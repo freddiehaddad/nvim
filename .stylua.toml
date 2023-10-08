@@ -1,0 +1,5 @@
+collapse_simple_statement = "Always"
+column_width = 200
+indent_type = "Tabs"
+indent_width = 8
+quote_style = "AutoPreferSingle"
