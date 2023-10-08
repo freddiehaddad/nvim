@@ -1,0 +1,5 @@
+# lazy nvim plugin
+lazy-lock.json
+
+# neodev plugin
+.luarc.json
