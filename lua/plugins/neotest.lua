@@ -38,7 +38,7 @@ return {
 		{ '<leader>tS', function() require('neotest').run.stop() end, desc = 'Stop' },
 	},
 	opts = {
-		status = { virtual_text = true },
+		status = { virtual_text = false },
 		output = { open_on_run = true },
 		quickfix = { open = function() vim.cmd('copen') end },
 		floating = {
