@@ -60,9 +60,6 @@ vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- line wrapping
-vim.opt.wrap = false
-
 -- window split behavior
 vim.opt.splitright = true
 vim.opt.splitbelow = true
