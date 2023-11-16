@@ -401,13 +401,13 @@ local function config()
 		{ -- left
 		},
 		{ -- right
-			c.in_file_info
+			c.in_file_info,
 		},
 	}
 
 	feline.setup({
 		components = { active = active, inactive = inactive },
-		force_inactive = { filetypes = { '^dapui_*', '^help$', '^NvimTree$', '^qf$' } },
+		force_inactive = { filetypes = { '^dapui_*', '^help$', '^neotest*', '^NvimTree$', '^qf$' } },
 		disable = { filetypes = { '^alpha$' } },
 	})
 	feline.use_theme(theme)
