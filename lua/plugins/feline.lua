@@ -421,6 +421,12 @@ return {
 		-- use a global statusline
 		-- vim.opt.laststatus = 3
 
+		-- update statusbar when there's a plugin update
+		vim.api.nvim_create_autocmd('User', {
+			pattern = 'LazyCheck',
+			callback = function() vim.opt.statusline = vim.opt.statusline end,
+		})
+
 		-- hide the mode
 		vim.opt.showmode = false
 
