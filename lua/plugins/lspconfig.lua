@@ -23,12 +23,12 @@ local function on_attach(ev)
 
 	-- goto
 	if client.supports_method('textDocument/implementation') then
-		map('n', 'gi', function() require('telescope.builtin').lsp_implementations({ jump_type = 'vsplit', reuse_win = true }) end, { desc = 'Goto implementation' })
+		map('n', 'gi', function() require('telescope.builtin').lsp_implementations({ reuse_win = true }) end, { desc = 'Goto implementation' })
 	end
 
-	map('n', 'gd', function() require('telescope.builtin').lsp_definitions({ jump_type = 'vsplit', reuse_win = true }) end, { desc = 'Goto definition' })
+	map('n', 'gd', function() require('telescope.builtin').lsp_definitions({ reuse_win = true }) end, { desc = 'Goto definition' })
 	map('n', 'gD', function() vim.lsp.buf.declaration() end, { desc = 'Goto declaration' })
-	map('n', 'gt', function() require('telescope.builtin').lsp_type_definitions({ jump_type = 'vsplit', reuse_win = true }) end, { desc = 'Goto type' })
+	map('n', 'gt', function() require('telescope.builtin').lsp_type_definitions({ reuse_win = true }) end, { desc = 'Goto type' })
 
 	map('n', ']d', function() vim.diagnostic.goto_next({ severity = nil }) end, { desc = 'Next diagnostic' })
 	map('n', '[d', function() vim.diagnostic.goto_prev({ severity = nil }) end, { desc = 'Previous diagnostic' })
