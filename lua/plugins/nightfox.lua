@@ -4,6 +4,23 @@ return {
 	opts = {
 		options = {
 			transparent = true,
+			styles = {
+				-- foot.ini:
+				-- font=IosevkaTerm Nerd Font Mono:weight=regular:size=12
+				-- font-bold=IosevkaTerm Nerd Font Mono:weight=medium:size=12
+				-- font-italic=IosevkaTerm Nerd Font Mono:weight=bold:size=12
+				-- font-bold-italic=IosevkaTerm Nerd Font Mono:weight=black:size=12
+				comments = 'NONE',
+				conditionals = 'NONE',
+				constants = 'bold,italic',
+				functions = 'NONE',
+				keywords = 'bold',
+				numbers = 'bold,italic',
+				operators = 'NONE',
+				strings = 'NONE',
+				types = 'NONE',
+				variables = 'NONE',
+			},
 		},
 		palettes = {
 			nightfox = {
