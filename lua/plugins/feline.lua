@@ -1,3 +1,46 @@
+-- progress data
+local clients = {}
+local progress = { '⠋', '⠙', '⠸', '⢰', '⣠', '⣄', '⡆', '⠇' }
+
+-- check for lsp progress data
+local function is_lsp_loading(client) return client and clients[client] and clients[client].percentage < 100 end
+
+-- update lsp progress
+local function update_lsp_progress()
+	local messages = vim.lsp.util.get_progress_messages()
+	for _, message in ipairs(messages) do
+		if not message.name then goto continue end
+
+		local client_name = message.name
+
+		if not clients[client_name] then clients[client_name] = { percentage = 0, progress_index = 0 } end
+
+		if message.done then
+			clients[client_name].percentage = 100
+		else
+			if message.percentage then clients[client_name].percentage = message.percentage end
+		end
+
+		if clients[client_name].percentage % 5 == 0 or clients[client_name].progress_index == 0 then
+			vim.opt.statusline = vim.opt.statusline
+			clients[client_name].progress_index = clients[client_name].progress_index + 1
+		end
+
+		if clients[client_name].progress_index > #progress then clients[client_name].progress_index = 1 end
+
+		::continue::
+	end
+end
+
+-- get lsp client name for buffer
+local function get_lsp_client_name()
+	local active_clients = vim.lsp.get_active_clients({ bufnr = 0 })
+	local client_name
+
+	if #active_clients > 0 then client_name = active_clients[1].name end
+	return client_name
+end
+
 -- configure feline
 local function config()
 	local colorscheme = vim.g.colors_name
@@ -6,6 +49,7 @@ local function config()
 	local vi_mode = require('feline.providers.vi_mode')
 	local file = require('feline.providers.file')
 	local separators = require('feline.defaults').statusline.separators.default_value
+	local lsp = require('feline.providers.lsp')
 
 	local theme = {
 		fg = palette.fg1,
@@ -154,40 +198,45 @@ local function config()
 
 		lsp = {
 			provider = function()
-				local lsp = require('feline.providers.lsp')
-				local s
-				if lsp.is_lsp_attached() then
-					-- s = string.format('  %s ', lsp.lsp_client_names())
-					s = '  LSP '
+				if not lsp.is_lsp_attached() then return ' 󱏎 LSP ' end
+
+				local client_name = get_lsp_client_name()
+				if is_lsp_loading(client_name) then
+					return string.format(' %s LSP ', progress[clients[client_name].progress_index])
 				else
-					s = '  LSP '
+					return ' 󱁛 LSP '
 				end
-				return s
 			end,
 			hl = function()
-				local lsp = require('feline.providers.lsp')
-				local bg = palette.fg3
-				if lsp.is_lsp_attached() then bg = palette.green.base end
-				return { fg = palette.bg0, bg = bg }
+				if not lsp.is_lsp_attached() then return { fg = palette.bg0, bg = palette.fg3 } end
+
+				local client_name = get_lsp_client_name()
+				if is_lsp_loading(client_name) then return { fg = palette.bg0, bg = palette.yellow.base } end
+
+				return { fg = palette.bg0, bg = palette.green.base }
 			end,
 			left_sep = {
 				always_visible = true,
 				str = separators.right_filled,
 				hl = function()
-					local lsp = require('feline.providers.lsp')
-					local bg = palette.fg3
-					if lsp.is_lsp_attached() then bg = palette.green.base end
-					return { fg = palette.bg0, bg = bg }
+					if not lsp.is_lsp_attached() then return { fg = palette.bg0, bg = palette.fg3 } end
+
+					local client_name = get_lsp_client_name()
+					if is_lsp_loading(client_name) then return { fg = palette.bg0, bg = palette.yellow.base } end
+
+					return { fg = palette.bg0, bg = palette.green.base }
 				end,
 			},
 			right_sep = {
 				always_visible = true,
 				str = separators.right_filled,
 				hl = function()
-					local lsp = require('feline.providers.lsp')
-					local fg = palette.fg3
-					if lsp.is_lsp_attached() then fg = palette.green.base end
-					return { fg = fg, bg = 'none' }
+					if not lsp.is_lsp_attached() then return { fg = palette.fg3, bg = 'none' } end
+
+					local client_name = get_lsp_client_name()
+					if is_lsp_loading(client_name) then return { fg = palette.yellow.base, bg = 'none' } end
+
+					return { fg = palette.green.base, bg = 'none' }
 				end,
 			},
 		},
@@ -425,6 +474,12 @@ return {
 		vim.api.nvim_create_autocmd('User', {
 			pattern = 'LazyCheck',
 			callback = function() vim.opt.statusline = vim.opt.statusline end,
+		})
+
+		-- update statusbar with LSP progress
+		vim.api.nvim_create_autocmd('User', {
+			pattern = 'LspProgressUpdate',
+			callback = function() update_lsp_progress() end,
 		})
 
 		-- hide the mode
