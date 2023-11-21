@@ -83,7 +83,7 @@ local function config()
 				if require('lazy.status').has_updates() then
 					s = require('lazy.status').updates()
 				else
-					s = ''
+					s = ''
 				end
 				s = string.format(' %s ', s)
 				return s
