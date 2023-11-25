@@ -42,7 +42,7 @@ local function get_lsp_client_name()
 end
 
 -- configure feline
-local function config()
+local function config(_, opts)
 	local colorscheme = vim.g.colors_name
 	local palette = require('nightfox.palette').load(colorscheme)
 	local feline = require('feline')
@@ -454,11 +454,9 @@ local function config()
 		},
 	}
 
-	feline.setup({
-		components = { active = active, inactive = inactive },
-		force_inactive = { filetypes = { '^dapui_*', '^help$', '^neotest*', '^NvimTree$', '^qf$' } },
-		disable = { filetypes = { '^alpha$' } },
-	})
+	opts.components = { active = active, inactive = inactive }
+
+	feline.setup(opts)
 	feline.use_theme(theme)
 end
 
@@ -488,4 +486,8 @@ return {
 		-- hide search count on command line
 		vim.opt.shortmess:append({ S = true })
 	end,
+	opts = {
+		force_inactive = { filetypes = { '^dapui_*', '^help$', '^neotest*', '^NvimTree$', '^qf$' } },
+		disable = { filetypes = { '^alpha$' } },
+	},
 }
