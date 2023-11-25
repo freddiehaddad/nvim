@@ -128,6 +128,11 @@ return {
 						},
 					},
 				},
+				pickers = {
+					lsp_document_symbols = {
+						symbol_width = 50, -- allow more room for symbol name
+					},
+				},
 			},
 		},
 		init = function() require('telescope').load_extension('undo') end,
