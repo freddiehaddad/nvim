@@ -103,9 +103,6 @@ vim.pumheight = 10
 -- short message format
 vim.opt.shortmess:append({ a = true, c = true, I = true, W = true })
 
--- wild completion
-vim.opt.wildmode = 'list'
-
 --------------------------------------------------------------------------------
 -- AUTO COMMANDS
 --------------------------------------------------------------------------------
