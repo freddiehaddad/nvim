@@ -1,6 +1,8 @@
 --[[
 Go language support requires installing:
 
+* Go must be installed on your system (i.e. pacman -S go)
+
 LSP
     - gopls
 
@@ -8,7 +10,8 @@ DAP
     - delve
 
 Formatter
-    - goimports (installed with go-tools)
+    - goimports
+    - gofumpt
 --]]
 return {
 	-- lsp
@@ -59,9 +62,13 @@ return {
 	-- formatting
 	{
 		'stevearc/conform.nvim',
+		dependencies = {
+			'williamboman/mason.nvim',
+			opts = function(_, opts) vim.list_extend(opts.ensure_installed, { 'goimports', 'gofumpt' }) end,
+		},
 		opts = {
 			formatters_by_ft = {
-				go = { 'goimports' },
+				go = { 'goimports', 'gofumpt' },
 			},
 		},
 	},
@@ -69,7 +76,13 @@ return {
 	-- dap
 	{
 		'leoluz/nvim-dap-go',
-		dependencies = 'mfussenegger/nvim-dap',
+		dependencies = {
+			{ 'mfussenegger/nvim-dap' },
+			{
+				'williamboman/mason.nvim',
+				opts = function(_, opts) table.insert(opts.ensure_installed, 'delve') end,
+			},
+		},
 		opts = {},
 	},
 

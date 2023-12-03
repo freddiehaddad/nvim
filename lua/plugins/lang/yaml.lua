@@ -5,7 +5,7 @@ LSP
     - yaml-language-server
 
 Formatter
-    - prettier
+    - prettierd
 --]]
 return {
 	-- schema support
@@ -17,6 +17,10 @@ return {
 	{
 		-- lsp
 		'neovim/nvim-lspconfig',
+		dependencies = {
+			'williamboman/mason-lspconfig.nvim',
+			opts = function(_, opts) table.insert(opts.ensure_installed, 'yamlls') end,
+		},
 		opts = function(_, opts)
 			opts.servers.yamlls = {
 				capabilities = {
@@ -50,7 +54,7 @@ return {
 		'stevearc/conform.nvim',
 		opts = {
 			formatters_by_ft = {
-				yaml = { 'prettier' },
+				yaml = { 'prettierd' },
 			},
 		},
 	},

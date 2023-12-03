@@ -2,10 +2,10 @@
 JSON language support requires installing:
 
 LSP
-    - vscode-json-languageserver
+    - jsonls
 
 Formatter
-    - prettier
+    - prettierd
 --]]
 return {
 	-- schema support
@@ -17,6 +17,10 @@ return {
 	{
 		-- lsp
 		'neovim/nvim-lspconfig',
+		dependencies = {
+			'williamboman/mason-lspconfig.nvim',
+			opts = function(_, opts) table.insert(opts.ensure_installed, 'jsonls') end,
+		},
 		opts = function(_, opts)
 			opts.servers.jsonls = {
 				settings = {
@@ -32,9 +36,13 @@ return {
 	-- formatting
 	{
 		'stevearc/conform.nvim',
+		dependencies = {
+			'williamboman/mason.nvim',
+			opts = function(_, opts) table.insert(opts.ensure_installed, 'prettierd') end,
+		},
 		opts = {
 			formatters_by_ft = {
-				json = { 'prettier' },
+				json = { 'prettierd' },
 			},
 		},
 	},
