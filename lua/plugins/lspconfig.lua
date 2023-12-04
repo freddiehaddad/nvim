@@ -14,19 +14,20 @@ local function on_attach(ev)
 		end
 	end
 
-	-- vim.api.nvim_create_autocmd('CursorHold', {
-	-- 	buffer = ev.buf,
-	-- 	callback = function()
-	-- 		local opts = {
-	-- 			focusable = false,
-	-- 			close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
-	-- 			border = 'none',
-	-- 			source = 'always',
-	-- 			max_width = 60,
-	-- 		}
-	-- 		vim.diagnostic.open_float(nil, opts)
-	-- 	end,
-	-- })
+	vim.api.nvim_create_autocmd('CursorHold', {
+		buffer = ev.buf,
+		callback = function()
+			local win_opts = { scope = 'cursor' }
+			local opts = {
+				focusable = false,
+				close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+				border = 'none',
+				source = 'always',
+				max_width = 60,
+			}
+			vim.diagnostic.open_float(win_opts, opts)
+		end,
+	})
 
 	-- goto
 	if client.supports_method('textDocument/implementation') then
@@ -122,12 +123,12 @@ return {
 		vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { max_width = max_width })
 
 		-- cursorhold
-		-- vim.opt.updatetime = 250
+		vim.opt.updatetime = 250
 
 		-- diagnostics
 		vim.diagnostic.config({
 			update_in_insert = false,
-			virtual_text = false,
+			virtual_text = true,
 		})
 	end,
 	opts = {
