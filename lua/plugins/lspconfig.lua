@@ -7,6 +7,13 @@ local function on_attach(ev)
 	end
 	local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
+	-- configure keymaps defined in lspconfig
+	if client.config.keys then
+		for _, keymap in ipairs(client.config.keys) do
+			map(keymap[1], keymap[2], keymap[3], keymap[4])
+		end
+	end
+
 	-- vim.api.nvim_create_autocmd('CursorHold', {
 	-- 	buffer = ev.buf,
 	-- 	callback = function()
