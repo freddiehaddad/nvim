@@ -19,7 +19,8 @@ return {
 		opts = function(_, opts)
 			opts.servers.clangd = {
 				keys = {
-					{ 'n', 'gs', '<cmd>ClangdSwitchSourceHeader<cr>', { desc = 'Switch Source/Header (C/C++)' } },
+					-- see: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/clangd.lua
+					{ 'n', 'gs', '<cmd>ClangdSwitchSourceHeader<cr>', { desc = 'Switch between source/header' } },
 				},
 				root_dir = function(fname)
 					return require('lspconfig.util').root_pattern('Makefile', 'configure.ac', 'configure.in', 'config.h.in', 'meson.build', 'meson_options.txt', 'build.ninja')(
@@ -48,36 +49,34 @@ return {
 	},
 
 	-- code navigation
-	{
-		'p00f/clangd_extensions.nvim',
-		lazy = true,
-		config = function() end,
-		opts = {
-			inlay_hints = {
-				inline = false,
-			},
-			ast = {
-				--These require codicons (https://github.com/microsoft/vscode-codicons)
-				role_icons = {
-					type = '',
-					declaration = '',
-					expression = '',
-					specifier = '',
-					statement = '',
-					['template argument'] = '',
-				},
-				kind_icons = {
-					Compound = '',
-					Recovery = '',
-					TranslationUnit = '',
-					PackExpansion = '',
-					TemplateTypeParm = '',
-					TemplateTemplateParm = '',
-					TemplateParamObject = '',
-				},
-			},
-		},
-	},
+	-- {
+	-- 	'p00f/clangd_extensions.nvim',
+	-- 	lazy = true,
+	-- 	config = function() end,
+	-- 	opts = {
+	-- 		ast = {
+	-- 			--These require codicons (https://github.com/microsoft/vscode-codicons)
+	-- 			role_icons = {
+	-- 				type = '',
+	-- 				declaration = '',
+	-- 				expression = '',
+	-- 				specifier = '',
+	-- 				statement = '',
+	-- 				['template argument'] = '',
+	-- 			},
+	--
+	-- 			kind_icons = {
+	-- 				Compound = '',
+	-- 				Recovery = '',
+	-- 				TranslationUnit = '',
+	-- 				PackExpansion = '',
+	-- 				TemplateTypeParm = '',
+	-- 				TemplateTemplateParm = '',
+	-- 				TemplateParamObject = '',
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 
 	-- dap
 	{
