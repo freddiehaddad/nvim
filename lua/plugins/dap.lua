@@ -40,7 +40,7 @@ return {
 			{ '<leader>de', function() require('dapui').eval() end, desc = 'Eval', mode = { 'n', 'v' } },
 		},
 		lazy = false,
-		opts = {},
+		opts = { render = { max_value_lines = 30 } },
 	},
 
 	-- which key integration
