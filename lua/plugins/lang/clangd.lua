@@ -28,14 +28,14 @@ return {
 					-- see: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/clangd.lua
 					{ 'n', 'gs', '<cmd>ClangdSwitchSourceHeader<cr>', { desc = 'Switch between source/header' } },
 				},
-				root_dir = function(fname)
-					return require('lspconfig.util').root_pattern('Makefile', 'configure.ac', 'configure.in', 'config.h.in', 'meson.build', 'meson_options.txt', 'build.ninja')(
-						fname
-					) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require('lspconfig.util').find_git_ancestor(fname)
-				end,
-				capabilities = {
-					offsetEncoding = { 'utf-16' },
-				},
+				-- root_dir = function(fname)
+				-- 	return require('lspconfig.util').root_pattern('Makefile', 'configure.ac', 'configure.in', 'config.h.in', 'meson.build', 'meson_options.txt', 'build.ninja')(
+				-- 		fname
+				-- 	) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require('lspconfig.util').find_git_ancestor(fname)
+				-- end,
+				-- capabilities = {
+				-- 	offsetEncoding = { 'utf-16' },
+				-- },
 				cmd = {
 					'clangd',
 					'--background-index',
