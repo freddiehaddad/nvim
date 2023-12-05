@@ -1,5 +1,5 @@
 --[[
-Clang language support requires installing:
+Clang language support:
 
 * Generate project compile_commands.json with (i.e. pacman -S --needed bear):
 
@@ -9,7 +9,7 @@ LSP
     - clangd
 
 DAP
-    - lldb
+    - codelldb
 
 * GDB 14 will support DAP
 
