@@ -1,9 +1,7 @@
 --[[
 Clang language support requires installing:
 
-* Must be installed on your system (i.e. pacman -S --needed bear clang lldb llvm)
-
-Generate project compile_commands.json with:
+* Generate project compile_commands.json with (i.e. pacman -S --needed bear):
 
     bear -- <your-build-command>
 
@@ -22,6 +20,10 @@ return {
 	-- lsp
 	{
 		'neovim/nvim-lspconfig',
+		dependencies = {
+			'williamboman/mason-lspconfig.nvim',
+			opts = function(_, opts) table.insert(opts.ensure_installed, 'clangd') end,
+		},
 		opts = function(_, opts)
 			opts.servers.clangd = {
 				keys = {
@@ -36,20 +38,20 @@ return {
 				-- capabilities = {
 				-- 	offsetEncoding = { 'utf-16' },
 				-- },
-				cmd = {
-					'clangd',
-					'--background-index',
-					'--clang-tidy',
-					'--header-insertion=iwyu',
-					'--completion-style=detailed',
-					'--function-arg-placeholders',
-					'--fallback-style=llvm',
-				},
-				init_options = {
-					usePlaceholders = true,
-					completeUnimported = true,
-					clangdFileStatus = true,
-				},
+				-- cmd = {
+				-- 	'clangd',
+				-- 	'--background-index',
+				-- 	'--clang-tidy',
+				-- 	'--header-insertion=iwyu',
+				-- 	'--completion-style=detailed',
+				-- 	'--function-arg-placeholders',
+				-- 	'--fallback-style=llvm',
+				-- },
+				-- init_options = {
+				-- 	usePlaceholders = true,
+				-- 	completeUnimported = true,
+				-- 	clangdFileStatus = true,
+				-- },
 			}
 		end,
 	},
@@ -87,17 +89,24 @@ return {
 	-- dap
 	{
 		'mfussenegger/nvim-dap',
+		dependencies = {
+			'williamboman/mason.nvim',
+			opts = function(_, opts) table.insert(opts.ensure_installed, 'codelldb') end,
+		},
 		opts = function()
 			local dap = require('dap')
-			dap.adapters.lldb = {
-				type = 'executable',
-				command = '/usr/bin/lldb-vscode',
-				name = 'lldb',
+			dap.adapters.codelldb = {
+				type = 'server',
+				port = '${port}',
+				executable = {
+					command = 'codelldb',
+					args = { '--port', '${port}' },
+				},
 			}
 			dap.configurations.cpp = {
 				{
 					name = 'Launch file',
-					type = 'lldb',
+					type = 'codelldb',
 					request = 'launch',
 					program = function() return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end,
 					cwd = '${workspaceFolder}',
@@ -106,7 +115,7 @@ return {
 				},
 				{
 					name = 'Attach to process',
-					type = 'lldb',
+					type = 'codelldb',
 					request = 'attach',
 					processId = require('dap.utils').pick_process,
 					cwd = '${workspaceFolder}',
