@@ -1,13 +1,19 @@
 --[[
 Clang language support requires installing:
 
-* Must be installed on your system (i.e. pacman -S --needed clang llvm lldb)
+* Must be installed on your system (i.e. pacman -S --needed bear clang lldb llvm)
+
+Generate project compile_commands.json with:
+
+    bear -- <your-build-command>
 
 LSP
     - clangd
 
 DAP
     - lldb
+
+* GDB 14 will support DAP
 
 Formatter
     - clang-format
