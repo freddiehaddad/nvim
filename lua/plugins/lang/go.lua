@@ -1,7 +1,5 @@
 --[[
-Go language support requires installing:
-
-* Go must be installed on your system (i.e. pacman -S go)
+Go language support:
 
 LSP
     - gopls
@@ -17,6 +15,10 @@ return {
 	-- lsp
 	{
 		'neovim/nvim-lspconfig',
+		dependencies = {
+			'williamboman/mason-lspconfig.nvim',
+			opts = function(_, opts) table.insert(opts.ensure_installed, 'gopls') end,
+		},
 		opts = function(_, opts)
 			opts.servers.gopls = {
 				settings = {
