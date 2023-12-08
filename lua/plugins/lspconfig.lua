@@ -17,15 +17,18 @@ local function on_attach(ev)
 	vim.api.nvim_create_autocmd('CursorHold', {
 		buffer = ev.buf,
 		callback = function()
-			local win_opts = { scope = 'cursor' }
 			local opts = {
+				-- open_float
+				scope = 'cursor',
+				source = true,
+				-- open_floating_preview
+				max_width = 60,
 				focusable = false,
 				close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+				-- nvim_open_win
 				border = 'none',
-				source = 'always',
-				max_width = 60,
 			}
-			vim.diagnostic.open_float(win_opts, opts)
+			vim.diagnostic.open_float(opts)
 		end,
 	})
 
