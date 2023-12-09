@@ -42,7 +42,7 @@ return {
 		output = { open_on_run = true },
 		quickfix = { open = function() vim.cmd('copen') end },
 		floating = {
-			border = 'single',
+			border = 'none',
 		},
 		icons = {
 			expanded = '┐',
