@@ -91,7 +91,7 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.blue.base },
 			right_sep = {
 				always_visible = true,
-				str = separators.right_filled,
+				str = separators.slant_right,
 				hl = { fg = palette.blue.base, bg = palette.bg0 },
 			},
 		},
@@ -104,7 +104,7 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.white.base },
 			left_sep = {
 				always_visible = true,
-				str = string.format('%s ', separators.right_filled),
+				str = string.format('%s ', separators.slant_right),
 				hl = { fg = palette.bg0, bg = palette.white.base },
 			},
 		},
@@ -124,12 +124,12 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.fg3 },
 			left_sep = {
 				always_visible = true,
-				str = string.format('%s%s', separators.block, separators.right_filled),
+				str = string.format('%s%s', separators.block, separators.slant_right),
 				hl = { fg = palette.white.base, bg = palette.fg3 },
 			},
 			right_sep = {
 				always_visible = true,
-				str = separators.right_filled,
+				str = separators.slant_right,
 				hl = { fg = palette.fg3, bg = palette.bg0 },
 			},
 		},
@@ -148,7 +148,7 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.green.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.bg0, bg = palette.green.base },
 		-- 	},
 		-- })
@@ -167,7 +167,7 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.yellow.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.green.base, bg = palette.yellow.base },
 		-- 	},
 		-- })
@@ -186,12 +186,12 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.red.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.yellow.base, bg = palette.red.base },
 		-- 	},
 		-- 	right_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.red.base, bg = palette.bg0 },
 		-- 	},
 		-- })
@@ -217,7 +217,7 @@ local function config(_, opts)
 			end,
 			left_sep = {
 				always_visible = true,
-				str = separators.right_filled,
+				str = separators.slant_right,
 				hl = function()
 					if not lsp.is_lsp_attached() then return { fg = palette.bg0, bg = palette.fg3 } end
 
@@ -229,7 +229,7 @@ local function config(_, opts)
 			},
 			right_sep = {
 				always_visible = true,
-				str = separators.right_filled,
+				str = separators.slant_right,
 				hl = function()
 					if not lsp.is_lsp_attached() then return { fg = palette.fg3, bg = 'none' } end
 
@@ -255,7 +255,7 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.red.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.bg0, bg = palette.red.base },
 		-- 	},
 		-- })
@@ -274,7 +274,7 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.magenta.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.red.base, bg = palette.magenta.base },
 		-- 	},
 		-- })
@@ -293,7 +293,7 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.blue.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.magenta.base, bg = palette.blue.base },
 		-- 	},
 		-- })
@@ -312,12 +312,12 @@ local function config(_, opts)
 		-- 	hl = { fg = palette.bg0, bg = palette.orange.base },
 		-- 	left_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.blue.base, bg = palette.orange.base },
 		-- 	},
 		-- 	right_sep = {
 		-- 		always_visible = true,
-		-- 		str = separators.right_filled,
+		-- 		str = separators.slant_right,
 		-- 		hl = { fg = palette.orange.base, bg = 'none' },
 		-- 	},
 		-- })
@@ -328,12 +328,12 @@ local function config(_, opts)
 			hl = function() return { fg = palette.bg0, bg = vi_mode.get_mode_color() } end,
 			left_sep = {
 				always_visible = true,
-				str = separators.left_filled,
+				str = separators.slant_left,
 				hl = function() return { fg = vi_mode.get_mode_color(), bg = 'none' } end,
 			},
 			right_sep = {
 				always_visible = true,
-				str = separators.left_filled,
+				str = separators.slant_left,
 				hl = function() return { fg = palette.bg0, bg = vi_mode.get_mode_color() } end,
 			},
 		},
@@ -352,7 +352,7 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.fg3 },
 			left_sep = {
 				always_visible = true,
-				str = separators.left_filled,
+				str = separators.slant_left,
 				hl = function() return { fg = palette.fg3, bg = palette.bg0 } end,
 			},
 		},
@@ -371,12 +371,12 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.white.base },
 			left_sep = {
 				always_visible = true,
-				str = separators.left_filled,
+				str = separators.slant_left,
 				hl = function() return { fg = palette.white.base, bg = palette.fg3 } end,
 			},
 			right_sep = {
 				always_visible = true,
-				str = separators.left_filled,
+				str = separators.slant_left,
 				hl = { fg = palette.bg0, bg = palette.white.base },
 			},
 		},
@@ -389,7 +389,7 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.blue.base },
 			left_sep = {
 				always_visible = true,
-				str = string.format('%s%s', separators.left_filled, separators.block),
+				str = string.format('%s%s', separators.slant_left, separators.block),
 				hl = function() return { fg = palette.blue.base, bg = palette.bg0 } end,
 			},
 			right_sep = {
@@ -419,7 +419,7 @@ local function config(_, opts)
 			hl = { fg = palette.bg0, bg = palette.blue.base },
 			left_sep = {
 				always_visible = true,
-				str = string.format('%s%s', separators.left_filled, separators.block),
+				str = string.format('%s%s', separators.slant_left, separators.block),
 				hl = { fg = palette.blue.base, bg = 'none' },
 			},
 			right_sep = {
