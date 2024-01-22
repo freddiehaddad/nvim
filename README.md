@@ -126,6 +126,7 @@ $HOME/.config/nvim
 │       ├── neotest.lua
 │       ├── nightfox.lua
 │       ├── nvimtree.lua
+│       ├── oil.lua
 │       ├── persistence.lua
 │       ├── smartsplits.lua
 │       ├── telescope.lua
