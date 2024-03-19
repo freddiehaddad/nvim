@@ -26,6 +26,7 @@ return {
 	dependencies = {
 		'nvim-lua/plenary.nvim',
 		'nvim-treesitter/nvim-treesitter',
+		'nvim-neotest/nvim-nio',
 	},
 	keys = {
 		{ '<leader>tt', function() require('neotest').run.run(vim.fn.expand('%')) end, desc = 'Run File' },
