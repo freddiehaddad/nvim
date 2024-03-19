@@ -20,6 +20,7 @@ return {
 			{ '<leader>ds', function() require('dap').session() end, desc = 'Session' },
 			{ '<leader>dt', function() require('dap').terminate() end, desc = 'Terminate' },
 			{ '<leader>dw', function() require('dap.ui.widgets').hover() end, desc = 'Widgets' },
+			{ '<leader>dX', function() require('dap').clear_breakpoints() end, desc = 'Clear all breakpoints' },
 		},
 	},
 
