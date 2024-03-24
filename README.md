@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-A [Neovim] configuration, that's designed to ease customization and
+A [Neovim] configuration that's designed to ease customization and
 extensibility. Avoid the pitfalls of starting from scratch and fighting with
 highly opinionated distributions.
 
@@ -10,15 +10,15 @@ Neovim startup screen:
 
 ![scrn-2023-10-27-16-52-43](https://github.com/freddiehaddad/nvim/assets/6127369/22cbc09e-85a1-413d-8366-0658f3eb1a5b)
 
-Tmux with Neovim showing multiple splits and hover window in left pane and git
-log output in a right pane:
+Neovim running within a tmux pane showing code completion support in the pop-up
+window and git log output in a tmux split:
 
 ![scrn-2023-10-27-16-52-09](https://github.com/freddiehaddad/nvim/assets/6127369/c03d144e-988c-46b5-b534-583055f2a73b)
 
 ## Language Support (LSP)
 
 Support for the following languages are included along with (where applicable)
-debugging and unit testing.
+debugging and unit testing functionality from within Neovim.
 
 - Bash
 - C
@@ -32,7 +32,7 @@ debugging and unit testing.
 See the associated lua files in the language directory `lua/plugins/lang` for a
 list of required dependencies that must be installed.
 
-## TMUX Support
+## Tmux Support
 
 Seamlessly move and resize tmux and Neovim windows using the same key bindings
 (without requiring the prefix key) by adding the following to your tmux
@@ -97,7 +97,7 @@ set -g status-right "#{pane_index} #{pane_id} #[bg=$white,fg=$background]\
 #[bg=$blue,fg=$background] #{pane_width}:#{pane_height} "
 ```
 
-Tmux session creation and navigation is handled by Tmux Session Launcher [TSL].
+Tmux session creation and navigation is handled by tmux Session Launcher [TSL].
 
 ## Organization
 
