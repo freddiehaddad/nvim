@@ -6,14 +6,40 @@ highly opinionated distributions.
 
 ## Screenshots
 
-Neovim startup screen:
+<details>
+<summary>Neovim startup screen:</summary>
 
 ![scrn-2023-10-27-16-52-43](https://github.com/freddiehaddad/nvim/assets/6127369/22cbc09e-85a1-413d-8366-0658f3eb1a5b)
 
-Neovim running within a tmux pane showing code completion support in the pop-up
-window and git log output in a tmux split:
+</details>
 
-![scrn-2023-10-27-16-52-09](https://github.com/freddiehaddad/nvim/assets/6127369/c03d144e-988c-46b5-b534-583055f2a73b)
+<details>
+<summary>Plugin Management via Lazy:</summary>
+
+![20240324-062743](https://github.com/freddiehaddad/nvim/assets/6127369/5e959988-b609-491e-a0bf-70f9dd9326fb)
+
+</details>
+
+<details>
+<summary>Tmux Integration:</summary>
+
+![20240324-063942](https://github.com/freddiehaddad/nvim/assets/6127369/ea557495-3f1a-4548-b7c8-c7d4dfde5405)
+
+</details>
+
+<details>
+<summary>Integrated Unit Testing:</summary>
+
+![20240324-063942](https://github.com/freddiehaddad/nvim/assets/6127369/0139615c-45fc-4e96-85e5-1d195636297e)
+
+</details>
+
+<details>
+<summary>Integrated Debugging:</summary>
+
+![20240324-063850](https://github.com/freddiehaddad/nvim/assets/6127369/e7b17dfd-7378-4618-a52a-f09fd4cb5a6f)
+
+</details>
 
 ## Language Support (LSP)
 
