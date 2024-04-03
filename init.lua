@@ -49,6 +49,9 @@ map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit all' })
 -- lazy
 map('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 
+-- mason
+map('n', '<leader>m', '<cmd>Mason<cr>', { desc = 'Mason' })
+
 --------------------------------------------------------------------------------
 -- NEOVIM OPTIONS
 --------------------------------------------------------------------------------
