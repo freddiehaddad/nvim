@@ -14,23 +14,23 @@ local function on_attach(ev)
 		end
 	end
 
-	vim.api.nvim_create_autocmd('CursorHold', {
-		buffer = ev.buf,
-		callback = function()
-			local opts = {
-				-- open_float
-				scope = 'cursor',
-				source = true,
-				-- open_floating_preview
-				max_width = 60,
-				focusable = false,
-				close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
-				-- nvim_open_win
-				border = 'none',
-			}
-			vim.diagnostic.open_float(opts)
-		end,
-	})
+	-- vim.api.nvim_create_autocmd('CursorHold', {
+	-- 	buffer = ev.buf,
+	-- 	callback = function()
+	-- 		local opts = {
+	-- 			-- open_float
+	-- 			scope = 'cursor',
+	-- 			source = true,
+	-- 			-- open_floating_preview
+	-- 			max_width = 60,
+	-- 			focusable = false,
+	-- 			close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+	-- 			-- nvim_open_win
+	-- 			border = 'none',
+	-- 		}
+	-- 		vim.diagnostic.open_float(opts)
+	-- 	end,
+	-- })
 
 	-- goto
 	if client.supports_method('textDocument/implementation') then
@@ -131,7 +131,7 @@ return {
 		-- diagnostics
 		vim.diagnostic.config({
 			update_in_insert = false,
-			virtual_text = true,
+			virtual_text = false,
 		})
 	end,
 	opts = {
