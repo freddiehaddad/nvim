@@ -62,7 +62,7 @@ local function on_attach(ev)
 	map({ 'n', 'v' }, '<leader>ca', function() vim.lsp.buf.code_action() end, { desc = 'Code action' })
 	map('n', '<leader>cA', function() vim.lsp.buf.code_action({ context = { only = { 'source' }, diagnostics = {} } }) end, { desc = 'Source action' })
 	map('n', '<leader>cf', function() require('conform').format() end, { desc = 'Format' })
-	map('v', '<leader>cF', function() require('conform').format() end, { desc = 'Format selection' })
+	map('v', '<leader>cf', function() require('conform').format() end, { desc = 'Format selection' })
 
 	-- help
 	map('n', 'K', function() vim.lsp.buf.hover() end, { desc = 'Hover information' })
