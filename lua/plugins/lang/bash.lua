@@ -18,7 +18,7 @@ return {
 		},
 		opts = {
 			servers = {
-				bashls = {},
+				bashls = { filetypes = { 'sh', 'zsh' } },
 			},
 		},
 	},
@@ -33,6 +33,7 @@ return {
 		opts = {
 			formatters_by_ft = {
 				sh = { 'shfmt' },
+				zsh = { 'shfmt' },
 			},
 		},
 	},
