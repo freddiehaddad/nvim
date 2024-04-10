@@ -132,6 +132,12 @@ return {
 					lsp_document_symbols = {
 						symbol_width = 50, -- allow more room for symbol name
 					},
+					diagnostics = {
+						layout_strategy = 'vertical',
+						layout_config = {
+							preview_height = 0.65,
+						},
+					},
 				},
 			},
 		},
