@@ -121,9 +121,9 @@ return {
 		})
 
 		-- update lsp floating window settings
-		local max_width = 80
-		vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { max_width = max_width })
-		vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { max_width = max_width })
+		-- local max_width = 80
+		vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {}) --, { max_width = max_width })
+		vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {}) --, { max_width = max_width })
 
 		-- cursorhold
 		vim.opt.updatetime = 250
