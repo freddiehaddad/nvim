@@ -53,6 +53,7 @@ debugging and unit testing functionality from within Neovim.
 - JSON
 - Lua
 - Markdown
+- Rust
 - YAML
 
 See the associated lua files in the language directory `lua/plugins/lang` for a
