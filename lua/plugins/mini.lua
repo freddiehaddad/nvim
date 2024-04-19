@@ -21,12 +21,6 @@ return {
 		opts = {},
 	},
 
-	-- code completion
-	{
-		'echasnovski/mini.completion',
-		opts = {},
-	},
-
 	-- code movement
 	{
 		'echasnovski/mini.move',
