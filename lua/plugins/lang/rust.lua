@@ -29,6 +29,7 @@ return {
 				on_attach = function(_, bufnr)
 					vim.keymap.set('n', '<leader>ca', function() vim.cmd.RustLsp('codeAction') end, { desc = 'Code action', buffer = bufnr })
 					vim.keymap.set('n', '<leader>dr', function() vim.cmd.RustLsp('debuggables') end, { desc = 'Rust debuggables', buffer = bufnr })
+					vim.keymap.set('n', '<leader>ce', function() vim.cmd.RustLsp('explainError') end, { desc = 'Rust explain error', buffer = bufnr })
 				end,
 			},
 			tools = {
