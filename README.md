@@ -135,6 +135,7 @@ $HOME/.config/nvim
 ├── lua
 │   └── plugins
 │       ├── alpha.lua
+│       ├── cmp.lua
 │       ├── conform.lua
 │       ├── dap.lua
 │       ├── feline.lua
@@ -147,6 +148,7 @@ $HOME/.config/nvim
 │       │   ├── json.lua
 │       │   ├── lua.lua
 │       │   ├── markdown.lua
+│       │   ├── rust.lua
 │       │   └── yaml.lua
 │       ├── lspconfig.lua
 │       ├── mini.lua
