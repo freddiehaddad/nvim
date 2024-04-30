@@ -41,7 +41,7 @@ return {
 			{ '<leader>de', function() require('dapui').eval() end, desc = 'Eval', mode = { 'n', 'v' } },
 		},
 		lazy = false,
-		opts = { render = { max_value_lines = 30 } },
+		opts = { render = { max_type_length = 10 } },
 	},
 
 	-- which key integration
