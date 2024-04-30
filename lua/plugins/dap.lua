@@ -41,7 +41,48 @@ return {
 			{ '<leader>de', function() require('dapui').eval() end, desc = 'Eval', mode = { 'n', 'v' } },
 		},
 		lazy = false,
-		opts = { render = { max_type_length = 10 } },
+		opts = {
+			render = { max_type_length = 10 },
+			controls = { enabled = false },
+			layouts = {
+				{
+					elements = {
+						{
+							id = 'scopes',
+							size = 0.55,
+						},
+						{
+							id = 'breakpoints',
+							size = 0.15,
+						},
+						{
+							id = 'stacks',
+							size = 0.15,
+						},
+						{
+							id = 'watches',
+							size = 0.15,
+						},
+					},
+					position = 'left',
+					size = 50,
+				},
+				{
+					elements = {
+						-- {
+						-- 	id = 'repl',
+						-- 	size = 0.5,
+						-- },
+						{
+							id = 'console',
+							size = 1.0,
+						},
+					},
+					position = 'bottom',
+					size = 10,
+				},
+			},
+		},
 	},
 
 	-- which key integration
