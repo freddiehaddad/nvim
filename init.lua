@@ -96,6 +96,9 @@ vim.opt.confirm = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- native formatting
+vim.opt.formatoptions = 'jcroqlnt'
+
 -- grep configuration
 vim.opt.grepformat = '%f:%l:%c:%m'
 vim.opt.grepprg = 'rg --vimgrep'
