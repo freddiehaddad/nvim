@@ -4,9 +4,7 @@ return {
 	init = function()
 		vim.opt.foldenable = false
 		vim.opt.foldmethod = 'expr'
-		-- enable for nvim 0.10
-		-- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-		vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+		vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 	end,
 	main = 'nvim-treesitter.configs',
 	opts = {
