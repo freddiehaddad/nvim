@@ -1,46 +1,3 @@
--- progress data
-local clients = {}
-local progress = { '⠋', '⠙', '⠸', '⢰', '⣠', '⣄', '⡆', '⠇' }
-
--- check for lsp progress data
-local function is_lsp_loading(client) return client and clients[client] and clients[client].percentage < 100 end
-
--- update lsp progress
-local function update_lsp_progress()
-	local messages = vim.lsp.util.get_progress_messages()
-	for _, message in ipairs(messages) do
-		if not message.name then goto continue end
-
-		local client_name = message.name
-
-		if not clients[client_name] then clients[client_name] = { percentage = 0, progress_index = 0 } end
-
-		if message.done then
-			clients[client_name].percentage = 100
-		else
-			if message.percentage then clients[client_name].percentage = message.percentage end
-		end
-
-		if clients[client_name].percentage % 5 == 0 or clients[client_name].progress_index == 0 then
-			vim.opt.statusline = vim.opt.statusline
-			clients[client_name].progress_index = clients[client_name].progress_index + 1
-		end
-
-		if clients[client_name].progress_index > #progress then clients[client_name].progress_index = 1 end
-
-		::continue::
-	end
-end
-
--- get lsp client name for buffer
-local function get_lsp_client_name()
-	local active_clients = vim.lsp.get_active_clients({ bufnr = 0 })
-	local client_name
-
-	if #active_clients > 0 then client_name = active_clients[1].name end
-	return client_name
-end
-
 -- configure feline
 local function config(_, opts)
 	local colorscheme = vim.g.colors_name
@@ -68,14 +25,6 @@ local function config(_, opts)
 	}
 
 	local c = {
-
-		-- local function git_diff(type)
-		-- 	---@diagnostic disable-next-line: undefined-field
-		-- 	local gsd = vim.b.gitsigns_status_dict
-		-- 	if gsd and gsd[type] and gsd[type] > 0 then return tostring(gsd[type]) end
-		-- 	return nil
-		-- end
-
 		-- left
 		vim_status = {
 			provider = function()
@@ -134,85 +83,13 @@ local function config(_, opts)
 			},
 		},
 
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local status = git_diff('added')
-		-- 		local s
-		-- 		if status then
-		-- 			s = string.format(' %s %s ', '', status)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.green.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.bg0, bg = palette.green.base },
-		-- 	},
-		-- })
-
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local status = git_diff('changed')
-		-- 		local s
-		-- 		if status then
-		-- 			s = string.format(' %s %s ', '', status)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.yellow.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.green.base, bg = palette.yellow.base },
-		-- 	},
-		-- })
-
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local status = git_diff('removed')
-		-- 		local s
-		-- 		if status then
-		-- 			s = string.format(' %s %s ', '', status)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.red.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.yellow.base, bg = palette.red.base },
-		-- 	},
-		-- 	right_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.red.base, bg = palette.bg0 },
-		-- 	},
-		-- })
-
 		lsp = {
 			provider = function()
 				if not lsp.is_lsp_attached() then return ' 󱏎 LSP ' end
-
-				local client_name = get_lsp_client_name()
-				if is_lsp_loading(client_name) then
-					return string.format(' %s LSP ', progress[clients[client_name].progress_index])
-				else
-					return ' 󱁛 LSP '
-				end
+				return string.format(' %s ', require('lsp-progress').progress())
 			end,
 			hl = function()
 				if not lsp.is_lsp_attached() then return { fg = palette.bg0, bg = palette.fg3 } end
-
-				local client_name = get_lsp_client_name()
-				if is_lsp_loading(client_name) then return { fg = palette.bg0, bg = palette.yellow.base } end
-
 				return { fg = palette.bg0, bg = palette.green.base }
 			end,
 			left_sep = {
@@ -220,10 +97,6 @@ local function config(_, opts)
 				str = separators.slant_right,
 				hl = function()
 					if not lsp.is_lsp_attached() then return { fg = palette.bg0, bg = palette.fg3 } end
-
-					local client_name = get_lsp_client_name()
-					if is_lsp_loading(client_name) then return { fg = palette.bg0, bg = palette.yellow.base } end
-
 					return { fg = palette.bg0, bg = palette.green.base }
 				end,
 			},
@@ -232,95 +105,10 @@ local function config(_, opts)
 				str = separators.slant_right,
 				hl = function()
 					if not lsp.is_lsp_attached() then return { fg = palette.fg3, bg = 'none' } end
-
-					local client_name = get_lsp_client_name()
-					if is_lsp_loading(client_name) then return { fg = palette.yellow.base, bg = 'none' } end
-
 					return { fg = palette.green.base, bg = 'none' }
 				end,
 			},
 		},
-
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local s
-		-- 		local count = vim.tbl_count(vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }))
-		-- 		if count > 0 then
-		-- 			s = string.format(' %s %d ', '', count)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.red.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.bg0, bg = palette.red.base },
-		-- 	},
-		-- })
-
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local s
-		-- 		local count = vim.tbl_count(vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }))
-		-- 		if count > 0 then
-		-- 			s = string.format(' %s %d ', '', count)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.magenta.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.red.base, bg = palette.magenta.base },
-		-- 	},
-		-- })
-
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local s
-		-- 		local count = vim.tbl_count(vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }))
-		-- 		if count > 0 then
-		-- 			s = string.format(' %s %d ', '', count)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.blue.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.magenta.base, bg = palette.blue.base },
-		-- 	},
-		-- })
-
-		-- table.insert(components.active[left], {
-		-- 	provider = function()
-		-- 		local s
-		-- 		local count = vim.tbl_count(vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }))
-		-- 		if count > 0 then
-		-- 			s = string.format(' %s %d ', '', count)
-		-- 		else
-		-- 			s = ''
-		-- 		end
-		-- 		return s
-		-- 	end,
-		-- 	hl = { fg = palette.bg0, bg = palette.orange.base },
-		-- 	left_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.blue.base, bg = palette.orange.base },
-		-- 	},
-		-- 	right_sep = {
-		-- 		always_visible = true,
-		-- 		str = separators.slant_right,
-		-- 		hl = { fg = palette.orange.base, bg = 'none' },
-		-- 	},
-		-- })
 
 		-- right
 		vi_mode = {
@@ -463,11 +251,25 @@ end
 return {
 	'freddiehaddad/feline.nvim',
 	config = config,
-	dependencies = { 'EdenEast/nightfox.nvim', 'lewis6991/gitsigns.nvim', 'nvim-tree/nvim-web-devicons' },
+	dependencies = {
+		'EdenEast/nightfox.nvim',
+		'lewis6991/gitsigns.nvim',
+		'nvim-tree/nvim-web-devicons',
+		{
+			'linrongbin16/lsp-progress.nvim',
+			opts = {
+				spinner = { '⠋', '⠙', '⠸', '⢰', '⣠', '⣄', '⡆', '⠇' },
+				client_format = function(_, spinner, series_messages) return #series_messages > 0 and (spinner .. ' LSP') or ' LSP' end,
+				format = function(client_messages)
+					local sign = ' LSP'
+					if #client_messages > 0 then return table.concat(client_messages) end
+					if #vim.lsp.get_clients() > 0 then return sign end
+					return '󱏎 LSP'
+				end,
+			},
+		},
+	},
 	init = function()
-		-- use a global statusline
-		-- vim.opt.laststatus = 3
-
 		-- update statusbar when there's a plugin update
 		vim.api.nvim_create_autocmd('User', {
 			pattern = 'LazyCheck',
@@ -475,9 +277,11 @@ return {
 		})
 
 		-- update statusbar with LSP progress
+		vim.api.nvim_create_augroup('feline_augroup', { clear = true })
 		vim.api.nvim_create_autocmd('User', {
-			pattern = 'LspProgressUpdate',
-			callback = function() update_lsp_progress() end,
+			group = 'feline_augroup',
+			pattern = 'LspProgressStatusUpdated',
+			callback = function() vim.opt.statusline = vim.opt.statusline end,
 		})
 
 		-- hide the mode
