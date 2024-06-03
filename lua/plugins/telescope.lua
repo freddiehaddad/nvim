@@ -41,7 +41,7 @@ return {
 			},
 			{
 				'<leader>sg',
-				function() require('telescope.builtin').live_grep() end,
+				function() require('telescope.builtin').live_grep({ additional_args = { '--no-ignore' } }) end,
 				desc = 'Grep files',
 			},
 			{
