@@ -99,7 +99,7 @@ return {
 				type = 'server',
 				port = '${port}',
 				executable = {
-					command = 'codelldb',
+					command = 'codelldb.cmd',
 					args = { '--port', '${port}' },
 				},
 			}
