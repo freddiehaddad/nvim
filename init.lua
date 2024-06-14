@@ -109,6 +109,9 @@ vim.pumheight = 10
 -- short message format
 vim.opt.shortmess:append({ a = true, c = true, I = true, W = true })
 
+-- fill char formating
+vim.opt.fillchars:append({ eob = ' ' })
+
 --------------------------------------------------------------------------------
 -- AUTO COMMANDS
 --------------------------------------------------------------------------------
