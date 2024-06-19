@@ -12,10 +12,10 @@ return {
 				-- font-bold-italic=IosevkaTerm Nerd Font Mono:weight=black:size=12
 				comments = 'NONE',
 				conditionals = 'NONE',
-				constants = 'bold,italic',
+				constants = 'bold',
 				functions = 'NONE',
 				keywords = 'bold',
-				numbers = 'bold,italic',
+				numbers = 'bold',
 				operators = 'NONE',
 				strings = 'NONE',
 				types = 'NONE',
