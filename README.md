@@ -148,6 +148,7 @@ $HOME/.config/nvim
 │       │   ├── json.lua
 │       │   ├── lua.lua
 │       │   ├── markdown.lua
+│       │   ├── powershell.lua
 │       │   ├── rust.lua
 │       │   └── yaml.lua
 │       ├── lspconfig.lua
