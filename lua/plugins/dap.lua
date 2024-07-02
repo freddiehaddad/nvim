@@ -44,7 +44,7 @@ return {
 			dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close({}) end
 			dap.listeners.before.event_exited['dapui_config'] = function() dapui.close({}) end
 		end,
-		dependencies = 'mfussenegger/nvim-dap',
+		dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
 		keys = {
 			{ '<leader>du', function() require('dapui').toggle({}) end, desc = 'Dap UI' },
 			{ '<leader>de', function() require('dapui').eval() end, desc = 'Eval', mode = { 'n', 'v' } },
