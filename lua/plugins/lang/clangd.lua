@@ -103,6 +103,7 @@ return {
 					args = { '--port', '${port}' },
 				},
 			}
+			if vim.uv.os_uname().sysname:find('Windows') then dap.adapters.codelldb.executable.command = dap.adapters.codelldb.executable.command .. '.cmd' end
 			dap.configurations.cpp = {
 				{
 					name = 'Launch file',
