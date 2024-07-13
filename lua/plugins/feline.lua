@@ -125,17 +125,7 @@ local function config(_, opts)
         },
 
         search_count = {
-            provider = function()
-                if vim.v.hlsearch == 0 then return '' end
-
-                local ok, result =
-                    pcall(vim.fn.searchcount, { maxcount = 999, timeout = 250 })
-                if not ok then return '' end
-                if next(result) == nil then return '' end
-
-                local denominator = math.min(result.total, result.maxcount)
-                return string.format('[%d/%d]', result.current, denominator)
-            end,
+            provider = 'search_count',
             hl = { fg = palette.yellow.base, bg = 'none' },
             right_sep = {
                 always_visible = true,
