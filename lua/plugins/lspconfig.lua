@@ -228,14 +228,14 @@ local function on_attach(ev)
 
     -- which-key
     local mappings = {
-        ['<leader>c'] = { name = '+code' },
+        { '<leader>c', group = 'code' },
     }
     local options = {
         mode = { 'n', 'v' },
         buffer = ev.buf,
     }
     local wk = require('which-key')
-    wk.register(mappings, options)
+    wk.add(mappings, options)
 end
 
 return {

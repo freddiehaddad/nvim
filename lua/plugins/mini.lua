@@ -55,9 +55,9 @@ return {
     {
         'folke/which-key.nvim',
         opts = {
-            defaults = {
-                ['<leader>b'] = { name = '+buffer' },
-                ['gs'] = { name = '+surround' },
+            spec = {
+                { '<leader>b', group = 'buffer' },
+                { 'gs', group = 'surround' },
             },
         },
     },

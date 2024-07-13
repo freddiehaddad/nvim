@@ -153,16 +153,15 @@ local function on_attach(buffer)
 
     -- which-key
     local mappings = {
-        ['<leader>g'] = { name = '+git' },
-        ['<leader>h'] = { name = '+hunks' },
-        ['<leader>t'] = { name = '+toggle' },
+        { '<leader>g', group = 'git' },
+        { '<leader>h', group = 'hunks' },
     }
     local options = {
         mode = { 'n', 'v' },
         buffer = buffer,
     }
     local wk = require('which-key')
-    wk.register(mappings, options)
+    wk.add(mappings, options)
 end
 
 return {
