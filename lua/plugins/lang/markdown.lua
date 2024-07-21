@@ -5,7 +5,7 @@ LSP
     - marksman
 
 Formatter
-    - mdformat
+    - prettierd
 --]]
 return {
     -- lsp
@@ -32,12 +32,12 @@ return {
         dependencies = {
             'williamboman/mason.nvim',
             opts = function(_, opts)
-                table.insert(opts.ensure_installed, 'mdformat')
+                table.insert(opts.ensure_installed, 'prettierd')
             end,
         },
         opts = {
             formatters_by_ft = {
-                markdown = { 'mdformat' },
+                markdown = { 'prettierd' },
             },
         },
     },
