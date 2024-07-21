@@ -20,6 +20,12 @@ return {
         opts = function(_, opts) opts.servers.marksman = {} end,
     },
 
+    -- viewer
+    {
+        'MeanderingProgrammer/markdown.nvim',
+        opts = {},
+    },
+
     -- formatting
     {
         'stevearc/conform.nvim',
