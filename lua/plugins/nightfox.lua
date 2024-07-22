@@ -1,6 +1,12 @@
 return {
     'EdenEast/nightfox.nvim',
-    init = function() vim.cmd.colorscheme('nightfox') end,
+    init = function()
+        vim.cmd.colorscheme('nightfox')
+
+        local hl = vim.api.nvim_set_hl
+        hl(0, '@markup.link.url', { italic = false, underline = false })
+        hl(0, '@markup.raw', { italic = false, underline = false })
+    end,
     opts = {
         options = {
             transparent = true,
