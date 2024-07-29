@@ -23,7 +23,18 @@ return {
     -- viewer
     {
         'MeanderingProgrammer/markdown.nvim',
-        opts = {},
+        opts = {
+            heading = {
+                icons = {
+                    '󰉫 ',
+                    '󰉬 ',
+                    '󰉭 ',
+                    '󰉮 ',
+                    '󰉯 ',
+                    '󰉰 ',
+                },
+            },
+        },
     },
 
     -- formatting
