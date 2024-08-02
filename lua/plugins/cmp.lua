@@ -123,6 +123,7 @@ return {
             delete_check_events = 'InsertLeave',
             region_check_events = 'InsertEnter',
         },
+        lazy = false,
         keys = {
             {
                 '<tab>',
