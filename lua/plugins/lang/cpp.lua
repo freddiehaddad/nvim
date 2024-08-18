@@ -78,7 +78,11 @@ return {
                     end,
                     cwd = '${workspaceFolder}',
                     stopOnEntry = false,
-                    args = {},
+                    setupCommands = {
+                        text = '-enable-pretty-printing',
+                        description = 'enable pretty printing',
+                        ignoreFailures = false,
+                    },
                 },
                 {
                     name = 'Attach to process',
