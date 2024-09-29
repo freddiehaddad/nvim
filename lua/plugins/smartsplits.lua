@@ -1,4 +1,5 @@
 return {
+    enabled = false,
     'mrjones2014/smart-splits.nvim',
     lazy = false,
     keys = {
@@ -49,5 +50,6 @@ return {
     opts = {
         default_amount = 1, -- resize amount
         at_edge = 'stop', -- disable wrapping around edges
+        log_level = 'trace',
     },
 }
