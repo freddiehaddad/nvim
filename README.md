@@ -164,7 +164,8 @@ $HOME/.config/nvim
 │       └── whichkey.lua
 ├── palette.lua                -- reference file for nightfox palette
 ├── README.md
-└── reset.sh                   -- clear all neovim data and start fresh
+├── reset.sh                   -- clear all neovim data and start fresh (linux)
+└── reset.ps1                  -- clear all neovim data and start fresh (windows)
 ```
 
 [neovim]: https://github.com/neovim/neovim
