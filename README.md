@@ -6,38 +6,64 @@ highly opinionated distributions.
 
 ## Screenshots
 
+![Regular](./screenshots/screenshot_regular.png)
+
 <details>
 <summary>Neovim startup screen:</summary>
 
-![scrn-2023-10-27-16-52-43](https://github.com/freddiehaddad/nvim/assets/6127369/22cbc09e-85a1-413d-8366-0658f3eb1a5b)
+![Dashboard](./screenshots/dashboard.png)
+
+</details>
+
+<details>
+<summary>Telescope Integration:</summary>
+
+![Telescope](./screenshots/telescope.png)
 
 </details>
 
 <details>
 <summary>Plugin Management via Lazy:</summary>
 
-![20240324-062743](https://github.com/freddiehaddad/nvim/assets/6127369/5e959988-b609-491e-a0bf-70f9dd9326fb)
+![Lazy](./screenshots/lazy_plugin_management.png)
 
 </details>
 
 <details>
-<summary>Tmux Integration:</summary>
+<summary>LSP/DAP Management via Mason:</summary>
 
-![20240324-063942](https://github.com/freddiehaddad/nvim/assets/6127369/ea557495-3f1a-4548-b7c8-c7d4dfde5405)
+![Mason](./screenshots/mason_lsp_plugin_management.png)
 
 </details>
 
 <details>
 <summary>Integrated Unit Testing:</summary>
 
-![20240324-063942](https://github.com/freddiehaddad/nvim/assets/6127369/0139615c-45fc-4e96-85e5-1d195636297e)
+![Unit Testing](./screenshots/screenshot_unit_testing.png)
 
 </details>
 
 <details>
 <summary>Integrated Debugging:</summary>
 
-![20240324-063850](https://github.com/freddiehaddad/nvim/assets/6127369/e7b17dfd-7378-4618-a52a-f09fd4cb5a6f)
+![Debugging](./screenshots/screenshot_debug.png)
+
+</details>
+
+<details>
+<summary>Customized Status Bar:</summary>
+
+![Regular](./screenshots/statusbar_regular.png)
+![Search and Macro Recording](./screenshots/statusbar_search_macro.png)
+![Plugin Update Notification](./screenshots/statusbar_lazy_update.png)
+![Inactive Window](./screenshots/statusbar_inactive.png)
+
+</details>
+
+<details>
+<summary>File Explorer:</summary>
+
+![Explorer](./screenshots/explorer.png)
 
 </details>
 
