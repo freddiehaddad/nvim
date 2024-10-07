@@ -22,46 +22,17 @@ return {
 
     -- viewer
     {
-        'MeanderingProgrammer/render-markdown.nvim',
-        init = function()
-            local hl = vim.api.nvim_set_hl
-
-            hl(0, 'RenderMarkdownH1Bg', { nocombine = true, bg = 'none' })
-            hl(0, 'RenderMarkdownH2Bg', { nocombine = true, bg = 'none' })
-            hl(0, 'RenderMarkdownH3Bg', { nocombine = true, bg = 'none' })
-            hl(0, 'RenderMarkdownH4Bg', { nocombine = true, bg = 'none' })
-            hl(0, 'RenderMarkdownH5Bg', { nocombine = true, bg = 'none' })
-            hl(0, 'RenderMarkdownH6Bg', { nocombine = true, bg = 'none' })
-
-            hl(0, 'RenderMarkdownCode', { nocombine = true, bg = 'none' })
-        end,
-        opts = {
-            heading = {
-                enabled = true,
-                sign = true,
-                position = 'inline',
-                -- heading icon prefix
-                icons = {
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                },
-                -- heading icon in sign column
-                signs = {
-                    '󰉫 ',
-                    '󰉬 ',
-                    '󰉭 ',
-                    '󰉮 ',
-                    '󰉯 ',
-                    '󰉰 ',
-                },
+        'OXY2DEV/markview.nvim',
+        lazy = false,
+        keys = {
+            {
+                '<leader>mp',
+                '<cmd>Markview splitToggle<cr>',
+                desc = 'Markdown Preview',
             },
-            code = {
-                border = 'none',
-                style = 'none',
+            dependencies = {
+                'nvim-treesitter/nvim-treesitter',
+                'nvim-tree/nvim-web-devicons',
             },
         },
     },
