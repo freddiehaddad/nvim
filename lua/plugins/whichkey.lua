@@ -11,6 +11,7 @@ return {
         },
         spec = {
             { '<leader>f', group = 'find' },
+            { '<leader>p', group = 'plugins' },
             { '<leader>q', group = 'quit' },
             { '<leader>s', group = 'search' },
             { '<leader>t', group = 'test/toggle' },

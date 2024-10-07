@@ -82,10 +82,10 @@ map({ 'i', 'n', 's', 'x' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
 map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit all' })
 
 -- lazy
-map('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+map('n', '<leader>pl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 
 -- mason
-map('n', '<leader>m', '<cmd>Mason<cr>', { desc = 'Mason' })
+map('n', '<leader>pm', '<cmd>Mason<cr>', { desc = 'Mason' })
 
 --------------------------------------------------------------------------------
 -- NEOVIM OPTIONS
