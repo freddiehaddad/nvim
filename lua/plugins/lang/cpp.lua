@@ -19,10 +19,21 @@ return {
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            'williamboman/mason-lspconfig.nvim',
-            opts = function(_, opts)
-                table.insert(opts.ensure_installed, 'clangd')
-            end,
+            {
+                'williamboman/mason-lspconfig.nvim',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'clangd')
+                end,
+            },
+            {
+                'nvim-treesitter/nvim-treesitter',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'c')
+                    table.insert(opts.ensure_installed, 'cpp')
+                    table.insert(opts.ensure_installed, 'cmake')
+                    table.insert(opts.ensure_installed, 'make')
+                end,
+            },
         },
         opts = function(_, opts)
             opts.servers.clangd = {

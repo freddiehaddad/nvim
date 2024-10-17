@@ -25,6 +25,12 @@ return {
                     table.insert(opts.ensure_installed, 'shellcheck')
                 end,
             },
+            {
+                'nvim-treesitter/nvim-treesitter',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'bash')
+                end,
+            },
         },
         opts = {
             servers = {

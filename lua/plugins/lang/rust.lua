@@ -18,6 +18,7 @@ return {
     -- lsp
     {
         'mrcjkb/rustaceanvim',
+	lazy = false,
         config = function(_, opts)
             vim.g.rustaceanvim = vim.tbl_deep_extend(
                 'keep',
@@ -26,10 +27,18 @@ return {
             )
         end,
         dependencies = {
-            'williamboman/mason-lspconfig.nvim',
-            opts = function(_, opts)
-                table.insert(opts.ensure_installed, 'rust_analyzer')
-            end,
+            {
+                'williamboman/mason-lspconfig.nvim',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'rust_analyzer')
+                end,
+            },
+            {
+                'nvim-treesitter/nvim-treesitter',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'rust')
+                end,
+            },
         },
         ft = { 'rust' },
         opts = {

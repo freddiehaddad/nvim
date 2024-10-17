@@ -46,6 +46,12 @@ return {
                     table.insert(opts.ensure_installed, 'lua_ls')
                 end,
             },
+            {
+                'nvim-treesitter/nvim-treesitter',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'lua')
+                end,
+            },
         },
         opts = function(_, opts)
             opts.servers.lua_ls = {

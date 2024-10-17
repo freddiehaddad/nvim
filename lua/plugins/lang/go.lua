@@ -16,10 +16,20 @@ return {
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            'williamboman/mason-lspconfig.nvim',
-            opts = function(_, opts)
-                table.insert(opts.ensure_installed, 'gopls')
-            end,
+            {
+                'williamboman/mason-lspconfig.nvim',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'gopls')
+                end,
+            },
+            {
+                'nvim-treesitter/nvim-treesitter',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'go')
+                    table.insert(opts.ensure_installed, 'gomod')
+                    table.insert(opts.ensure_installed, 'gosum')
+                end,
+            },
         },
         opts = function(_, opts)
             opts.servers.gopls = {

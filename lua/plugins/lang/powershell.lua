@@ -10,10 +10,18 @@ return {
         {
             'neovim/nvim-lspconfig',
             dependencies = {
-                'williamboman/mason-lspconfig.nvim',
-                opts = function(_, opts)
-                    table.insert(opts.ensure_installed, 'powershell_es')
-                end,
+                {
+                    'williamboman/mason-lspconfig.nvim',
+                    opts = function(_, opts)
+                        table.insert(opts.ensure_installed, 'powershell_es')
+                    end,
+                },
+                {
+                    'nvim-treesitter/nvim-treesitter',
+                    opts = function(_, opts)
+                        table.insert(opts.ensure_installed, 'powershell')
+                    end,
+                },
             },
         },
         {

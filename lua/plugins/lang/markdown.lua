@@ -31,8 +31,16 @@ return {
                 desc = 'Markdown Preview',
             },
             dependencies = {
-                'nvim-treesitter/nvim-treesitter',
-                'nvim-tree/nvim-web-devicons',
+                {
+                    'nvim-treesitter/nvim-treesitter',
+                    opts = function(_, opts)
+                        table.insert(opts.ensure_installed, 'markdown')
+                        table.insert(opts.ensure_installed, 'markdown_inline')
+                    end,
+                },
+                {
+                    'nvim-tree/nvim-web-devicons',
+                },
             },
         },
     },

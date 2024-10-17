@@ -18,10 +18,18 @@ return {
         -- lsp
         'neovim/nvim-lspconfig',
         dependencies = {
-            'williamboman/mason-lspconfig.nvim',
-            opts = function(_, opts)
-                table.insert(opts.ensure_installed, 'jsonls')
-            end,
+            {
+                'williamboman/mason-lspconfig.nvim',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'jsonls')
+                end,
+            },
+            {
+                'nvim-treesitter/nvim-treesitter',
+                opts = function(_, opts)
+                    table.insert(opts.ensure_installed, 'json')
+                end,
+            },
         },
         opts = function(_, opts)
             opts.servers.jsonls = {

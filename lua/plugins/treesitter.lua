@@ -8,7 +8,7 @@ return {
     end,
     main = 'nvim-treesitter.configs',
     opts = {
-        auto_install = true,
+        ensure_installed = { 'vim', 'vimdoc' },
         highlight = {
             enable = true,
         },
