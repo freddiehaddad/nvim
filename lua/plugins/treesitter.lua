@@ -8,7 +8,15 @@ return {
     end,
     main = 'nvim-treesitter.configs',
     opts = {
-        ensure_installed = { 'vim', 'vimdoc' },
+        ensure_installed = {
+            'vim',
+            'vimdoc',
+            'git_config',
+            'git_rebase',
+            'gitattributes',
+            'gitcommit',
+            'gitignore',
+        },
         highlight = {
             enable = true,
         },
