@@ -1,0 +1,17 @@
+return {
+    require('peanut.groups.alpha'),
+    require('peanut.groups.cmp'),
+    require('peanut.groups.dapui'),
+    require('peanut.groups.git'),
+    require('peanut.groups.highlights'),
+    require('peanut.groups.lazy'),
+    require('peanut.groups.lsp'),
+    require('peanut.groups.markview'),
+    require('peanut.groups.mason'),
+    require('peanut.groups.neotest'),
+    require('peanut.groups.nvimtree'),
+    require('peanut.groups.statusline'),
+    require('peanut.groups.telescope'),
+    require('peanut.groups.treesitter'),
+    require('peanut.groups.whichkey'),
+}

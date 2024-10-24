@@ -33,8 +33,5 @@ return {
             enable = true,
         },
     },
-    config = function(_, opts)
-        require('nvim-treesitter.configs').setup(opts)
-        -- require('nvim-treesitter.install').compilers = { 'zig' }
-    end,
+    config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
 }

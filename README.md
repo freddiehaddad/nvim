@@ -4,6 +4,15 @@ A [Neovim] configuration that's designed to ease customization and
 extensibility. Avoid the pitfalls of starting from scratch and fighting with
 highly opinionated distributions.
 
+## Palette
+
+<details>
+<summary>Color Palette:</summary>
+
+![Palette](./screenshots/palette.png)
+
+</details>
+
 ## Screenshots
 
 ![Regular](./screenshots/screenshot_regular.png)
@@ -87,11 +96,34 @@ list of required dependencies that must be installed.
 
 ## Organization
 
-```text
-$HOME/.config/nvim
-├── colortest.sh                -- utility to verify proper color terminal support
+```console
+.
 ├── init.lua
+├── colors
+│   └── peanut.lua
 ├── lua
+│   ├── peanut
+│   │   ├── groups
+│   │   │   ├── alpha.lua
+│   │   │   ├── cmp.lua
+│   │   │   ├── dapui.lua
+│   │   │   ├── git.lua
+│   │   │   ├── highlights.lua
+│   │   │   ├── init.lua
+│   │   │   ├── lazy.lua
+│   │   │   ├── lsp.lua
+│   │   │   ├── markview.lua
+│   │   │   ├── mason.lua
+│   │   │   ├── neotest.lua
+│   │   │   ├── nvimtree.lua
+│   │   │   ├── statusline.lua
+│   │   │   ├── telescope.lua
+│   │   │   ├── treesitter.lua
+│   │   │   └── whichkey.lua
+│   │   ├── init.lua
+│   │   ├── palette.lua
+│   │   ├── settings.lua
+│   │   └── util.lua
 │   └── plugins
 │       ├── alpha.lua
 │       ├── cmp.lua
@@ -102,7 +134,7 @@ $HOME/.config/nvim
 │       ├── icons.lua
 │       ├── lang
 │       │   ├── bash.lua
-│       │   ├── clangd.lua
+│       │   ├── cpp.lua
 │       │   ├── go.lua
 │       │   ├── json.lua
 │       │   ├── lua.lua
@@ -120,10 +152,9 @@ $HOME/.config/nvim
 │       ├── telescope.lua
 │       ├── treesitter.lua
 │       └── whichkey.lua
-├── palette.lua                -- reference file for nightfox palette
 ├── README.md
-├── reset.sh                   -- clear all neovim data and start fresh (linux)
-└── reset.ps1                  -- clear all neovim data and start fresh (windows)
+├── reset.sh   // clear all neovim data and start fresh (linux)
+└── reset.ps1  // clear all neovim data and start fresh (windows)
 ```
 
 [neovim]: https://github.com/neovim/neovim

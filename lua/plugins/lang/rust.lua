@@ -18,7 +18,7 @@ return {
     -- lsp
     {
         'mrcjkb/rustaceanvim',
-	lazy = false,
+        lazy = false,
         config = function(_, opts)
             vim.g.rustaceanvim = vim.tbl_deep_extend(
                 'keep',

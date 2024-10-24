@@ -1,20 +1,7 @@
 return {
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim', 'EdenEast/nightfox.nvim' },
-        init = function()
-            local hl = vim.api.nvim_set_hl
-            local p = require('nightfox.palette').load('carbonfox')
-
-            hl(0, 'TelescopePreviewBorder', { fg = p.blue.dim })
-            hl(0, 'TelescopePreviewTitle', { fg = p.blue.base })
-
-            hl(0, 'TelescopePromptBorder', { fg = p.cyan.dim })
-            hl(0, 'TelescopePromptTitle', { fg = p.cyan.bright })
-
-            hl(0, 'TelescopeResultsBorder', { fg = p.orange.dim })
-            hl(0, 'TelescopeResultsTitle', { fg = p.orange.bright })
-        end,
+        dependencies = { 'nvim-lua/plenary.nvim' },
         keys = {
             -- f
             {

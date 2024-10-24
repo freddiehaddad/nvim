@@ -166,16 +166,6 @@ end
 
 return {
     'lewis6991/gitsigns.nvim',
-    dependencies = {
-        'EdenEast/nightfox.nvim',
-        opts = {
-            groups = {
-                nightfox = {
-                    GitSignsCurrentLineBlame = { fg = 'palette.blue.base' },
-                },
-            },
-        },
-    },
     opts = {
         on_attach = on_attach,
     },

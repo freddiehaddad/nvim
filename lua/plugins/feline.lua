@@ -1,26 +1,26 @@
 -- configure feline
 local function config(_, opts)
     local colorscheme = vim.g.colors_name
-    local palette = require('nightfox.palette').load(colorscheme)
+    local palette = require('peanut.palette')
     local feline = require('feline')
     local vi_mode = require('feline.providers.vi_mode')
     local file = require('feline.providers.file')
     local lsp = require('feline.providers.lsp')
 
     local theme = {
-        fg = palette.fg1,
-        bg = palette.bg1,
-        black = palette.black.base,
-        skyblue = palette.blue.bright,
-        cyan = palette.cyan.base,
-        green = palette.green.base,
-        oceanblue = palette.blue.base,
-        magenta = palette.magenta.base,
-        orange = palette.orange.base,
-        red = palette.red.base,
-        violet = palette.magenta.bright,
-        white = palette.white.base,
-        yellow = palette.yellow.base,
+        fg = palette.fg,
+        bg = palette.bg,
+        black = palette.alt_bg,
+        skyblue = palette.blue,
+        cyan = palette.cyan,
+        green = palette.green,
+        oceanblue = palette.blue,
+        magenta = palette.magenta,
+        orange = palette.orange,
+        red = palette.red,
+        violet = palette.magenta,
+        white = palette.fg,
+        yellow = palette.yellow,
     }
 
     local c = {
@@ -36,7 +36,7 @@ local function config(_, opts)
                 s = string.format('%s', s)
                 return s
             end,
-            hl = { fg = palette.blue.base, bg = 'none' },
+            hl = { fg = palette.cyan, bg = 'none' },
         },
 
         file_name = {
@@ -44,7 +44,7 @@ local function config(_, opts)
                 name = 'file_info',
                 opts = { colored_icon = false },
             },
-            hl = { fg = palette.yellow.base, bg = 'none' },
+            hl = { fg = palette.yellow, bg = 'none' },
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -64,7 +64,7 @@ local function config(_, opts)
                 end
                 return s
             end,
-            hl = { fg = palette.fg3, bg = 'none' },
+            hl = { fg = palette.magenta, bg = 'none' },
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -79,9 +79,9 @@ local function config(_, opts)
             end,
             hl = function()
                 if not lsp.is_lsp_attached() then
-                    return { fg = palette.fg3, bg = 'none' }
+                    return { fg = palette.fg, bg = 'none' }
                 end
-                return { fg = palette.green.base, bg = 'none' }
+                return { fg = palette.green, bg = 'none' }
             end,
             left_sep = {
                 always_visible = true,
@@ -116,7 +116,7 @@ local function config(_, opts)
                 end
                 return s
             end,
-            hl = { fg = palette.fg3, bg = 'none' },
+            hl = { fg = palette.fg, bg = 'none' },
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -126,7 +126,7 @@ local function config(_, opts)
 
         search_count = {
             provider = 'search_count',
-            hl = { fg = palette.yellow.base, bg = 'none' },
+            hl = { fg = palette.yellow, bg = 'none' },
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -139,7 +139,7 @@ local function config(_, opts)
                 name = 'position',
                 opts = { padding = true },
             },
-            hl = { fg = palette.blue.base, bg = 'none' },
+            hl = { fg = palette.blue, bg = 'none' },
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', ' '),
@@ -152,7 +152,7 @@ local function config(_, opts)
                 name = 'scroll_bar',
                 opts = { reverse = true },
             },
-            hl = { fg = palette.blue.dim, bg = 'none' },
+            hl = { fg = palette.blue, bg = 'none' },
         },
 
         -- inactive statusline
@@ -167,7 +167,7 @@ local function config(_, opts)
                     )
                 end
             end,
-            hl = { fg = palette.blue.base, bg = 'none' },
+            hl = { fg = palette.blue, bg = 'none' },
         },
     }
 
