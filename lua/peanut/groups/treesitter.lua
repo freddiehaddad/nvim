@@ -89,6 +89,11 @@ function M.highlight(palette, opts)
         ['@variable.field'] = { fg = palette.white },
         ['@variable.parameter'] = { fg = palette.white },
         ['@variable.parameter.reference'] = { fg = palette.white },
+        -- C++
+        ['@lsp.type.class.cpp'] = { fg = palette.medium_gray_blue },
+        ['@lsp.type.namespace.cpp'] = { fg = palette.cyan },
+        ['@lsp.type.operator.cpp'] = { fg = palette.yellow },
+        ['@type.builtin.cpp'] = { fg = palette.blue },
     }
 end
 
