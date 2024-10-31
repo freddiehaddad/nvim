@@ -4,7 +4,7 @@ function M.highlight(palette, opts)
     return {
         NvimTreeFolderIcon = { fg = palette.white },
         NvimTreeIndentMarker = { fg = palette.alt_bg },
-        NvimTreeNormal = { fg = palette.light_gray, bg = palette.alt_bg },
+        NvimTreeNormal = { fg = palette.light_gray },
         NvimTreeVertSplit = { fg = palette.alt_bg, bg = palette.alt_bg },
         NvimTreeFolderName = { fg = palette.white },
         NvimTreeOpenedFolderName = { fg = palette.white, bold = true },

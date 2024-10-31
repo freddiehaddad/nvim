@@ -2,7 +2,11 @@ return {
     -- add ui animations
     {
         'echasnovski/mini.animate',
-        opts = { cursor = { enable = false } },
+        opts = {
+            cursor = { enable = false },
+            open = { enable = false },
+            close = { enable = false },
+        },
     },
 
     -- allow deleting buffers
