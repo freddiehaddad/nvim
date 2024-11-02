@@ -97,64 +97,77 @@ list of required dependencies that must be installed.
 ## Organization
 
 ```console
-.
-├── init.lua
-├── colors
-│   └── peanut.lua
-├── lua
-│   ├── peanut
-│   │   ├── groups
-│   │   │   ├── alpha.lua
-│   │   │   ├── cmp.lua
-│   │   │   ├── dapui.lua
-│   │   │   ├── git.lua
-│   │   │   ├── highlights.lua
-│   │   │   ├── init.lua
-│   │   │   ├── lazy.lua
-│   │   │   ├── lsp.lua
-│   │   │   ├── markview.lua
-│   │   │   ├── mason.lua
-│   │   │   ├── neotest.lua
-│   │   │   ├── nvimtree.lua
-│   │   │   ├── statusline.lua
-│   │   │   ├── telescope.lua
-│   │   │   ├── treesitter.lua
-│   │   │   └── whichkey.lua
-│   │   ├── init.lua
-│   │   ├── palette.lua
-│   │   ├── settings.lua
-│   │   └── util.lua
-│   └── plugins
-│       ├── alpha.lua
-│       ├── cmp.lua
-│       ├── conform.lua
-│       ├── dap.lua
-│       ├── feline.lua
-│       ├── gitsigns.lua
-│       ├── icons.lua
-│       ├── lang
-│       │   ├── bash.lua
-│       │   ├── cpp.lua
-│       │   ├── go.lua
-│       │   ├── json.lua
-│       │   ├── lua.lua
-│       │   ├── markdown.lua
-│       │   ├── powershell.lua
-│       │   ├── rust.lua
-│       │   └── yaml.lua
-│       ├── lspconfig.lua
-│       ├── mini.lua
-│       ├── neotest.lua
-│       ├── nightfox.lua
-│       ├── nvimtree.lua
-│       ├── oil.lua
-│       ├── persistence.lua
-│       ├── telescope.lua
-│       ├── treesitter.lua
-│       └── whichkey.lua
-├── README.md
-├── reset.sh   // clear all neovim data and start fresh (linux)
-└── reset.ps1  // clear all neovim data and start fresh (windows)
+o- colors
+|  o- peanut.lua
+o- init.lua
+o- lua
+|  o- peanut
+|  |  o- groups
+|  |  |  o- alpha.lua
+|  |  |  o- cmp.lua
+|  |  |  o- dapui.lua
+|  |  |  o- git.lua
+|  |  |  o- highlights.lua
+|  |  |  o- init.lua
+|  |  |  o- lazy.lua
+|  |  |  o- lsp.lua
+|  |  |  o- markview.lua
+|  |  |  o- mason.lua
+|  |  |  o- neotest.lua
+|  |  |  o- nvimtree.lua
+|  |  |  o- statusline.lua
+|  |  |  o- telescope.lua
+|  |  |  o- treesitter.lua
+|  |  |  o- whichkey.lua
+|  |  o- init.lua
+|  |  o- palette.lua
+|  |  o- settings.lua
+|  |  o- util.lua
+|  o- plugins
+|     o- alpha.lua
+|     o- cmp.lua
+|     o- conform.lua
+|     o- dap.lua
+|     o- feline.lua
+|     o- gitsigns.lua
+|     o- icons.lua
+|     o- lang
+|     |  o- bash.lua
+|     |  o- cpp.lua
+|     |  o- go.lua
+|     |  o- json.lua
+|     |  o- lua.lua
+|     |  o- markdown.lua
+|     |  o- powershell.lua
+|     |  o- rust.lua
+|     |  o- yaml.lua
+|     o- lspconfig.lua
+|     o- mini.lua
+|     o- neotest.lua
+|     o- nvimtree.lua
+|     o- oil.lua
+|     o- persistence.lua
+|     o- telescope.lua
+|     o- treesitter.lua
+|     o- whichkey.lua
+o- palette.html
+o- README.md
+o- reset.sh
+o- reset.ps1
+o- screenshots
+   o- dashboard.png
+   o- explorer.png
+   o- lazy_plugin_management.png
+   o- mason_lsp_plugin_management.png
+   o- palette.png
+   o- screenshot_debug.png
+   o- screenshot_regular.png
+   o- screenshot_unit_testing.png
+   o- statusbar_inactive.png
+   o- statusbar_lazy_update.png
+   o- statusbar_regular.png
+   o- statusbar_search_macro.png
+   o- telescope.png
 ```
 
 [neovim]: https://github.com/neovim/neovim
