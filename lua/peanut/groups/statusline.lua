@@ -2,11 +2,11 @@ local M = {}
 
 function M.highlight(palette, opts)
     return {
-        StatusLine = { link = 'Normal' },
-        StatusLineNC = { link = 'Normal' },
-        StatusLineSeparator = { link = 'Normal' },
-        StatusLineTerm = { link = 'Normal' },
-        StatusLineTermNC = { link = 'Normal' },
+        StatusLine = { fg = palette.fg4 },
+        StatusLineNC = { link = 'StatusLine' },
+        StatusLineSeparator = { link = 'StatusLine' },
+        StatusLineTerm = { link = 'StatusLine' },
+        StatusLineTermNC = { link = 'StatusLine' },
     }
 end
 
