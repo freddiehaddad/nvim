@@ -97,8 +97,8 @@ return {
             '█ │▓███████                │▓███████   ▓███████ █▄▄▄',
             '█ │▓███████▀▀ ▀    ▀       │▓███████▀▀▀▓█▄█████▄ ▄ █',
             '█▄▄▄▄▄▄▄▄ ▀ █▀▀▀▀▀▀▀▀▀▀▀▀█▄▄▄▄ ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄ ▄▄▄▄█',
-            '  <fh>  █ ▀ █                                       ',
-            '        ▀▀▀▀▀                                       ',
+            '        █ ▀ █                                       ',
+            '  <fh>  ▀▀▀▀▀                                       ',
         }
         local footer = {
             '                                      n e o v i m   ',
@@ -138,8 +138,8 @@ return {
             dashboard.button('q', ' ' .. ' Quit', ':qa<CR>'),
         }
         for _, button in ipairs(dashboard.section.buttons.val) do
-            button.opts.hl = 'AlphaHeader'
-            button.opts.hl_shortcut = 'AlphaHeader'
+            button.opts.hl = 'AlphaButtons'
+            button.opts.hl_shortcut = 'AlphaButtons'
         end
         dashboard.section.header.opts.hl = 'AlphaHeader'
         dashboard.section.buttons.opts.hl = 'AlphaButtons'
