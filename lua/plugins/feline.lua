@@ -8,19 +8,19 @@ local function config(_, opts)
     local lsp = require('feline.providers.lsp')
 
     local theme = {
-        fg = palette.fg,
-        bg = palette.bg,
-        black = palette.alt_bg,
-        skyblue = palette.blue,
-        cyan = palette.cyan,
-        green = palette.green,
-        oceanblue = palette.blue,
-        magenta = palette.magenta,
-        orange = palette.orange,
-        red = palette.red,
-        violet = palette.magenta,
-        white = palette.fg,
-        yellow = palette.yellow,
+        fg = palette.fg1,
+        bg = palette.bg1,
+        black = palette.bg1,
+        skyblue = palette.fg1,
+        cyan = palette.fg1,
+        green = palette.fg1,
+        oceanblue = palette.fg1,
+        magenta = palette.fg1,
+        orange = palette.fg1,
+        red = palette.fg1,
+        violet = palette.fg1,
+        white = palette.fg1,
+        yellow = palette.fg1,
     }
 
     local c = {
@@ -36,7 +36,7 @@ local function config(_, opts)
                 s = string.format('%s', s)
                 return s
             end,
-            hl = { fg = palette.cyan, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
         },
 
         file_name = {
@@ -44,7 +44,7 @@ local function config(_, opts)
                 name = 'file_info',
                 opts = { colored_icon = false },
             },
-            hl = { fg = palette.yellow, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -64,7 +64,7 @@ local function config(_, opts)
                 end
                 return s
             end,
-            hl = { fg = palette.magenta, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -79,9 +79,9 @@ local function config(_, opts)
             end,
             hl = function()
                 if not lsp.is_lsp_attached() then
-                    return { fg = palette.fg, bg = 'none' }
+                    return { fg = palette.fg1, bg = 'none' }
                 end
-                return { fg = palette.green, bg = 'none' }
+                return { fg = palette.fg1, bg = 'none' }
             end,
             left_sep = {
                 always_visible = true,
@@ -116,7 +116,7 @@ local function config(_, opts)
                 end
                 return s
             end,
-            hl = { fg = palette.fg, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -126,7 +126,7 @@ local function config(_, opts)
 
         search_count = {
             provider = 'search_count',
-            hl = { fg = palette.yellow, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
@@ -139,7 +139,7 @@ local function config(_, opts)
                 name = 'position',
                 opts = { padding = true },
             },
-            hl = { fg = palette.blue, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', ' '),
@@ -152,7 +152,7 @@ local function config(_, opts)
                 name = 'scroll_bar',
                 opts = { reverse = true },
             },
-            hl = { fg = palette.blue, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
         },
 
         -- inactive statusline
@@ -167,7 +167,7 @@ local function config(_, opts)
                     )
                 end
             end,
-            hl = { fg = palette.blue, bg = 'none' },
+            hl = { fg = palette.fg1, bg = 'none' },
         },
     }
 

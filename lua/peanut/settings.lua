@@ -1,7 +1,6 @@
 local M = {}
 
 local DEFAULT = {
-    transparent = true,
     styles = {
         comments = {},
         functions = {},

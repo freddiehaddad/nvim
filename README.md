@@ -6,12 +6,9 @@ highly opinionated distributions.
 
 ## Palette
 
-<details>
-<summary>Color Palette:</summary>
-
 ![Palette](./screenshots/palette.png)
 
-</details>
+https://coolors.co/07090a-172120-3b4853-556778-96938c-707d6d-7c745a-8a9ea0
 
 ## Screenshots
 

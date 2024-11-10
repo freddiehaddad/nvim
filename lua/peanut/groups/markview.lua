@@ -6,7 +6,7 @@ function M.highlight(palette, opts)
         -- MarkviewBlockQuoteSpecial
         -- MarkviewBlockQuoteNote
         -- MarkviewBlockQuoteDefault
-        MarkviewBlockQuoteOk = { fg = palette.accent },
+        MarkviewBlockQuoteOk = { fg = palette.fg1 },
         -- MarkviewBlockQuoteError
         -- MarkviewCheckboxCancelled
         -- MarkviewCheckboxChecked
@@ -14,9 +14,9 @@ function M.highlight(palette, opts)
         -- MarkviewCheckboxProgress
         -- MarkviewCheckboxUnchecked
         -- MarkviewCheckboxStriked
-        MarkviewInlineCode = { fg = palette.green },
-        MarkviewCodeInfo = { fg = palette.green },
-        MarkviewCode = { fg = palette.green },
+        MarkviewInlineCode = { fg = palette.fg1 },
+        MarkviewCodeInfo = { fg = palette.fg1 },
+        MarkviewCode = { fg = palette.fg1 },
         -- MarkviewIcon1
         -- MarkviewIcon1Sign
         -- MarkviewIcon1Fg
@@ -36,17 +36,17 @@ function M.highlight(palette, opts)
         -- MarkviewIcon6Sign
         -- MarkviewIcon6Fg
         -- MarkviewHeading1Sign
-        MarkviewHeading1 = { fg = palette.blue },
+        MarkviewHeading1 = { fg = palette.fg1 },
         -- MarkviewHeading2Sign
-        MarkviewHeading2 = { fg = palette.blue },
+        MarkviewHeading2 = { fg = palette.fg1 },
         -- MarkviewHeading3Sign
-        MarkviewHeading3 = { fg = palette.blue },
+        MarkviewHeading3 = { fg = palette.fg1 },
         -- MarkviewHeading4Sign
-        MarkviewHeading4 = { fg = palette.blue },
+        MarkviewHeading4 = { fg = palette.fg1 },
         -- MarkviewHeading5Sign
-        MarkviewHeading5 = { fg = palette.blue },
+        MarkviewHeading5 = { fg = palette.fg1 },
         -- MarkviewHeading6Sign
-        MarkviewHeading6 = { fg = palette.blue },
+        MarkviewHeading6 = { fg = palette.fg1 },
         -- MarkviewGradient1
         -- MarkviewGradient2
         -- MarkviewGradient3

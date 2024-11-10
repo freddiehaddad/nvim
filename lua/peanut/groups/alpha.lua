@@ -2,8 +2,8 @@ local M = {}
 
 function M.highlight(palette, opts)
     return {
-        AlphaHeader = { fg = palette.gray_blue },
-        AlphaButtons = { fg = palette.medium_gray },
+        AlphaHeader = { fg = palette.fg1 },
+        AlphaButtons = { fg = palette.fg1 },
     }
 end
 

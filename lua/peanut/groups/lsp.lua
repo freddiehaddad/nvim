@@ -5,38 +5,38 @@ function M.highlight(palette, opts)
         LspReferenceRead = { bg = '#36383F' },
         LspReferenceText = { bg = '#36383F' },
         LspReferenceWrite = { bg = '#36383f' },
-        DiagnosticError = { fg = palette.error },
-        DiagnosticWarn = { fg = palette.warning },
-        DiagnosticInfo = { fg = palette.info },
-        DiagnosticHint = { fg = palette.hint },
-        DiagnosticVirtualTextError = { fg = palette.error },
-        DiagnosticVirtualTextWarn = { fg = palette.warning },
-        DiagnosticVirtualTextInfo = { fg = palette.info },
-        DiagnosticVirtualTextHint = { fg = palette.hint },
+        DiagnosticError = { fg = palette.blue_bright },
+        DiagnosticWarn = { fg = palette.blue },
+        DiagnosticInfo = { fg = palette.blue },
+        DiagnosticHint = { fg = palette.blue },
+        DiagnosticVirtualTextError = { fg = palette.blue_bright },
+        DiagnosticVirtualTextWarn = { fg = palette.blue },
+        DiagnosticVirtualTextInfo = { fg = palette.blue },
+        DiagnosticVirtualTextHint = { fg = palette.blue },
         DiagnosticUnderlineError = vim.tbl_extend(
             'force',
-            { sp = palette.error },
+            { sp = palette.blue_bright },
             opts.styles.lsp
         ),
         DiagnosticUnderlineWarn = vim.tbl_extend(
             'force',
-            { sp = palette.warning },
+            { sp = palette.blue },
             opts.styles.lsp
         ),
         DiagnosticUnderlineInfo = vim.tbl_extend(
             'force',
-            { sp = palette.info },
+            { sp = palette.blue },
             opts.styles.lsp
         ),
         DiagnosticUnderlineHint = vim.tbl_extend(
             'force',
-            { sp = palette.hint },
+            { sp = palette.blue },
             opts.styles.lsp
         ),
-        LspSignatureActiveParameter = { bg = palette.alt_bg, bold = true },
-        LspCodeLens = { fg = palette.comment },
-        LspInlayHint = { bg = palette.hint },
-        LspInfoBoarder = { fg = palette.light_gray, bg = palette.hint },
+        LspSignatureActiveParameter = { bg = palette.bg_bright, bold = true },
+        LspCodeLens = { fg = palette.gray_dim },
+        LspInlayHint = { bg = palette.blue },
+        LspInfoBorder = { fg = palette.fg, bg = palette.bg_bright },
     }
 end
 

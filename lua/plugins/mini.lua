@@ -1,26 +1,26 @@
 return {
     -- add ui animations
-    {
-        'echasnovski/mini.animate',
-        config = function()
-            local animate = require('mini.animate')
-            local opts = {
-                cursor = { enable = false },
-                open = { enable = false },
-                close = { enable = false },
-                scroll = {
-                    timing = animate.gen_timing.linear({
-                        duration = 15,
-                        unit = 'total',
-                    }),
-                    subscroll = animate.gen_subscroll.equal({
-                        max_output_steps = 15,
-                    }),
-                },
-            }
-            animate.setup(opts)
-        end,
-    },
+    -- {
+    --     'echasnovski/mini.animate',
+    --     config = function()
+    --         local animate = require('mini.animate')
+    --         local opts = {
+    --             cursor = { enable = false },
+    --             open = { enable = false },
+    --             close = { enable = false },
+    --             scroll = {
+    --                 timing = animate.gen_timing.linear({
+    --                     duration = 15,
+    --                     unit = 'total',
+    --                 }),
+    --                 subscroll = animate.gen_subscroll.equal({
+    --                     max_output_steps = 15,
+    --                 }),
+    --             },
+    --         }
+    --         animate.setup(opts)
+    --     end,
+    -- },
 
     -- allow deleting buffers
     {

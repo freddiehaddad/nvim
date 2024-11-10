@@ -231,7 +231,7 @@ vim.o.shell = 'pwsh'
 --------------------------------------------------------------------------------
 
 require('lazy').setup({ { import = 'plugins' }, { import = 'plugins.lang' } }, {
-    install = { colorscheme = { 'nightfox' } },
+    -- install = { colorscheme = { 'peanut' } },
     concurrency = #vim.loop.cpu_info(),
     checker = {
         enabled = true,

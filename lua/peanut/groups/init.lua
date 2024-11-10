@@ -1,9 +1,9 @@
 return {
+    require('peanut.groups.highlights'),
     require('peanut.groups.alpha'),
     require('peanut.groups.cmp'),
     require('peanut.groups.dapui'),
     require('peanut.groups.git'),
-    require('peanut.groups.highlights'),
     require('peanut.groups.lazy'),
     require('peanut.groups.lsp'),
     require('peanut.groups.markview'),
