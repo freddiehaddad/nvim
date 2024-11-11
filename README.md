@@ -73,6 +73,13 @@ https://coolors.co/07090a-172120-3b4853-556778-96938c-707d6d-7c745a-8a9ea0
 
 </details>
 
+<details>
+<summary>Whichkey:</summary>
+
+![Explorer](./screenshots/screenshot_whichkey.png)
+
+</details>
+
 ## Language Support (LSP)
 
 Support for the following languages are included along with (where applicable)
