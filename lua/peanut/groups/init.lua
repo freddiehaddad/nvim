@@ -1,5 +1,5 @@
 return {
-    require('peanut.groups.highlights'),
+    require('peanut.groups.neovim'),
     require('peanut.groups.alpha'),
     require('peanut.groups.cmp'),
     require('peanut.groups.dapui'),
