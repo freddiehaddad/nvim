@@ -18,7 +18,7 @@ function M.highlight(palette, opts)
         CursorLineSign = { link = 'SignColumn' },
         CursorLineFold = { link = 'FoldColumn' },
 
-        --MatchParen     xxx cterm=bold,underline gui=bold guibg=NvimDarkGrey4
+        MatchParen = { fg = palette.fg4 },
 
         LineNr = { fg = palette.bg3 },
         LineNrAbove = { link = 'LineNr' },

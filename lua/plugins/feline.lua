@@ -178,9 +178,9 @@ local function config(_, opts)
             c.lsp,
         },
         { -- right
-            c.vi_mode,
             c.macro,
             c.search_count,
+            c.vi_mode,
             c.cursor_position,
             c.scroll_bar,
         },

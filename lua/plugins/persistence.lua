@@ -1,6 +1,6 @@
 return {
     'folke/persistence.nvim',
     opts = {
-        options = { 'buffers', 'curdir', 'folds', 'help', 'winsize' },
+        options = { 'buffers', 'curdir', 'folds', 'winsize' },
     },
 }

@@ -59,10 +59,8 @@ https://coolors.co/07090a-172120-3b4853-556778-96938c-707d6d-7c745a-8a9ea0
 <details>
 <summary>Customized Status Bar:</summary>
 
-![Regular](./screenshots/statusbar_regular.png)
-![Search and Macro Recording](./screenshots/statusbar_search_macro.png)
-![Plugin Update Notification](./screenshots/statusbar_lazy_update.png)
-![Inactive Window](./screenshots/statusbar_inactive.png)
+![Active](./screenshots/statusbar_active.png)
+![Inactive](./screenshots/statusbar_inactive.png)
 
 </details>
 
