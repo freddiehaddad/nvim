@@ -2,7 +2,7 @@ local M = {}
 
 function M.highlight(palette, opts)
     return {
-        MasonNormal = { link = 'Normal' },
+        MasonNormal = { link = 'NormalFloat' },
         MasonHeader = { link = 'Normal' },
         MasonHeaderSecondary = { link = 'Normal' },
 

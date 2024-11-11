@@ -5,7 +5,7 @@ function M.highlight(palette, opts)
         -- Standard:
         NvimTreeNormal = { link = 'Normal' },
         NvimTreeNormalFloat = { link = 'NormalFloat' },
-        NvimTreeNormalNC = { link = 'NormalFloat' },
+        NvimTreeNormalNC = { link = 'Normal' },
 
         NvimTreeLineNr = { link = 'LineNr' },
         NvimTreeWinSeparator = { link = 'WinSeparator' },

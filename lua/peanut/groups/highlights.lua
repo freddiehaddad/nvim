@@ -36,6 +36,7 @@ function M.highlight(palette, opts)
         Visual = { link = 'Search' },
         VisualNOS = { link = 'Visual' },
 
+        NormalFloat = { bg = palette.bg2 },
         Pmenu = { fg = palette.fg1, bg = palette.bg2 },
         PmenuSel = { bg = palette.bg3 },
         PmenuKind = { link = 'Pmenu' },
