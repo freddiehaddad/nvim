@@ -29,7 +29,7 @@ function M.highlight(palette, opts)
 
         WinSeparator = { fg = palette.bg1 },
 
-        Search = { bg = palette.bg4 },
+        Search = { bg = palette.bg2 },
         CurSearch = { link = 'Search' },
         IncSearch = { link = 'CurSearch' },
 
