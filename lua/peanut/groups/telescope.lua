@@ -3,13 +3,13 @@ local M = {}
 function M.highlight(palette, opts)
     return {
         -- Sets the highlight for selected items within the picker.
-        TelescopeSelection = { link = 'Visual' },
+        TelescopeSelection = { link = 'PmenuSel' },
         TelescopeSelectionCaret = { link = 'TelescopeSelection' },
         TelescopeMultiSelection = { link = 'Type' },
         TelescopeMultiIcon = { link = 'Identifier' },
 
         -- "Normal" in the floating windows created by telescope.
-        TelescopeNormal = { link = 'Normal' },
+        TelescopeNormal = { link = 'NormalFloat' },
         TelescopePreviewNormal = { link = 'TelescopeNormal' },
         TelescopePromptNormal = { link = 'TelescopeNormal' },
         TelescopeResultsNormal = { link = 'TelescopeNormal' },
