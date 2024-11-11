@@ -2,6 +2,12 @@ local M = {}
 
 function M.highlight(palette, opts)
     return {
+        -- TODO:
+        -- Need to identify these highlight groups
+        PmenuThumb = { fg = '#ff0000' },
+        VisualNC = { fg = '#ff0000' },
+        -- TODO:
+
         Normal = { fg = palette.fg1 },
         Bold = { bold = true },
         Italic = { italic = false },
@@ -9,6 +15,10 @@ function M.highlight(palette, opts)
         CursorLine = { bg = palette.bg2 },
         CursorColumn = { link = 'CursorLine' },
         CursorLineNr = { fg = palette.bg4 },
+        CursorLineSign = { link = 'SignColumn' },
+        CursorLineFold = { link = 'FoldColumn' },
+
+        --MatchParen     xxx cterm=bold,underline gui=bold guibg=NvimDarkGrey4
 
         LineNr = { fg = palette.bg3 },
         LineNrAbove = { link = 'LineNr' },
@@ -17,9 +27,6 @@ function M.highlight(palette, opts)
         SignColumn = { fg = palette.bg4 },
         FoldColumn = { link = 'SignColumn' },
 
-        CursorLineSign = { link = 'SignColumn' },
-        CursorLineFold = { link = 'FoldColumn' },
-
         WinSeparator = { fg = palette.bg1 },
 
         Search = { bg = palette.bg4 },
@@ -27,7 +34,6 @@ function M.highlight(palette, opts)
         IncSearch = { link = 'CurSearch' },
 
         Visual = { link = 'Search' },
-        -- VisualNC
         VisualNOS = { link = 'Visual' },
 
         Pmenu = { fg = palette.fg1, bg = palette.bg2 },
@@ -38,26 +44,50 @@ function M.highlight(palette, opts)
         PmenuExtraSel = { link = 'PmenuSel' },
         PmenuSbar = { link = 'Pmenu' },
 
-        DiffAdd = { fg = palette.fg1 },
-        DiffChange = { fg = palette.fg2 },
-        DiffDelete = { fg = palette.fg3 },
-        DiffText = { fg = palette.fg4 },
+        Title = { fg = palette.fg1, bold = true },
 
-        Boolean = { link = 'Normal' },
-        Character = { link = 'Normal' },
-        Comment = { fg = palette.bg4 },
-        Conditional = { link = 'Normal' },
-        Constant = { link = 'Normal' },
-        Delimiter = { link = 'Normal' },
-        Float = { link = 'Normal' },
-        Function = { link = 'Normal' },
-        Identifier = { link = 'Normal' },
-        Number = { link = 'Normal' },
-        Operator = { link = 'Normal' },
-        Special = { link = 'Normal' },
+        -- files / folders
+        Directory = { fg = palette.fg4 },
+
+        -- code
+        Type = { fg = palette.fg1 },
+        Boolean = { fg = palette.fg1 },
+        Character = { fg = palette.fg1 },
+        Float = { fg = palette.fg1 },
+
+        Constant = { fg = palette.fg3 },
+        Identifier = { fg = palette.fg3 },
+        Number = { fg = palette.fg3 },
         String = { fg = palette.fg3 },
-        Statement = { link = 'Normal' },
-        Variable = { link = 'Normal' },
+
+        Struct = { fg = palette.fg2 },
+        Structure = { link = 'Struct' },
+
+        Keyword = { fg = palette.fg2 },
+
+        Todo = { fg = palette.fg1 },
+        Conditional = { fg = palette.bg4 },
+        Delimiter = { fg = palette.bg4 },
+        Operator = { fg = palette.bg4 },
+        Comment = { fg = palette.bg4 },
+
+        Exception = { fg = palette.fg1 },
+        Function = { fg = palette.fg2 },
+        Statement = { fg = palette.fg3 },
+        Variable = { fg = palette.fg4 },
+
+        Label = { fg = palette.bg3 },
+
+        Special = { link = 'Normal' },
+        Repeat = { link = 'Normal' },
+        Include = { link = 'Normal' },
+        PreProc = { link = 'Normal' },
+        Define = { link = 'Normal' },
+        Macro = { link = 'Normal' },
+        PreCondit = { link = 'Normal' },
+        StorageClass = { link = 'Normal' },
+        Typedef = { link = 'Normal' },
+        Method = { link = 'Normal' },
     }
 end
 
