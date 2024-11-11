@@ -29,7 +29,7 @@ function M.highlight(palette, opts)
         -- LazyReasonRuntime       @macro
         -- LazyReasonSource        Character
         -- LazyReasonStart         @variable.member
-        -- LazySpecial             @punctuation.special
+        LazySpecial = { fg = palette.fg2 },
         -- LazyTaskError           ErrorMsg                task errors
         -- LazyTaskOutput          MsgArea                 task output
         -- LazyUrl                 @markup.link            url
