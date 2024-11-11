@@ -45,6 +45,7 @@ function M.highlight(palette, opts)
         PmenuSbar = { link = 'Pmenu' },
 
         Title = { fg = palette.fg1, bold = true },
+        Icon = { fg = palette.bg4 },
 
         -- files / folders
         Directory = { fg = palette.fg4 },

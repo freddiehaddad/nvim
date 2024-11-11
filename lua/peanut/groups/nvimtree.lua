@@ -34,13 +34,13 @@ function M.highlight(palette, opts)
         NvimTreeSymlinkFolderName = { link = 'Directory' },
 
         -- File Icons:
-        NvimTreeFileIcon = { link = 'NvimTreeNormal' },
-        NvimTreeSymlinkIcon = { link = 'NvimTreeNormal' },
+        NvimTreeFileIcon = { link = 'Icon' },
+        NvimTreeSymlinkIcon = { link = 'Icon' },
 
         -- Folder Icons:
-        NvimTreeFolderIcon = { link = 'Normal' },
-        NvimTreeOpenedFolderIcon = { link = 'NvimTreeFolderIcon' },
-        NvimTreeClosedFolderIcon = { link = 'NvimTreeFolderIcon' },
+        NvimTreeFolderIcon = { link = 'Icon' },
+        NvimTreeOpenedFolderIcon = { link = 'Icon' },
+        NvimTreeClosedFolderIcon = { link = 'Icon' },
         NvimTreeFolderArrowClosed = { link = 'NvimTreeIndentMarker' },
         NvimTreeFolderArrowOpen = { link = 'NvimTreeIndentMarker' },
 
@@ -121,9 +121,15 @@ function M.highlight(palette, opts)
         NvimTreeDiagnosticErrorFolderHL = {
             link = 'NvimTreeDiagnosticErrorFileHL',
         },
-        NvimTreeDiagnosticWarnFolderHL = { link = 'NvimTreeDiagnosticWarnFileHL' },
-        NvimTreeDiagnosticInfoFolderHL = { link = 'NvimTreeDiagnosticInfoFileHL' },
-        NvimTreeDiagnosticHintFolderHL = { link = 'NvimTreeDiagnosticHintFileHL' },
+        NvimTreeDiagnosticWarnFolderHL = {
+            link = 'NvimTreeDiagnosticWarnFileHL',
+        },
+        NvimTreeDiagnosticInfoFolderHL = {
+            link = 'NvimTreeDiagnosticInfoFileHL',
+        },
+        NvimTreeDiagnosticHintFolderHL = {
+            link = 'NvimTreeDiagnosticHintFileHL',
+        },
     }
 end
 
