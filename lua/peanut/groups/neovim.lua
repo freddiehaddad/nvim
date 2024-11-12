@@ -45,8 +45,13 @@ function M.highlight(palette, opts)
         PmenuExtraSel = { link = 'PmenuSel' },
         PmenuSbar = { link = 'Pmenu' },
 
+        -- information
         Title = { fg = palette.fg1, bold = true },
         Icon = { fg = palette.bg4 },
+        DiagnosticOk = { fg = palette.fg2 },
+        DiagnosticHint = { fg = palette.fg1 },
+        DiagnosticInfo = { fg = palette.fg4 },
+        DiagnosticWarn = { fg = palette.fg3 },
 
         -- files / folders
         Directory = { fg = palette.fg4 },
