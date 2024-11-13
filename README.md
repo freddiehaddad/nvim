@@ -12,52 +12,45 @@ https://coolors.co/07090a-111817-3b4853-556778-96938c-707d6d-7c745a-8a9ea0
 
 ## Screenshots
 
-![Regular](./screenshots/screenshot_regular.png)
+![Regular](./screenshots/regular.png)
 
 <details>
-<summary>Neovim startup screen:</summary>
+<summary>Neovim startup screen</summary>
 
 ![Dashboard](./screenshots/dashboard.png)
 
 </details>
 
 <details>
-<summary>Telescope Integration:</summary>
+<summary>Markdown Preview</summary>
+
+![Markdown](./screenshots/markdown.png)
+
+</details>
+
+<details>
+<summary>Telescope Integration</summary>
 
 ![Telescope](./screenshots/telescope.png)
 
 </details>
 
 <details>
-<summary>Plugin Management via Lazy:</summary>
+<summary>Unit Testing</summary>
 
-![Lazy](./screenshots/lazy_plugin_management.png)
-
-</details>
-
-<details>
-<summary>LSP/DAP Management via Mason:</summary>
-
-![Mason](./screenshots/mason_lsp_plugin_management.png)
+![Unit Testing](./screenshots/unit_testing.png)
 
 </details>
 
 <details>
-<summary>Integrated Unit Testing:</summary>
+<summary>Debugging</summary>
 
-![Unit Testing](./screenshots/screenshot_unit_testing.png)
-
-</details>
-
-<details>
-<summary>Integrated Debugging:</summary>
-
-![Debugging](./screenshots/screenshot_debug.png)
+![Debugging](./screenshots/debugging.png)
 
 </details>
 
 <details>
-<summary>Customized Status Bar:</summary>
+<summary>Customized Status Bar</summary>
 
 ![Active](./screenshots/statusbar_active.png)
 ![Inactive](./screenshots/statusbar_inactive.png)
@@ -65,16 +58,30 @@ https://coolors.co/07090a-111817-3b4853-556778-96938c-707d6d-7c745a-8a9ea0
 </details>
 
 <details>
-<summary>File Explorer:</summary>
+<summary>File Explorer</summary>
 
 ![Explorer](./screenshots/explorer.png)
 
 </details>
 
 <details>
-<summary>Whichkey:</summary>
+<summary>Whichkey</summary>
 
-![Explorer](./screenshots/screenshot_whichkey.png)
+![Explorer](./screenshots/whichkey.png)
+
+</details>
+
+<details>
+<summary>Plugin Management</summary>
+
+![Lazy](./screenshots/lazy.png)
+
+</details>
+
+<details>
+<summary>Integrated LSP/DAP Management</summary>
+
+![Mason](./screenshots/mason.png)
 
 </details>
 
@@ -158,19 +165,18 @@ o- reset.sh
 o- reset.ps1
 o- screenshots
    o- dashboard.png
+   o- debugging.png
    o- explorer.png
-   o- lazy_plugin_management.png
-   o- mason_lsp_plugin_management.png
+   o- lazy.png
+   o- markdown.png
+   o- mason.png
    o- palette.png
-   o- screenshot_debug.png
-   o- screenshot_regular.png
-   o- screenshot_unit_testing.png
+   o- regular.png
+   o- statusbar_active.png
    o- statusbar_inactive.png
-   o- statusbar_lazy_update.png
-   o- statusbar_regular.png
-   o- statusbar_search_macro.png
    o- telescope.png
+   o- unit_testing.png
+   o- whichkey.png
 ```
 
 [neovim]: https://github.com/neovim/neovim
-[tsl]: https://github.com/freddiehaddad/tsl
