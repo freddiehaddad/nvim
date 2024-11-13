@@ -35,7 +35,7 @@ local function config(_, opts)
                 s = string.format('%s', s)
                 return s
             end,
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
         },
 
         file_name = {
@@ -43,11 +43,11 @@ local function config(_, opts)
                 name = 'file_info',
                 opts = { colored_icon = false },
             },
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
@@ -63,29 +63,30 @@ local function config(_, opts)
                 end
                 return s
             end,
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
         lsp = {
             provider = function()
-                if not lsp.is_lsp_attached() then return '󱏎 LSP' end
+                local progress = require('lsp-progress').progress()
+                if progress == '' then return '󱏎  LSP' end
                 return string.format('%s', require('lsp-progress').progress())
             end,
             hl = function()
-                if not lsp.is_lsp_attached() then
-                    return { fg = palette.bg4, bg = 'none' }
-                end
-                return { fg = palette.bg4, bg = 'none' }
+                local progress = require('lsp-progress').progress()
+                if progress == '' then return 'FelineComponent' end
+                if progress:find('^') ~= nil then return 'DiagnosticInfo' end
+                return 'DiagnosticOk'
             end,
             left_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
@@ -100,7 +101,7 @@ local function config(_, opts)
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
@@ -115,21 +116,21 @@ local function config(_, opts)
                 end
                 return s
             end,
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
         search_count = {
             provider = 'search_count',
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', '  '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
@@ -138,11 +139,11 @@ local function config(_, opts)
                 name = 'position',
                 opts = { padding = true },
             },
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
             right_sep = {
                 always_visible = true,
                 str = string.format('%s', ' '),
-                hl = { fg = 'none', bg = 'none' },
+                hl = 'FelineComponent',
             },
         },
 
@@ -151,7 +152,7 @@ local function config(_, opts)
                 name = 'scroll_bar',
                 opts = { reverse = true },
             },
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
         },
 
         -- inactive statusline
@@ -166,7 +167,7 @@ local function config(_, opts)
                     )
                 end
             end,
-            hl = { fg = palette.bg4, bg = 'none' },
+            hl = 'FelineComponent',
         },
     }
 
