@@ -72,79 +72,116 @@ __ _ ____  __  /\___  _ __ ______ __/\     n e o v i m
                                        \/               
 --]]
 return {
-    'goolord/alpha-nvim',
-    config = function(_, dashboard)
-        -- close Lazy and re-open when the dashboard is ready
+    'nvimdev/dashboard-nvim',
+    lazy = false,
+    opts = function()
+        local header = [[
+            █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀█  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀█               
+            █ │░███▀█▀▀▀▀▀▓████▓▄ ▀▀▀▀ │░████▓▄   │▓████▓▄  █               
+            █ │▒███████  │▓███████     │▒███████  │▓███████ █               
+            █ │▓███████  │▓███████     │▓███████  │▓███████ █               
+            ▀ │▓███████  │▓███████     │▓███████  │▓███████ █               
+            ▀ │▓███████  │▓███████▄ ▄  │▓███████  │▓███████ █               
+            █ │▓███████                │▓███████   ▓███████ █▄▄▄            
+            █ │▓███████▀▀ ▀    ▀       │▓███████▀▀▀▓█▄█████▄ ▄ █            
+            █▄▄▄▄▄▄▄▄ ▀ █▀▀▀▀▀▀▀▀▀▀▀▀█▄▄▄▄ ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄ ▄▄▄▄█            
+                    █ ▀ █                                                   
+              <fh>  ▀▀▀▀▀                                                   
+	]]
+        local footer = [[
+            ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀            
+                                                  n e o v i m               
+	]]
+
+        local opts = {
+            theme = 'doom',
+            hide = { statusline = true },
+            config = {
+                header = vim.split(header, '\n'),
+
+                center = {
+                    {
+                        action = ':Telescope find_files',
+                        icon = ' ',
+                        desc = ' Find file',
+                        key = 'f',
+                    },
+                    {
+                        action = ':enew | startinsert',
+                        icon = ' ',
+                        desc = ' New file',
+                        key = 'n',
+                    },
+                    {
+                        action = ':Telescope oldfiles',
+                        icon = ' ',
+                        desc = ' Recent files',
+                        key = 'r',
+                    },
+                    {
+                        action = ':lua require("telescope.builtin").live_grep({additional_args = { "--no-ignore" }})',
+                        icon = ' ',
+                        desc = ' Find text',
+                        key = 'g',
+                    },
+                    {
+                        action = ':e $MYVIMRC',
+                        icon = ' ',
+                        desc = ' Config',
+                        key = 'c',
+                    },
+                    {
+                        action = ':lua require("persistence").load()',
+                        icon = ' ',
+                        desc = ' Restore Session',
+                        key = 's',
+                    },
+                    {
+                        action = ':Lazy',
+                        icon = '󰒲 ',
+                        desc = ' Lazy',
+                        key = 'l',
+                    },
+                    {
+                        action = ':Mason',
+                        icon = ' ',
+                        desc = ' Mason',
+                        key = 'm',
+                    },
+                    {
+                        action = ':qa',
+                        icon = ' ',
+                        desc = ' Quit',
+                        key = 'q',
+                    },
+                },
+                footer = vim.split(footer, '\n'),
+            },
+        }
+
+        -- add spacing between the buttons
+        for _, button in ipairs(opts.config.center) do
+            button.desc = button.desc .. string.rep(' ', 40 - #button.desc)
+            button.key_format = '  %s'
+        end
+        -- open dashboard after closing lazy
         if vim.o.filetype == 'lazy' then
-            vim.cmd.close()
-            vim.api.nvim_create_autocmd('User', {
-                pattern = 'AlphaReady',
-                callback = function() require('lazy').show() end,
+            vim.api.nvim_create_autocmd('WinClosed', {
+                pattern = tostring(vim.api.nvim_get_current_win()),
+                once = true,
+                callback = function()
+                    vim.schedule(
+                        function()
+                            vim.api.nvim_exec_autocmds(
+                                'UIEnter',
+                                { group = 'dashboard' }
+                            )
+                        end
+                    )
+                end,
             })
         end
 
-        require('alpha').setup(dashboard.opts)
-    end,
-    opts = function()
-        local dashboard = require('alpha.themes.dashboard')
-        local header = {
-            '█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀█  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀█   ',
-            '█ │░███▀█▀▀▀▀▀▓████▓▄ ▀▀▀▀ │░████▓▄   │▓████▓▄  █   ',
-            '█ │▒███████  │▓███████     │▒███████  │▓███████ █   ',
-            '█ │▓███████  │▓███████     │▓███████  │▓███████ █   ',
-            '▀ │▓███████  │▓███████     │▓███████  │▓███████ █   ',
-            '▀ │▓███████  │▓███████▄ ▄  │▓███████  │▓███████ █   ',
-            '█ │▓███████                │▓███████   ▓███████ █▄▄▄',
-            '█ │▓███████▀▀ ▀    ▀       │▓███████▀▀▀▓█▄█████▄ ▄ █',
-            '█▄▄▄▄▄▄▄▄ ▀ █▀▀▀▀▀▀▀▀▀▀▀▀█▄▄▄▄ ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄ ▄▄▄▄█',
-            '        █ ▀ █                                       ',
-            '  <fh>  ▀▀▀▀▀                                       ',
-        }
-        local footer = {
-            '                                      n e o v i m   ',
-            '▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄',
-        }
-        dashboard.section.header.val = header
-        dashboard.section.footer.val = footer
-        dashboard.section.buttons.val = {
-            dashboard.button(
-                'f',
-                ' ' .. ' Find file',
-                ':Telescope find_files <CR>'
-            ),
-            dashboard.button(
-                'n',
-                ' ' .. ' New file',
-                ':ene <BAR> startinsert <CR>'
-            ),
-            dashboard.button(
-                'r',
-                ' ' .. ' Recent files',
-                ':Telescope oldfiles <CR>'
-            ),
-            dashboard.button(
-                'g',
-                ' ' .. ' Find text',
-                ':lua require("telescope.builtin").live_grep({additional_args = { "--no-ignore" }}) <CR>'
-            ),
-            dashboard.button('c', ' ' .. ' Config', ':e $MYVIMRC <CR>'),
-            dashboard.button(
-                's',
-                ' ' .. ' Restore Session',
-                ':lua require("persistence").load() <cr>'
-            ),
-            dashboard.button('l', '󰒲 ' .. ' Lazy', ':Lazy<CR>'),
-            dashboard.button('m', ' ' .. ' Mason', ':Mason<CR>'),
-            dashboard.button('q', ' ' .. ' Quit', ':qa<CR>'),
-        }
-        for _, button in ipairs(dashboard.section.buttons.val) do
-            button.opts.hl = 'AlphaButtons'
-            button.opts.hl_shortcut = 'AlphaButtons'
-        end
-        dashboard.section.header.opts.hl = 'AlphaHeader'
-        dashboard.section.buttons.opts.hl = 'AlphaButtons'
-        dashboard.section.footer.opts.hl = 'AlphaHeader'
-        dashboard.opts.layout[1].val = 8
-        return dashboard
+        return opts
     end,
 }
