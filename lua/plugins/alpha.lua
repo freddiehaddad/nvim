@@ -128,11 +128,11 @@ return {
                 ':lua require("telescope.builtin").live_grep({additional_args = { "--no-ignore" }}) <CR>'
             ),
             dashboard.button('c', ' ' .. ' Config', ':e $MYVIMRC <CR>'),
-            -- dashboard.button(
-            --     's',
-            --     ' ' .. ' Restore Session',
-            --     ':lua require("persistence").load() <cr>'
-            -- ),
+            dashboard.button(
+                's',
+                ' ' .. ' Restore Session',
+                ':lua require("persistence").load() <cr>'
+            ),
             dashboard.button('l', '󰒲 ' .. ' Lazy', ':Lazy<CR>'),
             dashboard.button('m', ' ' .. ' Mason', ':Mason<CR>'),
             dashboard.button('q', ' ' .. ' Quit', ':qa<CR>'),
