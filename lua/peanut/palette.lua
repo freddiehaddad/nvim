@@ -8,6 +8,8 @@ local colors = {
     fg2 = '#707d6d',
     fg3 = '#7c745a',
     fg4 = '#8a9ea0',
+
+    sb1 = '#151e1d' -- scrollbar (used for PemnuSbar, etc.)
 }
 
 return colors

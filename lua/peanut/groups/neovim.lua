@@ -42,7 +42,7 @@ function M.highlight(palette, opts)
         PmenuKindSel = { link = 'PmenuSel' },
         PmenuExtra = { link = 'Pmenu' },
         PmenuExtraSel = { link = 'PmenuSel' },
-        PmenuThumb = { bg = palette.bg3 },
+        PmenuThumb = { bg = palette.sb1 },
         PmenuSbar = { bg = palette.bg2 },
 
         -- information
