@@ -93,6 +93,8 @@ return {
                                                   n e o v i m               
 	]]
 
+        header = string.rep('\n', 14) .. header
+
         local opts = {
             theme = 'doom',
             hide = { statusline = true },
