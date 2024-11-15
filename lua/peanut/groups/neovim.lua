@@ -13,17 +13,17 @@ function M.highlight(palette, opts)
 
         CursorLine = { bg = palette.bg2 },
         CursorColumn = { link = 'CursorLine' },
-        CursorLineNr = { fg = palette.bg4 },
+        CursorLineNr = { fg = palette.bg5 },
         CursorLineSign = { link = 'SignColumn' },
         CursorLineFold = { link = 'FoldColumn' },
 
         MatchParen = { fg = palette.fg4 },
 
-        LineNr = { fg = palette.bg3 },
+        LineNr = { fg = palette.bg4 },
         LineNrAbove = { link = 'LineNr' },
         LineNrBelow = { link = 'LineNr' },
 
-        SignColumn = { fg = palette.bg4 },
+        SignColumn = { fg = palette.bg5 },
         FoldColumn = { link = 'SignColumn' },
 
         WinSeparator = { fg = palette.bg1 },
@@ -36,18 +36,20 @@ function M.highlight(palette, opts)
         VisualNOS = { link = 'Visual' },
 
         NormalFloat = { bg = palette.bg2 },
+        FloatBorder = { fg = palette.bg4, bg = palette.bg2 },
+
         Pmenu = { fg = palette.fg1, bg = palette.bg2 },
-        PmenuSel = { bg = palette.bg3 },
+        PmenuSel = { bg = palette.bg4 },
         PmenuKind = { link = 'Pmenu' },
         PmenuKindSel = { link = 'PmenuSel' },
         PmenuExtra = { link = 'Pmenu' },
         PmenuExtraSel = { link = 'PmenuSel' },
-        PmenuThumb = { bg = palette.sb1 },
+        PmenuThumb = { bg = palette.bg3 },
         PmenuSbar = { bg = palette.bg2 },
 
         -- information
         Title = { fg = palette.fg1, bold = true },
-        Icon = { fg = palette.bg4 },
+        Icon = { fg = palette.bg5 },
 
         -- files / folders
         Directory = { fg = palette.fg4 },

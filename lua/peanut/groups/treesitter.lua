@@ -19,17 +19,17 @@ function M.highlight(palette, opts)
         Keyword = { fg = palette.fg2 },
 
         Todo = { fg = palette.fg1 },
-        Conditional = { fg = palette.bg4 },
-        Delimiter = { fg = palette.bg4 },
-        Operator = { fg = palette.bg4 },
-        Comment = { fg = palette.bg4 },
+        Conditional = { fg = palette.bg5 },
+        Delimiter = { fg = palette.bg5 },
+        Operator = { fg = palette.bg5 },
+        Comment = { fg = palette.bg5 },
 
         Exception = { fg = palette.fg1 },
         Function = { fg = palette.fg2 },
         Statement = { fg = palette.fg3 },
         Variable = { fg = palette.fg4 },
 
-        Label = { fg = palette.bg3 },
+        Label = { fg = palette.bg4 },
 
         Special = { link = 'Normal' },
         Repeat = { link = 'Normal' },

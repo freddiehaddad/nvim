@@ -17,7 +17,7 @@ function M.highlight(palette, opts)
         -- Border highlight groups.
         --   Use TelescopeBorder to override the default.
         --   Otherwise set them specifically
-        TelescopeBorder = { link = 'TelescopeNormal' },
+        TelescopeBorder = { link = 'FloatBorder' },
         TelescopePromptBorder = { link = 'TelescopeBorder' },
         TelescopeResultsBorder = { link = 'TelescopeBorder' },
         TelescopePreviewBorder = { link = 'TelescopeBorder' },
