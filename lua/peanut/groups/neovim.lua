@@ -4,7 +4,6 @@ function M.highlight(palette, opts)
     return {
         -- TODO:
         -- Need to identify these highlight groups
-        PmenuThumb = { fg = '#ff0000' },
         VisualNC = { fg = '#ff0000' },
         -- TODO:
 
@@ -43,7 +42,8 @@ function M.highlight(palette, opts)
         PmenuKindSel = { link = 'PmenuSel' },
         PmenuExtra = { link = 'Pmenu' },
         PmenuExtraSel = { link = 'PmenuSel' },
-        PmenuSbar = { link = 'Pmenu' },
+        PmenuThumb = { bg = palette.bg3 },
+        PmenuSbar = { bg = palette.bg2 },
 
         -- information
         Title = { fg = palette.fg1, bold = true },
