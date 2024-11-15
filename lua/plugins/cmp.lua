@@ -10,17 +10,12 @@ return {
             'hrsh7th/cmp-path',
         },
         opts = function()
-            vim.api.nvim_set_hl(
-                0,
-                'CmpGhostText',
-                { link = 'Comment', default = true }
-            )
             local cmp = require('cmp')
             local defaults = require('cmp.config.default')()
             return {
                 auto_brackets = {}, -- configure any filetype to auto add brackets
                 completion = {
-                    completeopt = 'menu,menuone,noinsert',
+                    completeopt = 'menu,menuone,noinsert,noselect',
                 },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-n>'] = cmp.mapping.select_next_item({
