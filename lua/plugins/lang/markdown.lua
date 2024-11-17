@@ -30,6 +30,16 @@ return {
                 '<cmd>Markview splitToggle<cr>',
                 desc = 'Markdown Preview',
             },
+            {
+                '<leader>mt',
+                '<cmd>Markview toggle<cr>',
+                desc = 'Markdown Toggle',
+            },
+            {
+                '<leader>mT',
+                '<cmd>Markview toggleAll<cr>',
+                desc = 'Markdown Toggle All',
+            },
             dependencies = {
                 {
                     'nvim-treesitter/nvim-treesitter',
