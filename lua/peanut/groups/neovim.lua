@@ -28,7 +28,7 @@ function M.highlight(palette, opts)
 
         WinSeparator = { fg = palette.bg1 },
 
-        Search = { bg = palette.bg2 },
+        Search = { bg = palette.bg4 },
         CurSearch = { link = 'Search' },
         IncSearch = { link = 'CurSearch' },
 
@@ -39,13 +39,15 @@ function M.highlight(palette, opts)
         FloatBorder = { fg = palette.bg4, bg = palette.bg2 },
 
         Pmenu = { fg = palette.fg1, bg = palette.bg2 },
-        PmenuSel = { bg = palette.bg4 },
+        PmenuSel = { bg = palette.bg3 },
         PmenuKind = { link = 'Pmenu' },
         PmenuKindSel = { link = 'PmenuSel' },
         PmenuExtra = { link = 'Pmenu' },
         PmenuExtraSel = { link = 'PmenuSel' },
         PmenuThumb = { bg = palette.bg3 },
         PmenuSbar = { bg = palette.bg2 },
+
+        Special = { fg = palette.fg4 },
 
         -- information
         Title = { fg = palette.fg1, bold = true },

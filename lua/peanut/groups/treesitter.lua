@@ -31,7 +31,6 @@ function M.highlight(palette, opts)
 
         Label = { fg = palette.bg4 },
 
-        Special = { link = 'Normal' },
         Repeat = { link = 'Normal' },
         Include = { link = 'Normal' },
         PreProc = { link = 'Normal' },
@@ -56,9 +55,10 @@ function M.highlight(palette, opts)
         ['@markup.link.markdown_inline'] = { link = 'String' },
         ['@markup.link.label.markdown'] = { fg = palette.fg2 },
         ['@markup.link.label.markdown_inline'] = { fg = palette.fg2 },
-        ['@lsp.type.class.markdown'] = { fg = palette.fg2},
+        ['@lsp.type.class.markdown'] = { fg = palette.fg2 },
 
         -- treesitter
+        ['@constructor'] = { link = 'Struct' },
         ['@keyword'] = { link = 'Keyword' },
         ['@variable'] = { link = 'Variable' },
         ['@variable.parameter'] = { link = 'Label' },
