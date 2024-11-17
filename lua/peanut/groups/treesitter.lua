@@ -42,9 +42,21 @@ function M.highlight(palette, opts)
         Typedef = { link = 'Normal' },
         Method = { link = 'Normal' },
 
+        --errors
+        ErrorMsg = { fg = palette.fg3 },
+        WarningMsg = { fg = palette.fg3 },
+
+        --spell
+        SpellBad = { fg = palette.fg3, underline = true },
+        SpellCap = { fg = palette.fg3, underline = true },
+        SpellLocal = { fg = palette.fg3, underline = true },
+        SpellRare = { fg = palette.fg3, underline = true },
+
         --markdown
-        ['@markup.link.label.markdown'] = { link = 'Label' },
-        ['@markup.link.label.markdown_inline'] = { link = 'Constant' },
+        ['@markup.link.markdown_inline'] = { link = 'String' },
+        ['@markup.link.label.markdown'] = { fg = palette.fg2 },
+        ['@markup.link.label.markdown_inline'] = { fg = palette.fg2 },
+        ['@lsp.type.class.markdown'] = { fg = palette.fg2},
 
         -- treesitter
         ['@keyword'] = { link = 'Keyword' },
