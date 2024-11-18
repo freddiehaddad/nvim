@@ -3,10 +3,10 @@ local M = {}
 function M.highlight(palette, opts)
     return {
         -- default hightlights
-        DiffAdd = { fg = palette.fg1 },
-        DiffChange = { fg = palette.fg2 },
-        DiffDelete = { fg = palette.fg3 },
-        DiffText = { fg = palette.fg4 },
+        DiffAdd = { fg = palette.fg2 },
+        DiffChange = { fg = palette.fg3 },
+        DiffDelete = { fg = palette.fg4 },
+        DiffText = { fg = palette.fg5 },
 
         SignAdd = { link = 'DiffAdd' },
         SignChange = { link = 'DiffChange' },

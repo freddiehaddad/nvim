@@ -1,14 +1,15 @@
 local colors = {
     bg1 = '#07090a', -- main background
-    bg2 = '#111817', -- menus
-    bg3 = '#151e1d', -- scrollbar (used for PemnuSbar, etc.)
-    bg4 = '#3b4853', -- cursor line
-    bg5 = '#556778',
+    bg2 = '#101517', -- menus, cursor line
+    bg3 = '#1f292d', -- scrollbar (used for PemnuSbar, etc.)
+    bg4 = '#2a363c',
 
-    fg1 = '#96938c',
-    fg2 = '#707d6d',
-    fg3 = '#7c745a',
-    fg4 = '#8a9ea0',
+
+    fg1 = '#394952',
+    fg2 = '#96938c',
+    fg3 = '#707d6d',
+    fg4 = '#7c745a',
+    fg5 = '#8a9ea0',
 }
 
 return colors

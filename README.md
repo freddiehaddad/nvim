@@ -8,7 +8,7 @@ highly opinionated distributions.
 
 ![Palette](./screenshots/palette.png)
 
-https://coolors.co/07090a-111817-151e1d-3b4853-556778-96938c-707d6d-7c745a-8a9ea0
+https://coolors.co/07090a-101517-1f292d-2a363c-394952-96938c-707d6d-7c745a-8a9ea0
 
 ## Screenshots
 

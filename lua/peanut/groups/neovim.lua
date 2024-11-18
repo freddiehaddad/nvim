@@ -7,38 +7,38 @@ function M.highlight(palette, opts)
         VisualNC = { fg = '#ff0000' },
         -- TODO:
 
-        Normal = { fg = palette.fg1 },
+        Normal = { fg = palette.fg2 },
         Bold = { bold = true },
         Italic = { italic = false },
 
         CursorLine = { bg = palette.bg2 },
         CursorColumn = { link = 'CursorLine' },
-        CursorLineNr = { fg = palette.bg5 },
+        CursorLineNr = { fg = palette.fg1 },
         CursorLineSign = { link = 'SignColumn' },
         CursorLineFold = { link = 'FoldColumn' },
 
-        MatchParen = { fg = palette.fg4 },
+        MatchParen = { fg = palette.fg5 },
 
-        LineNr = { fg = palette.bg4 },
+        LineNr = { fg = palette.fg1 },
         LineNrAbove = { link = 'LineNr' },
         LineNrBelow = { link = 'LineNr' },
 
-        SignColumn = { fg = palette.bg5 },
+        SignColumn = { fg = palette.fg1 },
         FoldColumn = { link = 'SignColumn' },
 
         WinSeparator = { fg = palette.bg1 },
 
         Search = { bg = palette.bg4 },
         CurSearch = { link = 'Search' },
-        IncSearch = { link = 'CurSearch' },
+        IncSearch = { link = 'Search' },
 
         Visual = { link = 'Search' },
         VisualNOS = { link = 'Visual' },
 
         NormalFloat = { bg = palette.bg2 },
-        FloatBorder = { fg = palette.bg4, bg = palette.bg2 },
+        FloatBorder = { fg = palette.fg1, bg = palette.bg2 },
 
-        Pmenu = { fg = palette.fg1, bg = palette.bg2 },
+        Pmenu = { fg = palette.fg2, bg = palette.bg2 },
         PmenuSel = { bg = palette.bg3 },
         PmenuKind = { link = 'Pmenu' },
         PmenuKindSel = { link = 'PmenuSel' },
@@ -47,14 +47,14 @@ function M.highlight(palette, opts)
         PmenuThumb = { bg = palette.bg3 },
         PmenuSbar = { bg = palette.bg2 },
 
-        Special = { fg = palette.fg4 },
+        Special = { fg = palette.fg1 },
 
         -- information
-        Title = { fg = palette.fg1, bold = true },
-        Icon = { fg = palette.bg5 },
+        Title = { fg = palette.fg2, bold = true },
+        Icon = { fg = palette.fg1 },
 
         -- files / folders
-        Directory = { fg = palette.fg4 },
+        Directory = { fg = palette.fg5 },
     }
 end
 

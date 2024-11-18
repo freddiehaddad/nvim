@@ -7,19 +7,19 @@ local function config(_, opts)
     local lsp = require('feline.providers.lsp')
 
     local theme = {
-        fg = palette.fg1,
+        fg = palette.fg2,
         bg = palette.bg1,
-        black = palette.fg1,
-        skyblue = palette.fg1,
-        cyan = palette.fg1,
-        green = palette.fg1,
-        oceanblue = palette.fg1,
-        magenta = palette.fg1,
-        orange = palette.fg1,
-        red = palette.fg1,
-        violet = palette.fg1,
-        white = palette.fg1,
-        yellow = palette.fg1,
+        black = palette.fg2,
+        skyblue = palette.fg2,
+        cyan = palette.fg2,
+        green = palette.fg2,
+        oceanblue = palette.fg2,
+        magenta = palette.fg2,
+        orange = palette.fg2,
+        red = palette.fg2,
+        violet = palette.fg2,
+        white = palette.fg2,
+        yellow = palette.fg2,
     }
 
     local c = {

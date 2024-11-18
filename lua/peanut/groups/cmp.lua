@@ -2,12 +2,12 @@ local M = {}
 
 function M.highlight(palette, opts)
     return {
-        CmpItemAbbr = { fg = palette.fg1 },
-        CmpItemAbbrDeprecated = { fg = palette.fg1 },
-        CmpItemAbbrMatch = { fg = palette.fg1 },
-        CmpItemAbbrMatchFuzzy = { fg = palette.fg1 },
-        CmpItemMenu = { fg = palette.fg1 },
-        CmpItemKind = { fg = palette.fg1 },
+        CmpItemAbbr = { fg = palette.fg2 },
+        CmpItemAbbrDeprecated = { fg = palette.fg2 },
+        CmpItemAbbrMatch = { fg = palette.fg2 },
+        CmpItemAbbrMatchFuzzy = { fg = palette.fg2 },
+        CmpItemMenu = { fg = palette.fg2 },
+        CmpItemKind = { fg = palette.fg2 },
     }
 end
 

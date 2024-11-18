@@ -3,33 +3,33 @@ local M = {}
 function M.highlight(palette, opts)
     return {
         -- code
-        Type = { fg = palette.fg1 },
-        Boolean = { fg = palette.fg1 },
-        Character = { fg = palette.fg1 },
-        Float = { fg = palette.fg1 },
+        Type = { fg = palette.fg2 },
+        Boolean = { fg = palette.fg2 },
+        Character = { fg = palette.fg2 },
+        Float = { fg = palette.fg2 },
 
-        Constant = { fg = palette.fg3 },
-        Identifier = { fg = palette.fg3 },
-        Number = { fg = palette.fg3 },
-        String = { fg = palette.fg3 },
+        Constant = { fg = palette.fg4 },
+        Identifier = { fg = palette.fg4 },
+        Number = { fg = palette.fg4 },
+        String = { fg = palette.fg4 },
 
-        Struct = { fg = palette.fg2 },
+        Struct = { fg = palette.fg3 },
         Structure = { link = 'Struct' },
 
-        Keyword = { fg = palette.fg2 },
+        Keyword = { fg = palette.fg3 },
 
-        Todo = { fg = palette.fg1 },
-        Conditional = { fg = palette.bg5 },
-        Delimiter = { fg = palette.bg5 },
-        Operator = { fg = palette.bg5 },
-        Comment = { fg = palette.bg5 },
+        Todo = { fg = palette.fg2 },
+        Conditional = { fg = palette.fg1 },
+        Delimiter = { fg = palette.fg1 },
+        Operator = { fg = palette.fg1 },
+        Comment = { fg = palette.fg1 },
 
-        Exception = { fg = palette.fg1 },
-        Function = { fg = palette.fg2 },
-        Statement = { fg = palette.fg3 },
-        Variable = { fg = palette.fg4 },
+        Exception = { fg = palette.fg2 },
+        Function = { fg = palette.fg3 },
+        Statement = { fg = palette.fg4 },
+        Variable = { fg = palette.fg5 },
 
-        Label = { fg = palette.bg4 },
+        Label = { fg = palette.fg4 },
 
         Repeat = { link = 'Normal' },
         Include = { link = 'Normal' },
@@ -42,20 +42,20 @@ function M.highlight(palette, opts)
         Method = { link = 'Normal' },
 
         --errors
-        ErrorMsg = { fg = palette.fg3 },
-        WarningMsg = { fg = palette.fg3 },
+        ErrorMsg = { fg = palette.fg4 },
+        WarningMsg = { fg = palette.fg4 },
 
         --spell
-        SpellBad = { fg = palette.fg3, underline = true },
-        SpellCap = { fg = palette.fg3, underline = true },
-        SpellLocal = { fg = palette.fg3, underline = true },
-        SpellRare = { fg = palette.fg3, underline = true },
+        SpellBad = { fg = palette.fg4, underline = true },
+        SpellCap = { fg = palette.fg4, underline = true },
+        SpellLocal = { fg = palette.fg4, underline = true },
+        SpellRare = { fg = palette.fg4, underline = true },
 
         --markdown
         ['@markup.link.markdown_inline'] = { link = 'String' },
-        ['@markup.link.label.markdown'] = { fg = palette.fg2 },
-        ['@markup.link.label.markdown_inline'] = { fg = palette.fg2 },
-        ['@lsp.type.class.markdown'] = { fg = palette.fg2 },
+        ['@markup.link.label.markdown'] = { fg = palette.fg3 },
+        ['@markup.link.label.markdown_inline'] = { fg = palette.fg3 },
+        ['@lsp.type.class.markdown'] = { fg = palette.fg3 },
 
         -- treesitter
         ['@constructor'] = { link = 'Struct' },
