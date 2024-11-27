@@ -11,6 +11,11 @@ function M.highlight(palette, opts)
         Bold = { bold = true },
         Italic = { italic = false },
 
+        Added = { fg = palette.fg2 },
+        Changed = { fg = palette.fg3 },
+        Removed = { fg = palette.fg4 },
+        NonText = { fg = palette.fg5 },
+
         CursorLine = { bg = palette.bg2 },
         CursorColumn = { link = 'CursorLine' },
         CursorLineNr = { fg = palette.fg1 },
