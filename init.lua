@@ -238,6 +238,6 @@ require('lazy').setup({ { import = 'plugins' }, { import = 'plugins.lang' } }, {
         concurrency = #vim.loop.cpu_info(),
         notify = false,
     },
-    change_detection = { notify = false },
+    change_detection = { notify = true },
     rocks = { enabled = false },
 })

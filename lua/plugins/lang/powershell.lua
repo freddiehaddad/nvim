@@ -6,6 +6,7 @@ LSP
 --]]
 return {
     'TheLeoP/powershell.nvim',
+    lazy = true,
     dependencies = {
         {
             'neovim/nvim-lspconfig',

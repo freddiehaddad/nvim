@@ -2,6 +2,7 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
+        lazy = true,
         keys = {
             -- f
             {
@@ -118,6 +119,7 @@ return {
     -- native fuzzy search for telescope
     {
         'nvim-telescope/telescope-fzf-native.nvim',
+        lazy = true,
         build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
         dependencies = {
             'nvim-telescope/telescope.nvim',
@@ -129,6 +131,7 @@ return {
     -- telescope undo extension
     {
         'debugloop/telescope-undo.nvim',
+        lazy = true,
         dependencies = {
             'nvim-telescope/telescope.nvim',
             opts = {

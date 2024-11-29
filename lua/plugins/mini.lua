@@ -25,7 +25,6 @@ return {
     -- allow deleting buffers
     {
         'echasnovski/mini.bufremove',
-        lazy = false,
         keys = {
             {
                 '<leader>bd',
