@@ -28,12 +28,6 @@ return {
         end,
         dependencies = {
             {
-                'williamboman/mason-lspconfig.nvim',
-                opts = function(_, opts)
-                    table.insert(opts.ensure_installed, 'rust_analyzer')
-                end,
-            },
-            {
                 'nvim-treesitter/nvim-treesitter',
                 opts = function(_, opts)
                     table.insert(opts.ensure_installed, 'rust')
