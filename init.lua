@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- LOAD COLORSCHEME
 --------------------------------------------------------------------------------
-vim.cmd("colorscheme peanut")
+vim.cmd('colorscheme peanut')
 
 --------------------------------------------------------------------------------
 -- BOOTSTRAP PLUGIN MANAGER
@@ -49,10 +49,20 @@ map('n', '<C-h>', '<C-w>h', { desc = 'Go to Left Window', remap = true })
 map('n', '<C-j>', '<C-w>j', { desc = 'Go to Lower Window', remap = true })
 map('n', '<C-k>', '<C-w>k', { desc = 'Go to Upper Window', remap = true })
 map('n', '<C-l>', '<C-w>l', { desc = 'Go to Right Window', remap = true })
-map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
-map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
+map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
+map(
+    'n',
+    '<C-Left>',
+    '<cmd>vertical resize -2<cr>',
+    { desc = 'Decrease Window Width' }
+)
+map(
+    'n',
+    '<C-Right>',
+    '<cmd>vertical resize +2<cr>',
+    { desc = 'Increase Window Width' }
+)
 
 -- better up/down
 map(
@@ -124,10 +134,10 @@ vim.opt.mouse = ''
 vim.opt.autowrite = true
 
 -- insert mode completion behavior
-vim.opt.completeopt:append({ 'menuone', 'noselect' })
+vim.opt.completeopt:append({ 'menuone' })
 
 -- hide * markup for bold and italic
-vim.opt.conceallevel = 3
+-- vim.opt.conceallevel = 3
 
 -- confirm to save changes before exiting modified buffer
 vim.opt.confirm = true
@@ -152,33 +162,43 @@ vim.opt.shortmess:append({ a = true, c = true, I = true, W = true })
 -- fill char formating
 vim.opt.fillchars:append({ eob = ' ' })
 
+-- shell
+vim.o.shell = 'pwsh'
+
 --------------------------------------------------------------------------------
 -- AUTO COMMANDS
 --------------------------------------------------------------------------------
 
 local function augroup(name)
-    return vim.api.nvim_create_augroup('Init' .. name, { clear = true })
+    return vim.api.nvim_create_augroup('init_' .. name, { clear = true })
 end
 
 -- check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
-    group = augroup('Checktime'),
-    command = 'checktime',
+    group = augroup('checktime'),
+    callback = function()
+        if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
+    end,
 })
 
 -- highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
-    group = augroup('HighlightYank'),
-    callback = function() vim.highlight.on_yank() end,
+    group = augroup('highlight_yank'),
+    callback = function() (vim.hl or vim.highlight).on_yank() end,
 })
 
 -- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd('BufWinEnter', {
-    group = augroup('LastLoction'),
+vim.api.nvim_create_autocmd('BufReadPost', {
+    group = augroup('last_loc'),
     callback = function(event)
         local exclude = { 'gitcommit' }
         local buf = event.buf
-        if vim.tbl_contains(exclude, vim.bo[buf].filetype) then return end
+        if
+            vim.tbl_contains(exclude, vim.bo[buf].filetype)
+            or vim.b[buf].lazyvim_last_loc
+        then
+            return
+        end
         local mark = vim.api.nvim_buf_get_mark(buf, '"')
         local lcount = vim.api.nvim_buf_line_count(buf)
         if mark[1] > 0 and mark[1] <= lcount then
@@ -189,55 +209,49 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd('FileType', {
-    group = augroup('CloseWithQ'),
+    group = augroup('close_with_q'),
     pattern = {
         'checkhealth',
-        'dashboard',
+        'gitsigns-blame',
         'help',
         'lspinfo',
-        'man',
         'neotest-output',
         'neotest-output-panel',
         'neotest-summary',
-        'notify',
         'qf',
-        'PlenaryTestPopup',
     },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
-        vim.keymap.set(
-            'n',
-            'q',
-            '<cmd>close<cr>',
-            { buffer = event.buf, silent = true, desc = 'Close with q' }
-        )
+        vim.schedule(function()
+            vim.keymap.set('n', 'q', function()
+                vim.cmd('close')
+                pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+            end, {
+                buffer = event.buf,
+                silent = true,
+                desc = 'Quit buffer',
+            })
+        end)
     end,
 })
 
 -- wrap and check spelling in text filetypes
 vim.api.nvim_create_autocmd('FileType', {
-    group = augroup('WrapSpell'),
-    pattern = { 'gitcommit', 'markdown' },
+    group = augroup('wrap_spell'),
+    pattern = { 'text', 'gitcommit', 'markdown' },
     callback = function()
         vim.opt_local.wrap = true
         vim.opt_local.spell = true
     end,
 })
 
-vim.o.shell = 'pwsh'
-
 --------------------------------------------------------------------------------
 -- LOAD PLUGINS
 --------------------------------------------------------------------------------
 
-require('lazy').setup({ { import = 'plugins' }, { import = 'plugins.lang' } }, {
-    -- install = { colorscheme = { 'peanut' } },
-    concurrency = #vim.loop.cpu_info(),
-    checker = {
-        enabled = true,
-        concurrency = #vim.loop.cpu_info(),
-        notify = false,
+require('lazy').setup({
+    spec = { { import = 'plugins' }, { import = 'plugins.lang' } },
+    change_detection = {
+        notify = false, -- get a notification when changes are found
     },
-    change_detection = { notify = true },
-    rocks = { enabled = false },
 })

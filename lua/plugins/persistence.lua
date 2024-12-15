@@ -2,6 +2,18 @@ return {
     event = 'BufReadPre',
     'folke/persistence.nvim',
     opts = {},
+    init = function()
+        vim.opt.sessionoptions = {
+            'buffers',
+            'curdir',
+            'tabpages',
+            'winsize',
+            'help',
+            'globals',
+            'skiprtp',
+            'folds',
+        }
+    end,
     keys = {
         {
             '<leader>qs',

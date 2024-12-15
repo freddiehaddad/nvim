@@ -23,7 +23,10 @@ return {
     -- viewer
     {
         'OXY2DEV/markview.nvim',
-        lazy = false,
+	lazy = false,
+	opts = {
+		initial_state = false,
+	},
         keys = {
             {
                 '<leader>mp',
@@ -44,6 +47,7 @@ return {
                 {
                     'nvim-treesitter/nvim-treesitter',
                     opts = function(_, opts)
+                        table.insert(opts.ensure_installed, 'html')
                         table.insert(opts.ensure_installed, 'markdown')
                         table.insert(opts.ensure_installed, 'markdown_inline')
                     end,

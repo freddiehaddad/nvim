@@ -2,24 +2,7 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
-        lazy = true,
         keys = {
-            -- f
-            {
-                '<leader>ff',
-                function() require('telescope.builtin').find_files() end,
-                desc = 'Find files',
-            },
-            {
-                '<leader>fF',
-                function()
-                    require('telescope.builtin').find_files({
-                        hidden = true,
-                        no_ignore = true,
-                    })
-                end,
-                desc = 'Find files (hidden)',
-            },
             {
                 '<leader>fb',
                 function()
@@ -119,19 +102,32 @@ return {
     -- native fuzzy search for telescope
     {
         'nvim-telescope/telescope-fzf-native.nvim',
-        lazy = true,
         build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-        dependencies = {
-            'nvim-telescope/telescope.nvim',
-            opts = { extensions = { fzf = {} } },
+        config = function() require('telescope').load_extension('fzf') end,
+
+        -- f
+        keys = {
+            {
+                '<leader>ff',
+                function() require('telescope.builtin').find_files() end,
+                desc = 'Find files',
+            },
+            {
+                '<leader>fF',
+                function()
+                    require('telescope.builtin').find_files({
+                        hidden = true,
+                        no_ignore = true,
+                    })
+                end,
+                desc = 'Find files (hidden)',
+            },
         },
-        init = function() require('telescope').load_extension('fzf') end,
     },
 
     -- telescope undo extension
     {
         'debugloop/telescope-undo.nvim',
-        lazy = true,
         dependencies = {
             'nvim-telescope/telescope.nvim',
             opts = {
@@ -192,7 +188,7 @@ return {
                 },
             },
         },
-        init = function() require('telescope').load_extension('undo') end,
+        config = function() require('telescope').load_extension('undo') end,
         keys = {
             {
                 '<leader>su',

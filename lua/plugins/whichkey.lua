@@ -10,7 +10,10 @@ return {
             separator = ':',
         },
         spec = {
+            { '<leader>b', group = 'buffer' },
+            { '<leader>d', group = 'debug' },
             { '<leader>f', group = 'find' },
+            { '<leader>m', group = 'markdown' },
             { '<leader>p', group = 'plugins' },
             { '<leader>q', group = 'quit' },
             { '<leader>s', group = 'search' },

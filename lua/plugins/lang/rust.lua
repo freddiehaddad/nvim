@@ -18,7 +18,6 @@ return {
     -- lsp
     {
         'mrcjkb/rustaceanvim',
-        lazy = false,
         config = function(_, opts)
             vim.g.rustaceanvim = vim.tbl_deep_extend(
                 'keep',
@@ -31,6 +30,7 @@ return {
                 'nvim-treesitter/nvim-treesitter',
                 opts = function(_, opts)
                     table.insert(opts.ensure_installed, 'rust')
+                    table.insert(opts.ensure_installed, 'toml')
                 end,
             },
         },
@@ -102,25 +102,5 @@ return {
                 ['rustaceanvim.neotest'] = {},
             },
         },
-    },
-
-    -- extend autocompletion
-    {
-        'hrsh7th/nvim-cmp',
-        dependencies = {
-            {
-                'Saecki/crates.nvim',
-                event = { 'BufRead Cargo.toml' },
-                opts = {
-                    completion = {
-                        cmp = { enabled = true },
-                    },
-                },
-            },
-        },
-        opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            table.insert(opts.sources, { name = 'crates' })
-        end,
     },
 }
