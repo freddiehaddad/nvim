@@ -10,7 +10,6 @@ Formatter
 return {
     -- schema support
     {
-        lazy = true,
         'b0o/SchemaStore.nvim',
     },
 
@@ -19,6 +18,9 @@ return {
         -- lsp
         'neovim/nvim-lspconfig',
         dependencies = {
+            {
+                'b0o/SchemaStore.nvim',
+            },
             {
                 'williamboman/mason-lspconfig.nvim',
                 opts = function(_, opts)

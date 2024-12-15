@@ -11,7 +11,6 @@ return {
     -- schema support
     {
         'b0o/SchemaStore.nvim',
-        lazy = true,
     },
 
     -- lsp
@@ -19,6 +18,9 @@ return {
         -- lsp
         'neovim/nvim-lspconfig',
         dependencies = {
+            {
+                'b0o/SchemaStore.nvim',
+            },
             {
                 'williamboman/mason-lspconfig.nvim',
                 opts = function(_, opts)
