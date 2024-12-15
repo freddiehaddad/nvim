@@ -91,13 +91,12 @@ https://coolors.co/07090a-101517-1f292d-2a363c-546c78-96938c-707d6d-7c745a-8a9ea
 Support for the following languages are included along with (where applicable)
 debugging and unit testing functionality from within Neovim.
 
-- Bash
 - C
 - C++
-- Go
 - JSON
 - Lua
 - Markdown
+- Powershell
 - Rust
 - YAML
 
@@ -134,17 +133,14 @@ o- lua
 |  |  o- settings.lua
 |  |  o- util.lua
 |  o- plugins
-|     o- alpha.lua
-|     o- cmp.lua
+|     o- blink.lua
 |     o- conform.lua
 |     o- dap.lua
 |     o- feline.lua
 |     o- gitsigns.lua
 |     o- icons.lua
 |     o- lang
-|     |  o- bash.lua
 |     |  o- cpp.lua
-|     |  o- go.lua
 |     |  o- json.lua
 |     |  o- lua.lua
 |     |  o- markdown.lua
@@ -152,11 +148,10 @@ o- lua
 |     |  o- rust.lua
 |     |  o- yaml.lua
 |     o- lspconfig.lua
-|     o- mini.lua
 |     o- neotest.lua
 |     o- nvimtree.lua
-|     o- oil.lua
 |     o- persistence.lua
+|     o- snacks.lua
 |     o- telescope.lua
 |     o- treesitter.lua
 |     o- whichkey.lua
