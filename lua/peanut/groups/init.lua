@@ -1,8 +1,6 @@
 return {
     require('peanut.groups.neovim'),
-    require('peanut.groups.cmp'),
     require('peanut.groups.dapui'),
-    require('peanut.groups.dashboard'),
     require('peanut.groups.git'),
     require('peanut.groups.lazy'),
     require('peanut.groups.lsp'),

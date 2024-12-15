@@ -11,8 +11,16 @@ return {
             completion = {
                 list = { selection = 'auto_insert' },
                 documentation = {
-                    auto_show = true,
                     window = { max_width = 80 },
+                },
+            },
+            keymap = {
+                preset = 'default',
+                ['<C-space>'] = {},
+                ['<C-k>'] = {
+                    'show',
+                    'show_documentation',
+                    'hide_documentation',
                 },
             },
         },

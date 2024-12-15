@@ -11,6 +11,7 @@ return {
     -- schema support
     {
         'b0o/SchemaStore.nvim',
+        lazy = true,
     },
 
     -- lsp

@@ -10,6 +10,7 @@ Formatter
 return {
     -- schema support
     {
+        lazy = true,
         'b0o/SchemaStore.nvim',
     },
 
