@@ -17,7 +17,7 @@ https://coolors.co/07090a-101517-1f292d-2a363c-546c78-96938c-707d6d-7c745a-8a9ea
 <details>
 <summary>Neovim startup screen</summary>
 
-![dashboard](https://github.com/user-attachments/assets/c9bfa473-bcb1-4aa3-8614-25f1c6aa9f1e)
+![startup](https://github.com/user-attachments/assets/87683246-a2c5-44f5-8d97-8bb24b0ad7d0)
 
 </details>
 
