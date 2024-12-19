@@ -91,7 +91,7 @@ return {
                         },
                     },
                     lualine_c = {
-                        { "branch", icon = "", padding = { left = 2 } },
+                        { "branch", icon = "", padding = { left = 2 } },
                         {
                             "diff",
                             diff_color = {
@@ -562,7 +562,7 @@ return {
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
         dependencies = "williamboman/mason.nvim",
         opts = {
-            automatic_installation = true,
+            automatic_installation = { exclude = { "rust_analyzer" } },
             ensure_installed = { "clangd", "lua_ls", "taplo" },
         },
     },
