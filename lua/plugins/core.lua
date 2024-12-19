@@ -531,7 +531,7 @@ return {
         cmd = "Mason",
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         opts = {
-            ensure_installed = { "clang-format", "codelldb", "stylua", "clangd", "lua_ls", "taplo" },
+            ensure_installed = { "clang-format", "codelldb", "stylua", "clangd", "lua-language-server", "taplo" },
         },
         config = function(_, opts)
             require("mason").setup(opts)
