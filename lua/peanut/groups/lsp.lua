@@ -1,12 +1,13 @@
 local M = {}
 
+---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
         DiagnosticOk = { fg = palette.fg3 },
-        DiagnosticError = { link = 'ErrorMsg' },
+        DiagnosticError = { link = "ErrorMsg" },
         DiagnosticHint = { fg = palette.fg2 },
         DiagnosticInfo = { fg = palette.fg5 },
-        DiagnosticWarn = { link = 'WarningMsg' },
+        DiagnosticWarn = { link = "WarningMsg" },
     }
 end
 

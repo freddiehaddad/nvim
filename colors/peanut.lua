@@ -1,1 +1,1 @@
-require('peanut').load()
+require("peanut").load()

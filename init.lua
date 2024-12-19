@@ -1,224 +1,187 @@
---------------------------------------------------------------------------------
--- LOAD COLORSCHEME
---------------------------------------------------------------------------------
-vim.cmd('colorscheme peanut')
+-- Colorscheme
+vim.cmd("colorscheme peanut")
 
---------------------------------------------------------------------------------
--- BOOTSTRAP PLUGIN MANAGER
---------------------------------------------------------------------------------
+-- Options
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
 
--- install the lazy.nvim plugin manager
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-local lazy_is_installed = vim.loop.fs_stat(lazypath)
-if not lazy_is_installed then
-    vim.fn.system({
-        'git',
-        'clone',
-        '--filter=blob:none',
-        'https://github.com/folke/lazy.nvim.git',
-        '--branch=stable',
-        lazypath,
-    })
+local opt = vim.opt
+
+opt.clipboard = "unnamedplus"
+opt.cmdheight = 0
+opt.cursorline = true
+opt.fillchars:append({ eob = " ", foldopen = "", foldclose = "", vert = " " })
+opt.laststatus = 0 -- disable statusline until plugin is ready
+opt.mouse = ""
+opt.number = true
+opt.pumblend = 10
+opt.relativenumber = true
+opt.scrolloff = 2
+opt.showmode = false
+opt.showtabline = 0
+opt.sidescrolloff = 2
+opt.smoothscroll = true
+opt.splitright = true
+opt.splitbelow = true
+opt.undofile = true
+opt.undolevels = 10000
+opt.virtualedit = "block"
+opt.wrap = false
+
+-- Default file format
+opt.expandtab = true
+opt.shiftwidth = 4
+opt.tabstop = 4
+opt.textwidth = 80
+
+-- Folding
+---@diagnostic disable-next-line
+_G.foldexpr_handler = function()
+    local buf = vim.api.nvim_get_current_buf()
+    if vim.b[buf].ts_folds == nil then
+        -- as long as we don't have a filetype, don't bother
+        -- checking if treesitter is available (it won't)
+        if vim.bo[buf].filetype == "" then
+            return "0"
+        end
+        if vim.bo[buf].filetype:find("dashboard") then
+            vim.b[buf].ts_folds = false
+        else
+            vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
+        end
+    end
+    return vim.b[buf].ts_folds and vim.treesitter.foldexpr() or "0"
 end
-vim.opt.runtimepath:prepend(lazypath)
+opt.foldexpr = "v:lua.foldexpr_handler()"
+opt.foldmethod = "expr"
+opt.foldtext = ""
 
---------------------------------------------------------------------------------
--- CONFIGURE KEYMAPS
---------------------------------------------------------------------------------
+-- Powershell options
+opt.shell = "pwsh"
+opt.shellcmdflag =
+    "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering=[System.Management.Automation.OutputRendering]::PlainText;Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+opt.shellredir = "2>&1 | %%{ '$_' } | Out-File %s; exit $LastExitCode"
+opt.shellpipe = "2>&1 | %%{ '$_' } | tee %s; exit $LastExitCode"
+opt.shellquote = ""
+opt.shellxquote = ""
 
-vim.g.mapleader = ' '
-
+--Keymaps
 local map = vim.keymap.set
 
--- windows
-map(
-    'n',
-    '<leader>wv',
-    '<cmd>vsplit<cr>',
-    { desc = 'Split current window vertically' }
-)
-map(
-    'n',
-    '<leader>wh',
-    '<cmd>split<cr>',
-    { desc = 'Split current window horizontally' }
-)
-map('n', '<leader>w=', '<C-W>=', { desc = 'Make windows equal size' })
-map('n', '<leader>wd', '<C-W>c', { desc = 'Delete window' })
-map('n', '<C-h>', '<C-w>h', { desc = 'Go to Left Window', remap = true })
-map('n', '<C-j>', '<C-w>j', { desc = 'Go to Lower Window', remap = true })
-map('n', '<C-k>', '<C-w>k', { desc = 'Go to Upper Window', remap = true })
-map('n', '<C-l>', '<C-w>l', { desc = 'Go to Right Window', remap = true })
-map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
-map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
-map(
-    'n',
-    '<C-Left>',
-    '<cmd>vertical resize -2<cr>',
-    { desc = 'Decrease Window Width' }
-)
-map(
-    'n',
-    '<C-Right>',
-    '<cmd>vertical resize +2<cr>',
-    { desc = 'Increase Window Width' }
-)
-
 -- better up/down
-map(
-    { 'n', 'x' },
-    'j',
-    "v:count == 0 ? 'gj' : 'j'",
-    { expr = true, silent = true }
-)
-map(
-    { 'n', 'x' },
-    'k',
-    "v:count == 0 ? 'gk' : 'k'",
-    { expr = true, silent = true }
-)
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
--- quickfix
-map('n', '[q', '<cmd>cprevious<cr>', { desc = 'Previous quickfix' })
-map('n', ']q', '<cmd>cnext<cr>', { desc = 'Next quickfix' })
+-- Move to window using the <ctrl> hjkl keys
+map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
 
--- clear search with <esc>
-map(
-    { 'i', 'n' },
-    '<esc>',
-    '<cmd>nohlsearch<cr><esc>',
-    { desc = 'Escape and clear hlsearch' }
-)
+-- Resize window using <ctrl> arrow keys
+map("n", "<C-Up>", "<cmd>resize +1<cr>", { desc = "Increase window height" })
+map("n", "<C-Down>", "<cmd>resize -1<cr>", { desc = "Decrease window height" })
+map("n", "<C-Left>", "<cmd>vertical resize -1<cr>", { desc = "Decrease window width" })
+map("n", "<C-Right>", "<cmd>vertical resize +1<cr>", { desc = "Increase window width" })
 
--- save file
-map({ 'i', 'n', 's', 'x' }, '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
+-- Split windows
+map("n", "<leader>w=", "<C-W>=", { desc = "Equally high and wide", remap = true })
+map("n", "<leader>wh", "<C-W>s", { desc = "Split window below", remap = true })
+map("n", "<leader>wv", "<C-W>v", { desc = "Split window right", remap = true })
+map("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })
 
--- quit
-map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit all' })
+-- Move lines
+map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move down" })
+map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move up" })
+map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
+map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
+map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move down" })
+map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move up" })
 
--- Move Lines
-map(
-    'n',
-    '<A-j>',
-    "<cmd>execute 'move .+' . v:count1<cr>==",
-    { desc = 'Move Down' }
-)
-map(
-    'n',
-    '<A-k>',
-    "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==",
-    { desc = 'Move Up' }
-)
-map('i', '<A-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
-map('i', '<A-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
-map(
-    'v',
-    '<A-j>',
-    ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv",
-    { desc = 'Move Down' }
-)
-map(
-    'v',
-    '<A-k>',
-    ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv",
-    { desc = 'Move Up' }
-)
+-- Buffers
+map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
+map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
---------------------------------------------------------------------------------
--- NEOVIM OPTIONS
---------------------------------------------------------------------------------
+-- Clear search and stop snippet on escape
+map({ "i", "n", "s" }, "<esc>", function()
+    vim.cmd("nohlsearch")
+    if vim.snippet then
+        vim.snippet.stop()
+    end
+    return "<esc>"
+end, { expr = true, desc = "Escape and clear hlsearch" })
 
--- cursor
-vim.opt.cursorline = true
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next search result" })
+map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev search result" })
+map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 
--- relative line numbering
-vim.opt.number = true
-vim.opt.relativenumber = true
+-- Add undo break-points
+map("i", ",", ",<c-g>u")
+map("i", ".", ".<c-g>u")
+map("i", ";", ";<c-g>u")
 
--- window split behavior
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+-- Save file
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
--- disable tab visibility
-vim.opt.showtabline = 0
+-- Better indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
--- yank/paste behavior
-vim.opt.clipboard = 'unnamedplus'
+-- Commenting
+map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add comment below" })
+map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add comment above" })
 
--- persistent undo
-vim.opt.undofile = true
-vim.opt.undolevels = 10000
+-- lazy
+map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
--- disable mouse support
-vim.opt.mouse = ''
+-- New file
+map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New file" })
 
--- autowrite
-vim.opt.autowrite = true
+-- Lists
+map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location list" })
+map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix list" })
 
--- insert mode completion behavior
-vim.opt.completeopt:append({ 'menuone' })
+-- Quit
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 
--- hide * markup for bold and italic
--- vim.opt.conceallevel = 3
+-- Diagnostic
+local diagnostic_goto = function(next, severity)
+    local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+    severity = severity and vim.diagnostic.severity[severity] or nil
+    return function()
+        go({ severity = severity })
+    end
+end
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
+map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
+map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
+map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
--- confirm to save changes before exiting modified buffer
-vim.opt.confirm = true
-
--- search case sensitivity
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- native formatting
-vim.opt.formatoptions = 'jcroqlnt'
-
--- grep configuration
-vim.opt.grepformat = '%f:%l:%c:%m'
-vim.opt.grepprg = 'rg --vimgrep'
-
--- popup menu
-vim.pumheight = 10
-
--- short message format
-vim.opt.shortmess:append({ a = true, c = true, I = true, W = true })
-
--- fill char formating
-vim.opt.fillchars:append({ eob = ' ' })
-
--- shell
-vim.o.shell = 'pwsh'
-
---------------------------------------------------------------------------------
--- AUTO COMMANDS
---------------------------------------------------------------------------------
-
+-- Autocmds
+local autocmd = vim.api.nvim_create_autocmd
 local function augroup(name)
-    return vim.api.nvim_create_augroup('init_' .. name, { clear = true })
+    return vim.api.nvim_create_augroup("MyConfig" .. name, { clear = true })
 end
 
--- check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
-    group = augroup('checktime'),
-    callback = function()
-        if vim.o.buftype ~= 'nofile' then vim.cmd('checktime') end
-    end,
-})
-
--- highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
-    group = augroup('highlight_yank'),
-    callback = function() (vim.hl or vim.highlight).on_yank() end,
-})
-
--- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd('BufReadPost', {
-    group = augroup('last_loc'),
+-- Go to last location when opening a buffer
+autocmd("BufReadPost", {
+    group = augroup("LastLocation"),
     callback = function(event)
-        local exclude = { 'gitcommit' }
+        local exclude = { "gitcommit" }
         local buf = event.buf
-        if
-            vim.tbl_contains(exclude, vim.bo[buf].filetype)
-            or vim.b[buf].lazyvim_last_loc
-        then
+        if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
             return
         end
         local mark = vim.api.nvim_buf_get_mark(buf, '"')
@@ -229,51 +192,62 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end,
 })
 
--- close some filetypes with <q>
-vim.api.nvim_create_autocmd('FileType', {
-    group = augroup('close_with_q'),
+-- Close some filetypes with <q>
+autocmd("FileType", {
+    group = augroup("CloseWithQ"),
     pattern = {
-        'checkhealth',
-        'gitsigns-blame',
-        'help',
-        'lspinfo',
-        'neotest-output',
-        'neotest-output-panel',
-        'neotest-summary',
-        'qf',
+        "checkhealth",
+        "dap-float",
+        "gitsigns-blame",
+        "help",
+        "qf",
     },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.schedule(function()
-            vim.keymap.set('n', 'q', function()
-                vim.cmd('close')
+            map("n", "q", function()
+                vim.cmd("close")
                 pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
             end, {
                 buffer = event.buf,
                 silent = true,
-                desc = 'Quit buffer',
+                desc = "Quit buffer",
             })
         end)
     end,
 })
 
--- wrap and check spelling in text filetypes
-vim.api.nvim_create_autocmd('FileType', {
-    group = augroup('wrap_spell'),
-    pattern = { 'text', 'gitcommit', 'markdown' },
+-- Enable spellcheck and line wrapping in select file types
+autocmd("FileType", {
+    group = augroup("SpellWrap"),
+    pattern = { "text", "gitcommit", "markdown" },
     callback = function()
         vim.opt_local.wrap = true
         vim.opt_local.spell = true
     end,
 })
 
---------------------------------------------------------------------------------
--- LOAD PLUGINS
---------------------------------------------------------------------------------
+-- Install Lazy plugin manager
+local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazy_is_installed = vim.uv.fs_stat(lazy_path)
+if not lazy_is_installed then
+    local lazy_repo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazy_repo, lazy_path })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.runtimepath:prepend(lazy_path)
 
-require('lazy').setup({
-    spec = { { import = 'plugins' }, { import = 'plugins.lang' } },
-    change_detection = {
-        notify = false, -- get a notification when changes are found
-    },
+-- Load Lazy plugin manager
+require("lazy").setup({
+    spec = { { import = "plugins" } },
+    rocks = { enabled = false },
+    checker = { enabled = true },
 })

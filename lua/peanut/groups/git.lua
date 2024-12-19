@@ -1,22 +1,23 @@
 local M = {}
 
+---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
         -- default hightlights
-        DiffAdd = { link = 'Added' },
-        DiffChange = { link = 'Changed' },
-        DiffDelete = { link = 'Removed' },
-        DiffText = { link = 'NonText' },
+        DiffAdd = { link = "Added" },
+        DiffChange = { link = "Changed" },
+        DiffDelete = { link = "Removed" },
+        DiffText = { link = "NonText" },
 
-        SignAdd = { link = 'DiffAdd' },
-        SignChange = { link = 'DiffChange' },
-        SignDelete = { link = 'DiffDelete' },
+        SignAdd = { link = "DiffAdd" },
+        SignChange = { link = "DiffChange" },
+        SignDelete = { link = "DiffDelete" },
 
         -- git signs addon
-        GitSignsAdd = { link = 'DiffAdd' },
-        GitSignsChange = { link = 'DiffChange' },
-        GitSignsDelete = { link = 'DiffDelete' },
-        GitSignsCurrentLineBlame = { link = 'DiffText' },
+        GitSignsAdd = { link = "DiffAdd" },
+        GitSignsChange = { link = "DiffChange" },
+        GitSignsDelete = { link = "DiffDelete" },
+        GitSignsCurrentLineBlame = { link = "DiffText" },
         -- GitSignsChangedelete xxx links to GitSignsChange
         -- GitSignsTopdelete xxx links to GitSignsDelete
         -- GitSignsUntracked xxx links to GitSignsAdd
@@ -43,41 +44,41 @@ function M.highlight(palette, opts)
         -- GitSignsChangedeleteCul xxx links to GitSignsChangeCul
         -- GitSignsTopdeleteCul xxx links to GitSignsDeleteCul
         -- GitSignsUntrackedCul xxx links to GitSignsAddCul
-        GitSignsStagedAdd = { link = 'DiffAdd' },
-        GitSignsStagedChange = { link = 'DiffChange' },
-        GitSignsStagedDelete = { link = 'DiffDelete' },
-        GitSignsStagedChangedelete = { link = 'DiffDelete' },
-        GitSignsStagedTopdelete = { link = 'DiffDelete' },
-        GitSignsStagedAddNr = { link = 'DiffAdd' },
-        GitSignsStagedChangeNr = { link = 'DiffChange' },
-        GitSignsStagedDeleteNr = { link = 'DiffDelete' },
-        GitSignsStagedChangedeleteNr = { link = 'DiffDelete' },
-        GitSignsStagedTopdeleteNr = { link = 'DiffDelete' },
-        GitSignsStagedAddLn = { link = 'DiffAdd' },
-        GitSignsStagedChangeLn = { link = 'DiffChange' },
+        GitSignsStagedAdd = { link = "DiffAdd" },
+        GitSignsStagedChange = { link = "DiffChange" },
+        GitSignsStagedDelete = { link = "DiffDelete" },
+        GitSignsStagedChangedelete = { link = "DiffDelete" },
+        GitSignsStagedTopdelete = { link = "DiffDelete" },
+        GitSignsStagedAddNr = { link = "DiffAdd" },
+        GitSignsStagedChangeNr = { link = "DiffChange" },
+        GitSignsStagedDeleteNr = { link = "DiffDelete" },
+        GitSignsStagedChangedeleteNr = { link = "DiffDelete" },
+        GitSignsStagedTopdeleteNr = { link = "DiffDelete" },
+        GitSignsStagedAddLn = { link = "DiffAdd" },
+        GitSignsStagedChangeLn = { link = "DiffChange" },
         -- GitSignsStagedDeleteLn xxx cleared
         -- GitSignsDeleteLn xxx cleared
-        GitSignsStagedChangedeleteLn = { link = 'DiffDelete' },
+        GitSignsStagedChangedeleteLn = { link = "DiffDelete" },
         -- GitSignsStagedTopdeleteLn xxx cleared
         -- GitSignsTopdeleteLn xxx cleared
-        GitSignsStagedAddCul = { link = 'DiffAdd' },
-        GitSignsStagedChangeCul = { link = 'DiffChange' },
-        GitSignsStagedDeleteCul = { link = 'DiffDelete' },
-        GitSignsStagedChangedeleteCul = { link = 'DiffDelete' },
-        GitSignsStagedTopdeleteCul = { link = 'DiffDelete' },
-        GitSignsAddPreview = { link = 'DiffAdd' },
-        GitSignsDeletePreview = { link = 'DiffDelete' },
+        GitSignsStagedAddCul = { link = "DiffAdd" },
+        GitSignsStagedChangeCul = { link = "DiffChange" },
+        GitSignsStagedDeleteCul = { link = "DiffDelete" },
+        GitSignsStagedChangedeleteCul = { link = "DiffDelete" },
+        GitSignsStagedTopdeleteCul = { link = "DiffDelete" },
+        GitSignsAddPreview = { link = "DiffAdd" },
+        GitSignsDeletePreview = { link = "DiffDelete" },
         -- GitGutterDeleteLine xxx cleared
         -- SignifyLineDelete xxx cleared
-        GitSignsAddInline = { link = 'DiffAdd' },
-        GitSignsChangeInline = { link = 'DiffChange' },
-        GitSignsDeleteInline = { link = 'DiffDelete' },
-        GitSignsAddLnInline = { link = 'DiffAdd' },
-        GitSignsChangeLnInline = { link = 'DiffChange' },
-        GitSignsDeleteLnInline = { link = 'DiffDelete' },
-        GitSignsDeleteVirtLn = { link = 'DiffDelete' },
-        GitSignsDeleteVirtLnInLine = { link = 'DiffDelete' },
-        GitSignsVirtLnum = { link = 'DiffDelete' },
+        GitSignsAddInline = { link = "DiffAdd" },
+        GitSignsChangeInline = { link = "DiffChange" },
+        GitSignsDeleteInline = { link = "DiffDelete" },
+        GitSignsAddLnInline = { link = "DiffAdd" },
+        GitSignsChangeLnInline = { link = "DiffChange" },
+        GitSignsDeleteLnInline = { link = "DiffDelete" },
+        GitSignsDeleteVirtLn = { link = "DiffDelete" },
+        GitSignsDeleteVirtLnInLine = { link = "DiffDelete" },
+        GitSignsVirtLnum = { link = "DiffDelete" },
     }
 end
 
