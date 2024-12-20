@@ -773,6 +773,7 @@ return {
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    Snacks.toggle.inlay_hints():map("<leader>uh")
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
@@ -824,6 +825,7 @@ return {
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    Snacks.toggle.inlay_hints():map("<leader>uh")
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
@@ -877,6 +879,7 @@ return {
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    Snacks.toggle.inlay_hints():map("<leader>uh")
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
