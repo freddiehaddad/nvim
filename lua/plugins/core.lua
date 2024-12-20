@@ -99,8 +99,18 @@ return {
                                 modified = "DiffChange",
                                 removed = "DiffDelete",
                             },
-                            symbols = { added = "󰯬", modified = "󰯲", removed = "󰯵" },
-                            padding = 0,
+                            symbols = { added = "󰯭 ", modified = "󰯳 ", removed = "󰯶 " },
+                            source = function()
+                                local gitsigns = vim.b.gitsigns_status_dict
+                                if gitsigns then
+                                    return {
+                                        added = gitsigns.added,
+                                        modified = gitsigns.changed,
+                                        removed = gitsigns.removed,
+                                    }
+                                end
+                            end,
+                            padding = { left = 1 },
                         },
                     },
                     lualine_x = {},
@@ -219,7 +229,7 @@ return {
                 { "gx", desc = "Open with system app" },
             },
         },
-	-- stylua: ignore
+        -- stylua: ignore
         keys = {
             { "<leader>?", "<cmd>lua require('which-key').show({ global = false })<cr>", desc = "Buffer keymaps (which-key)" },
         },
@@ -289,6 +299,8 @@ return {
                     gs.diffthis("~")
                 end, "Diff This ~")
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+                map("n", "<leader>gc", "<cmd>Telescope git_commits<cr>", "Commits")
+                map("n", "<leader>gs", "<cmd>Telescope git_status<cr>", "Status")
             end,
         },
     },
@@ -308,14 +320,11 @@ return {
         keys = {
             -- find
             { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>", desc = "Buffers" },
-            { "<leader>fc", "<cmd>Telescope find_files cwd="..vim.fn.stdpath("config").."<cr>", desc = "Config file" },
+            { "<leader>fc", "<cmd>Telescope find_files cwd=" .. vim.fn.stdpath("config") .. "<cr>", desc = "Config file" },
             { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Files" },
             { "<leader>fF", "<cmd>Telescope find_files hidden=true<cr>", desc = "Files (hidden)" },
             { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Files (git)" },
             { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
-            -- git
-            { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
-            { "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Status" },
             -- search
             { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto commands" },
             { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
@@ -531,10 +540,19 @@ return {
         cmd = "Mason",
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         opts = {
-            ensure_installed = { "clang-format", "codelldb", "stylua", "clangd", "lua-language-server", "taplo" },
+            ui = {
+                keymaps = { apply_language_filter = "F" },
+                icons = {
+                    package_installed = "●",
+                    package_pending = "󰦗",
+                    package_uninstalled = "○",
+                },
+            },
+            ensure_installed = { "clang-format", "codelldb", "stylua" },
         },
         config = function(_, opts)
             require("mason").setup(opts)
+
             local mr = require("mason-registry")
             mr:on("package:install:success", function()
                 vim.defer_fn(function()
@@ -547,8 +565,8 @@ return {
             end)
 
             mr.refresh(function()
-                for _, tool in ipairs(opts.ensure_installed) do
-                    local p = mr.get_package(tool)
+                for _, pkg in ipairs(opts.ensure_installed) do
+                    local p = mr.get_package(pkg)
                     if not p:is_installed() then
                         p:install()
                     end
@@ -563,8 +581,9 @@ return {
         dependencies = "williamboman/mason.nvim",
         opts = {
             automatic_installation = { exclude = { "rust_analyzer" } },
-            ensure_installed = { "clangd", "lua_ls", "taplo" },
         },
+        -- Setup will take place during LSP configuration
+        config = function() end,
     },
 
     -- LSP configuration
@@ -574,10 +593,10 @@ return {
         dependencies = { "williamboman/mason-lspconfig.nvim", "saghen/blink.cmp" },
         init = function()
             local icons = {
-                error = "󰯸",
-                warn = "󰰮",
-                hint = "󰰁",
-                info = "󰰄",
+                error = "󰯹",
+                warn = "󰰯",
+                hint = "󰰂",
+                info = "󰰅",
             }
 
             -- diagnostics
@@ -608,6 +627,12 @@ return {
             vim.diagnostic.config(vim.deepcopy(diagnostics))
         end,
         config = function()
+            -- Perf (lazy loading):
+            local spec = require("lazy.core.config").spec.plugins["mason-lspconfig.nvim"]
+            local opts = require("lazy.core.plugin").values(spec, "opts", false)
+
+            require("mason-lspconfig").setup(opts)
+
             require("lspconfig").lua_ls.setup({
                 settings = {
                     Lua = {
@@ -749,6 +774,7 @@ return {
                 cpp = { "clang_format" },
                 lua = { "stylua" },
                 rust = { "rustfmt" },
+                toml = { "taplo" },
             },
             default_format_opts = {
                 lsp_format = "fallback",
@@ -905,11 +931,11 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         dependencies = { "nvim-neotest/nvim-nio" },
-    -- stylua: ignore
-    keys = {
-      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-      { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
-    },
+        -- stylua: ignore
+        keys = {
+            { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
+            { "<leader>de", function() require("dapui").eval() end, desc = "Eval",  mode = { "n", "v" } },
+        },
         opts = {},
         config = function(_, opts)
             local dap = require("dap")
@@ -930,7 +956,7 @@ return {
     -- mason.nvim integration
     {
         "jay-babu/mason-nvim-dap.nvim",
-        dependencies = "mason.nvim",
+        dependencies = "williamboman/mason.nvim",
         cmd = { "DapInstall", "DapUninstall" },
         opts = {
             -- Makes a best effort to setup the various debuggers with
@@ -943,9 +969,7 @@ return {
 
             -- You'll need to check that you have the required things installed
             -- online, please don't ask me how to install them :)
-            ensure_installed = {
-                -- Update this to ensure that you have the debuggers for the langs you want
-            },
+            ensure_installed = { "codelldb" },
         },
         -- mason-nvim-dap is loaded when nvim-dap loads
         config = function() end,
@@ -1015,17 +1039,17 @@ return {
         end,
         -- stylua: ignore
         keys = {
-          {"<leader>t", "", desc = "+test"},
-          { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run file (neotest)" },
-          { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end, desc = "Run all test files (neotest)" },
-          { "<leader>tr", function() require("neotest").run.run() end, desc = "Run nearest (neotest)" },
-          { "<leader>tl", function() require("neotest").run.run_last() end, desc = "Run last (neotest)" },
-          { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle summary (neotest)" },
-          { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show output (neotest)" },
-          { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle output panel (neotest)" },
-          { "<leader>tS", function() require("neotest").run.stop() end, desc = "Stop (neotest)" },
-          { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle watch (neotest)" },
-          { "<leader>td", function() require("neotest").run.run({strategy = "dap"}) end, desc = "Debug nearest" },
+            { "<leader>t",  "", desc = "+test" },
+            { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run file (neotest)" },
+            { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end, desc = "Run all test files (neotest)" },
+            { "<leader>tr", function() require("neotest").run.run() end, desc = "Run nearest (neotest)" },
+            { "<leader>tl", function() require("neotest").run.run_last() end, desc = "Run last (neotest)" },
+            { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle summary (neotest)" },
+            { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show output (neotest)" },
+            { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle output panel (neotest)" },
+            { "<leader>tS", function() require("neotest").run.stop() end, desc = "Stop (neotest)" },
+            { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle watch (neotest)" },
+            { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Debug nearest" },
         },
     },
 

@@ -26,7 +26,7 @@ function M.load()
 
     for _, group in ipairs(groups) do
         group = group.highlight(palette, opts)
-        util.initialise(group)
+        util.initialize(group)
     end
 end
 
