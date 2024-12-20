@@ -759,7 +759,7 @@ return {
                 end,
             })
 
-            require("lspconfig").markdown_oxide.setup({
+            require("lspconfig").marksman.setup({
                 capabilities = vim.tbl_deep_extend(
                     "force",
                     { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } },
