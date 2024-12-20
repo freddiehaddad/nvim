@@ -803,15 +803,8 @@ return {
                     end
 
                     vim.b[bufnr].autoformat = true
-                    Snacks.toggle({
-                        name = "autoformat (buffer)",
-                        get = function()
-                            return vim.b[bufnr].autoformat
-                        end,
-                        set = function(state)
-                            vim.b[bufnr].autoformat = state
-                        end,
-                    }):map("<leader>uf")
+                    -- stylua: ignore
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
                 end,
             })
 
@@ -866,15 +859,8 @@ return {
                     end
 
                     vim.b[bufnr].autoformat = true
-                    Snacks.toggle({
-                        name = "autoformat (buffer)",
-                        get = function()
-                            return vim.b[bufnr].autoformat
-                        end,
-                        set = function(state)
-                            vim.b[bufnr].autoformat = state
-                        end,
-                    }):map("<leader>uf")
+                    -- stylua: ignore
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
                 end,
             })
 
@@ -931,15 +917,8 @@ return {
                     end
 
                     vim.b[bufnr].autoformat = true
-                    Snacks.toggle({
-                        name = "autoformat (buffer)",
-                        get = function()
-                            return vim.b[bufnr].autoformat
-                        end,
-                        set = function(state)
-                            vim.b[bufnr].autoformat = state
-                        end,
-                    }):map("<leader>uf")
+                    -- stylua: ignore
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
                 end,
             })
         end,
