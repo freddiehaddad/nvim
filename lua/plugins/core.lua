@@ -237,6 +237,7 @@ return {
                 { "<leader>d", group = "Debug" },
                 { "<leader>f", group = "File/find" },
                 { "<leader>g", group = "Git" },
+                { "<leader>gh", group = "Hunks" },
                 { "<leader>m", group = "Markdown" },
                 { "<leader>q", group = "Quit/session" },
                 { "<leader>s", group = "Search" },
