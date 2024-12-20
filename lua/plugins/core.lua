@@ -30,6 +30,8 @@ return {
     -- File explorer
     {
         "stevearc/oil.nvim",
+        cmd = "Oil",
+        event = "BufAdd",
         opts = {},
     },
 
@@ -518,7 +520,7 @@ return {
     -- LSP for Cargo.toml
     {
         "Saecki/crates.nvim",
-        event = { "BufRead Cargo.toml" },
+        event = "BufRead Cargo.toml",
         opts = {
             completion = {
                 crates = {
@@ -897,7 +899,7 @@ return {
     {
         "stevearc/conform.nvim",
         dependencies = "williamboman/mason.nvim", -- depdency updates RTP
-        event = { "BufWritePre" },
+        event = "BufWritePre",
         cmd = "ConformInfo",
         init = function()
             vim.opt.formatexpr = "v:lua.require('conform').formatexpr()"
