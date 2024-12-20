@@ -8,7 +8,7 @@ highly opinionated distributions.
 
 ![palette](https://github.com/user-attachments/assets/fec53e1f-a0d6-404c-9342-9173e25daf9f)
 
-https://coolors.co/07090a-101517-1f292d-2a363c-546c78-96938c-707d6d-7c745a-8a9ea0
+<https://coolors.co/07090a-101517-1f292d-2a363c-546c78-96938c-707d6d-7c745a-8a9ea0>
 
 ## Screenshots
 
@@ -68,7 +68,6 @@ https://coolors.co/07090a-101517-1f292d-2a363c-546c78-96938c-707d6d-7c745a-8a9ea
 <summary>Whichkey</summary>
 
 ![whichkey](https://github.com/user-attachments/assets/f58d3155-f21a-4da3-b1f0-6cdc5dbd2de6)
-
 
 </details>
 

@@ -548,7 +548,7 @@ return {
                     package_uninstalled = "○",
                 },
             },
-            ensure_installed = { "clang-format", "codelldb", "stylua" },
+            ensure_installed = { "clang-format", "codelldb", "prettier", "stylua" },
         },
         config = function(_, opts)
             require("mason").setup(opts)
@@ -627,10 +627,9 @@ return {
             vim.diagnostic.config(vim.deepcopy(diagnostics))
         end,
         config = function()
-            -- Perf (lazy loading):
+            -- Perf (lazy loading)
             local spec = require("lazy.core.config").spec.plugins["mason-lspconfig.nvim"]
             local opts = require("lazy.core.plugin").values(spec, "opts", false)
-
             require("mason-lspconfig").setup(opts)
 
             require("lspconfig").lua_ls.setup({
@@ -659,18 +658,16 @@ return {
                         diagnostics = { disable = { "missing-fields" } },
                     },
                 },
-                capabilities = vim.tbl_deep_extend("force", {
-                    workspace = {
-                        fileOperations = {
-                            didRename = true,
-                            willRename = true,
-                        },
-                    },
-                }, vim.lsp.protocol.make_client_capabilities(), require("blink.cmp").get_lsp_capabilities()),
-                -- stylua: ignore
-                ---@diagnostic disable-next-line: unused-local
+                capabilities = vim.tbl_deep_extend(
+                    "force",
+                    { workspace = { fileOperations = { didRename = true, willRename = true } } },
+                    vim.lsp.protocol.make_client_capabilities(),
+                    require("blink.cmp").get_lsp_capabilities()
+                ),
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
+
+                    -- stylua: ignore start
                     local map = vim.keymap.set
                     map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to definition" })
                     map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, silent = true, nowait = true, desc = "References" })
@@ -692,14 +689,22 @@ return {
 
                     map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
                     map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
+                    -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
-                    -- vim.lsp.codelens.refresh()
-                    -- vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-                    --     buffer = bufnr,
-                    --     callback = vim.lsp.codelens.refresh,
-                    -- })
+                    if client.server_capabilities.codeLensProvider then
+                        -- stylua: ignore start
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
+                        -- stylua: ignore end
+
+                        vim.lsp.codelens.refresh()
+                        vim.api.nvim_create_autocmd(
+                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
+                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
+                        )
+                    end
                 end,
             })
 
@@ -710,10 +715,10 @@ return {
                     vim.lsp.protocol.make_client_capabilities(),
                     require("blink.cmp").get_lsp_capabilities()
                 ),
-                -- stylua: ignore
-                ---@diagnostic disable-next-line: unused-local
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
+
+                    -- stylua: ignore start
                     local map = vim.keymap.set
                     map("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, silent = true, desc = "Go to definition" })
                     map("n", "gr", vim.lsp.buf.references, { buffer = bufnr, silent = true, nowait = true, desc = "References" })
@@ -725,26 +730,85 @@ return {
                     map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, silent = true, desc = "Hover" })
 
                     map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = "Code action" })
-                    -- map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
                     map("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", { buffer = bufnr, silent = true, desc = "Switch source/header" })
                     map("n", "<leader>ci", "<cmd>ClangdShowSymbolInfo<cr>", { buffer = bufnr, silent = true, desc = "Symbol information" })
                     map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, silent = true, desc = "LSP information" })
                     map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, silent = true, desc = "Rename buffer" })
 
                     map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, silent = true, desc = "Source action" })
-                    -- map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
+                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, silent = true, desc = "Rename file" })
+
+                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
+                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
+                    -- stylua: ignore end
+
+                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+
+                    if client.server_capabilities.codeLensProvider then
+                        -- stylua: ignore start
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
+                        -- stylua: ignore end
+
+                        vim.lsp.codelens.refresh()
+                        vim.api.nvim_create_autocmd(
+                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
+                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
+                        )
+                    end
+                end,
+            })
+
+            require("lspconfig").markdown_oxide.setup({
+                capabilities = vim.tbl_deep_extend(
+                    "force",
+                    { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } },
+                    vim.lsp.protocol.make_client_capabilities(),
+                    require("blink.cmp").get_lsp_capabilities()
+                ),
+                on_attach = function(client, bufnr)
+                    -- vim.notify(vim.inspect(client))
+
+                    -- stylua: ignore start
+                    local map = vim.keymap.set
+                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to definition" })
+                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, silent = true, nowait = true, desc = "References" })
+                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to type definition" })
+                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, silent = true, desc = "Go to declaration" })
+                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to implementation" })
+                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, silent = true, desc = "Signature help" })
+
+                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, silent = true, desc = "Hover" })
+
+                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = "Code action" })
+                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, silent = true, desc = "LSP information" })
+                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, silent = true, desc = "Rename buffer" })
+
+                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, silent = true, desc = "Source action" })
                     map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, silent = true, desc = "Rename file" })
 
                     map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
                     map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
 
+                    map("n", "<leader>mp", "<cmd>Markview splitToggle<cr>", { buffer = bufnr, silent = true, desc = "Markdown preview" })
+                    map("n", "<leader>mt", "<cmd>Markview toggle<cr>", { buffer = bufnr, silent = true, desc = "Markdown toggle" })
+                    map("n", "<leader>mT", "<cmd>Markview toggleAll<cr>", { buffer = bufnr, silent = true, desc = "Markdown toggle all" })
+                    -- stylua: ignore end
+
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
-                    -- vim.lsp.codelens.refresh()
-                    -- vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-                    --     buffer = bufnr,
-                    --     callback = vim.lsp.codelens.refresh,
-                    -- })
+                    if client.server_capabilities.codeLensProvider then
+                        -- stylua: ignore start
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
+                        -- stylua: ignore end
+
+                        vim.lsp.codelens.refresh()
+                        vim.api.nvim_create_autocmd(
+                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
+                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
+                        )
+                    end
                 end,
             })
         end,
@@ -773,6 +837,7 @@ return {
                 c = { "clang_format" },
                 cpp = { "clang_format" },
                 lua = { "stylua" },
+                markdown = { "prettier" },
                 rust = { "rustfmt" },
                 toml = { "taplo" },
             },
@@ -1060,23 +1125,6 @@ return {
             initial_state = false,
         },
         ft = "markdown",
-        keys = {
-            {
-                "<leader>up",
-                "<cmd>Markview splitToggle<cr>",
-                desc = "Markdown preview",
-            },
-            {
-                "<leader>ut",
-                "<cmd>Markview toggle<cr>",
-                desc = "Markdown toggle",
-            },
-            {
-                "<leader>uT",
-                "<cmd>Markview toggleAll<cr>",
-                desc = "Markdown toggle all",
-            },
-        },
     },
 }
 
