@@ -198,28 +198,29 @@ return {
             icons = { separator = ":" },
             spec = {
                 mode = { "n", "v" },
-                { "<leader>c", group = "code" },
-                { "<leader>d", group = "debug" },
-                { "<leader>f", group = "file/find" },
-                { "<leader>g", group = "git" },
-                { "<leader>q", group = "quit/session" },
-                { "<leader>s", group = "search" },
-                { "<leader>u", group = "ui" },
-                { "<leader>x", group = "diagnostics/quickfix" },
-                { "z", group = "folds/jumps/spelling" },
-                { "g", group = "goto/actions" },
-                { "[", group = "prev" },
-                { "]", group = "next" },
+                { "<leader>c", group = "Code" },
+                { "<leader>d", group = "Debug" },
+                { "<leader>f", group = "File/find" },
+                { "<leader>g", group = "Git" },
+                { "<leader>m", group = "Markdown" },
+                { "<leader>q", group = "Quit/session" },
+                { "<leader>s", group = "Search" },
+                { "<leader>u", group = "Ui" },
+                { "<leader>x", group = "Diagnostics/quickfix" },
+                { "z", group = "Folds/jumps/spelling" },
+                { "g", group = "Goto/actions" },
+                { "[", group = "Prev" },
+                { "]", group = "Next" },
                 {
                     "<leader>b",
-                    group = "buffer",
+                    group = "Buffer",
                     expand = function()
                         return require("which-key.extras").expand.buf()
                     end,
                 },
                 {
                     "<leader>w",
-                    group = "windows",
+                    group = "Windows",
                     proxy = "<c-w>",
                     expand = function()
                         return require("which-key.extras").expand.win()
@@ -347,8 +348,14 @@ return {
         },
         opts = function()
             local actions = require("telescope.actions")
+            local open_with_trouble = function(...)
+                return require("trouble.sources.telescope").open(...)
+            end
             return {
                 defaults = {
+                    prompt_prefix = " ",
+                    selection_caret = " ",
+                    multi_icon = " ",
                     -- use square corners
                     borderchars = {
                         "─",
@@ -365,6 +372,10 @@ return {
                             ["<C-f>"] = actions.preview_scrolling_down,
                             ["<C-b>"] = actions.preview_scrolling_up,
                             ["<c-h>"] = "select_horizontal",
+                            ["<c-t>"] = open_with_trouble,
+                        },
+                        n = {
+                            ["q"] = actions.close,
                         },
                     },
                 },
@@ -374,6 +385,55 @@ return {
             require("telescope").setup(opts)
             require("telescope").load_extension("fzf")
         end,
+    },
+
+    -- Better diagnostics list and others
+    {
+        "folke/trouble.nvim",
+        cmd = { "Trouble" },
+        opts = {
+            modes = {
+                lsp = {
+                    win = { position = "right" },
+                },
+            },
+        },
+        keys = {
+            { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (trouble)" },
+            { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer diagnostics (trouble)" },
+            { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (trouble)" },
+            { "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (trouble)" },
+            { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location list (trouble)" },
+            { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix list (trouble)" },
+            {
+                "[q",
+                function()
+                    if require("trouble").is_open() then
+                        require("trouble").prev({ skip_groups = true, jump = true }, {})
+                    else
+                        local ok, err = pcall(vim.cmd.cprev)
+                        if not ok then
+                            vim.notify(err, vim.log.levels.ERROR)
+                        end
+                    end
+                end,
+                desc = "Previous Trouble/Quickfix item",
+            },
+            {
+                "]q",
+                function()
+                    if require("trouble").is_open() then
+                        require("trouble").next({ skip_groups = true, jump = true }, {})
+                    else
+                        local ok, err = pcall(vim.cmd.cnext)
+                        if not ok then
+                            vim.notify(err, vim.log.levels.ERROR)
+                        end
+                    end
+                end,
+                desc = "Next Trouble/Quickfix item",
+            },
+        },
     },
 
     -- Syntax highlighting and code parsing
@@ -472,10 +532,10 @@ return {
                     map("n", "<leader>dn", function() vim.cmd.RustLsp("debug") end, { desc = "Debug nearest", buffer = bufnr })
                     map("n", "<leader>dR", function() vim.cmd.RustLsp("debuggables") end, { desc = "Rust debuggables ", buffer = bufnr })
 
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
+                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
+                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
 
-                    map({ "n", "v" }, "<leader>ca", function() vim.cmd.RustLsp("codeAction") end, { buffer = bufnr, silent = true, desc = "Code action" })
+                    map({ "n", "v" }, "<leader>ca", function() vim.cmd.RustLsp("codeAction") end, { buffer = bufnr, desc = "Code action" })
                 end,
                 default_settings = {
                     -- rust-analyzer language server configuration
@@ -669,34 +729,34 @@ return {
 
                     -- stylua: ignore start
                     local map = vim.keymap.set
-                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to definition" })
-                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, silent = true, nowait = true, desc = "References" })
-                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, silent = true, desc = "Go to declaration" })
-                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, silent = true, desc = "Signature help" })
+                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
+                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
+                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
+                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
+                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
+                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
 
-                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, silent = true, desc = "Hover" })
+                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, desc = "Hover" })
 
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = "Code action" })
-                    -- map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, silent = true, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, silent = true, desc = "Rename buffer" })
+                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
+                    -- map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
+                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
+                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
 
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, silent = true, desc = "Source action" })
-                    -- map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, silent = true, desc = "Rename file" })
+                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
+                    -- map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
 
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
+                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
+                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
                         -- stylua: ignore end
 
                         vim.lsp.codelens.refresh()
@@ -720,34 +780,34 @@ return {
 
                     -- stylua: ignore start
                     local map = vim.keymap.set
-                    map("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, silent = true, desc = "Go to definition" })
-                    map("n", "gr", vim.lsp.buf.references, { buffer = bufnr, silent = true, nowait = true, desc = "References" })
-                    map("n", "gy", vim.lsp.buf.type_definition, { buffer = bufnr, silent = true, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, silent = true, desc = "Go to declaration" })
-                    map("n", "gI", vim.lsp.buf.implementation, { buffer = bufnr, silent = true, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, silent = true, desc = "Signature help" })
+                    map("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+                    map("n", "gr", vim.lsp.buf.references, { buffer = bufnr, nowait = true, desc = "References" })
+                    map("n", "gy", vim.lsp.buf.type_definition, { buffer = bufnr, desc = "Go to type definition" })
+                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
+                    map("n", "gI", vim.lsp.buf.implementation, { buffer = bufnr, desc = "Go to implementation" })
+                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
 
-                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, silent = true, desc = "Hover" })
+                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, desc = "Hover" })
 
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = "Code action" })
-                    map("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", { buffer = bufnr, silent = true, desc = "Switch source/header" })
-                    map("n", "<leader>ci", "<cmd>ClangdShowSymbolInfo<cr>", { buffer = bufnr, silent = true, desc = "Symbol information" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, silent = true, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, silent = true, desc = "Rename buffer" })
+                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
+                    map("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", { buffer = bufnr, desc = "Switch source/header" })
+                    map("n", "<leader>ci", "<cmd>ClangdShowSymbolInfo<cr>", { buffer = bufnr, desc = "Symbol information" })
+                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
+                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
 
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, silent = true, desc = "Source action" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, silent = true, desc = "Rename file" })
+                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
+                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
 
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
+                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
+                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
                         -- stylua: ignore end
 
                         vim.lsp.codelens.refresh()
@@ -771,36 +831,36 @@ return {
 
                     -- stylua: ignore start
                     local map = vim.keymap.set
-                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to definition" })
-                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, silent = true, nowait = true, desc = "References" })
-                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, silent = true, desc = "Go to declaration" })
-                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, silent = true, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, silent = true, desc = "Signature help" })
+                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
+                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
+                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
+                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
+                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
+                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
 
-                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, silent = true, desc = "Hover" })
+                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, desc = "Hover" })
 
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, silent = true, desc = "Code action" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, silent = true, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, silent = true, desc = "Rename buffer" })
+                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
+                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
+                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
 
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, silent = true, desc = "Source action" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, silent = true, desc = "Rename file" })
+                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
+                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
 
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, silent = true, desc = "Symbols (workspace)" })
+                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
+                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
 
-                    map("n", "<leader>mp", "<cmd>Markview splitToggle<cr>", { buffer = bufnr, silent = true, desc = "Markdown preview" })
-                    map("n", "<leader>mt", "<cmd>Markview toggle<cr>", { buffer = bufnr, silent = true, desc = "Markdown toggle" })
-                    map("n", "<leader>mT", "<cmd>Markview toggleAll<cr>", { buffer = bufnr, silent = true, desc = "Markdown toggle all" })
+                    map("n", "<leader>mp", "<cmd>Markview splitToggle<cr>", { buffer = bufnr, desc = "Markdown preview" })
+                    map("n", "<leader>mt", "<cmd>Markview toggle<cr>", { buffer = bufnr, desc = "Markdown toggle" })
+                    map("n", "<leader>mT", "<cmd>Markview toggleAll<cr>", { buffer = bufnr, desc = "Markdown toggle all" })
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, silent = true, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, silent = true, desc = "Run codelens" })
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
                         -- stylua: ignore end
 
                         vim.lsp.codelens.refresh()
