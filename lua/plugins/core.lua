@@ -91,10 +91,10 @@ return {
                         {
                             "filename",
                             symbols = {
-                                modified = "󰯹",
-                                readonly = "󰰠",
-                                unnamed = "󰰩",
-                                newfile = "󰰔",
+                                modified = "󰯹 ",
+                                readonly = "󰰠 ",
+                                unnamed = "󰰩 ",
+                                newfile = "󰰔 ",
                             },
                             padding = 0,
                         },
@@ -161,6 +161,20 @@ return {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
+        init = function()
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "VeryLazy",
+                callback = function()
+                    -- Create some toggle mappings
+                    Snacks.toggle.animate():map("<leader>ua")
+                    Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
+                    Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
+                    Snacks.toggle.line_number():map("<leader>ul")
+                    Snacks.toggle.scroll():map("<leader>uS")
+                    Snacks.toggle.option("relativenumber", { name = "relative number" }):map("<leader>uL")
+                end,
+            })
+        end,
         opts = {
             dashboard = {
                 width = 47,
@@ -194,11 +208,11 @@ return {
             notifier = {
                 enabled = true,
                 icons = {
-                    error = "󰯸",
-                    warn = "󰰮",
-                    info = "󰰄",
-                    debug = "󰯵",
-                    trace = "󰰥",
+                    error = "󰯸 ",
+                    warn = "󰰮 ",
+                    info = "󰰄 ",
+                    debug = "󰯵 ",
+                    trace = "󰰥 ",
                 },
             },
             scroll = { enabled = true },
@@ -624,9 +638,9 @@ return {
             ui = {
                 keymaps = { apply_language_filter = "F" },
                 icons = {
-                    package_installed = "●",
-                    package_pending = "󰦗",
-                    package_uninstalled = "○",
+                    package_installed = "● ",
+                    package_pending = "󰦗 ",
+                    package_uninstalled = "○ ",
                 },
             },
             ensure_installed = { "clang-format", "codelldb", "prettier", "stylua" },
@@ -674,10 +688,10 @@ return {
         dependencies = { "williamboman/mason-lspconfig.nvim", "saghen/blink.cmp" },
         init = function()
             local icons = {
-                error = "󰯹",
-                warn = "󰰯",
-                hint = "󰰂",
-                info = "󰰅",
+                error = "󰯹 ",
+                warn = "󰰯 ",
+                hint = "󰰂 ",
+                info = "󰰅 ",
             }
 
             -- diagnostics
@@ -787,6 +801,17 @@ return {
                             { buffer = bufnr, callback = vim.lsp.codelens.refresh }
                         )
                     end
+
+                    vim.b[bufnr].autoformat = true
+                    Snacks.toggle({
+                        name = "autoformat (buffer)",
+                        get = function()
+                            return vim.b[bufnr].autoformat
+                        end,
+                        set = function(state)
+                            vim.b[bufnr].autoformat = state
+                        end,
+                    }):map("<leader>uf")
                 end,
             })
 
@@ -839,6 +864,17 @@ return {
                             { buffer = bufnr, callback = vim.lsp.codelens.refresh }
                         )
                     end
+
+                    vim.b[bufnr].autoformat = true
+                    Snacks.toggle({
+                        name = "autoformat (buffer)",
+                        get = function()
+                            return vim.b[bufnr].autoformat
+                        end,
+                        set = function(state)
+                            vim.b[bufnr].autoformat = state
+                        end,
+                    }):map("<leader>uf")
                 end,
             })
 
@@ -893,6 +929,17 @@ return {
                             { buffer = bufnr, callback = vim.lsp.codelens.refresh }
                         )
                     end
+
+                    vim.b[bufnr].autoformat = true
+                    Snacks.toggle({
+                        name = "autoformat (buffer)",
+                        get = function()
+                            return vim.b[bufnr].autoformat
+                        end,
+                        set = function(state)
+                            vim.b[bufnr].autoformat = state
+                        end,
+                    }):map("<leader>uf")
                 end,
             })
         end,
@@ -928,7 +975,12 @@ return {
             default_format_opts = {
                 lsp_format = "fallback",
             },
-            format_on_save = { timeout_ms = 500 },
+            format_on_save = function(bufnr)
+                -- set during lsp config
+                if vim.b[bufnr].autoformat then
+                    return { time_ms = 500, lsp_format = "fallback" }
+                end
+            end,
         },
     },
 
