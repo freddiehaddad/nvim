@@ -27,6 +27,12 @@ return {
         end,
     },
 
+    -- File explorer
+    {
+        "stevearc/oil.nvim",
+        opts = {},
+    },
+
     -- Statusline
     {
         "nvim-lualine/lualine.nvim",
@@ -67,6 +73,7 @@ return {
                         inactive = { "StatusLine" },
                     },
                 },
+                extensions = { "lazy", "mason", "nvim-dap-ui", "oil", "trouble", "quickfix" },
                 sections = {
                     lualine_a = {
                         {
