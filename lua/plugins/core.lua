@@ -167,11 +167,11 @@ return {
                 callback = function()
                     -- Create some toggle mappings
                     Snacks.toggle.animate():map("<leader>ua")
-                    Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
-                    Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
                     Snacks.toggle.line_number():map("<leader>ul")
-                    Snacks.toggle.scroll():map("<leader>uS")
                     Snacks.toggle.option("relativenumber", { name = "relative number" }):map("<leader>uL")
+                    Snacks.toggle.option("spell", { name = "spelling" }):map("<leader>us")
+                    Snacks.toggle.scroll():map("<leader>uS")
+                    Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
                 end,
             })
         end,
@@ -479,6 +479,7 @@ return {
             ensure_installed = {
                 "c",
                 "cpp",
+                "cmake",
                 "html",
                 "lua",
                 "markdown",
@@ -714,9 +715,9 @@ return {
                         workspace = {
                             checkThirdParty = false,
                         },
-                        -- codeLens = {
-                        --     enable = true,
-                        -- },
+                        codeLens = {
+                            enable = true,
+                        },
                         completion = {
                             callSnippet = "Replace",
                         },
@@ -731,7 +732,6 @@ return {
                             semicolon = "Disable",
                             arrayIndex = "Disable",
                         },
-                        diagnostics = { disable = { "missing-fields" } },
                     },
                 },
                 capabilities = vim.tbl_deep_extend(
@@ -755,12 +755,80 @@ return {
                     map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, desc = "Hover" })
 
                     map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-                    -- map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
                     map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
                     map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
 
                     map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-                    -- map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
+
+                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
+                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
+                    -- stylua: ignore end
+
+                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    if client.server_capabilities.codeLensProvider then
+                        -- stylua: ignore start
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
+                        -- stylua: ignore end
+
+                        vim.lsp.codelens.refresh()
+                        vim.api.nvim_create_autocmd(
+                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
+                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
+                        )
+                    end
+
+                    vim.b[bufnr].autoformat = true
+                    -- stylua: ignore
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
+                end,
+            })
+
+            require("lspconfig").neocmake.setup({
+                init_options = {
+                    format = {
+                        enable = true,
+                    },
+                    lint = {
+                        enable = true,
+                    },
+                    scan_cmake_in_package = true,
+                    semantic_token = false,
+                },
+                capabilities = vim.tbl_deep_extend("force", {
+                    workspace = {
+                        didChangeWatchedFiles = { dynamicRegistration = true, relative_pattern_support = true },
+                    },
+                    textDocument = {
+                        completion = {
+                            completionItem = {
+                                snippetSupport = true,
+                            },
+                        },
+                    },
+                }, vim.lsp.protocol.make_client_capabilities(), require("blink.cmp").get_lsp_capabilities()),
+                on_attach = function(client, bufnr)
+                    -- vim.notify(vim.inspect(client))
+
+                    -- stylua: ignore start
+                    local map = vim.keymap.set
+                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
+                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
+                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
+                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
+                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
+                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
+
+                    map("n", "K", function() return vim.lsp.buf.hover() end, { buffer = bufnr, desc = "Hover" })
+
+                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
+                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
+                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
+
+                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
                     map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
 
                     map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
@@ -817,7 +885,6 @@ return {
                     map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
 
                     map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
 
                     map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
                     map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
@@ -912,7 +979,7 @@ return {
         event = "BufWritePre",
         cmd = "ConformInfo",
         init = function()
-            vim.opt.formatexpr = "v:lua.require('conform').formatexpr()"
+            vim.o.formatexpr = "v:lua.require('conform').formatexpr()"
         end,
         keys = {
             {
@@ -938,7 +1005,7 @@ return {
             format_on_save = function(bufnr)
                 -- set during lsp config
                 if vim.b[bufnr].autoformat then
-                    return { time_ms = 500, lsp_format = "fallback" }
+                    return { time_ms = 3000, lsp_format = "fallback" }
                 end
             end,
         },
