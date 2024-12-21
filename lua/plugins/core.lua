@@ -1052,7 +1052,11 @@ return {
     {
         "j-hui/fidget.nvim",
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-        opts = {},
+        opts = {
+            notification = {
+                window = { normal_hl = "", border_hl = "", border = "single", winblend = 0 },
+            },
+        },
     },
 
     -- Debugging (DAP)
