@@ -32,7 +32,9 @@ return {
         "stevearc/oil.nvim",
         cmd = "Oil",
         event = "BufAdd",
-        opts = {},
+        opts = {
+            default_file_explorer = false,
+        },
     },
 
     -- Statusline
@@ -544,17 +546,55 @@ return {
             },
             server = {
                 -- stylua: ignore
-                ---@diagnostic disable-next-line: unused-local
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
+
+                    -- stylua: ignore start
                     local map = vim.keymap.set
-                    map("n", "<leader>dn", function() vim.cmd.RustLsp("debug") end, { desc = "Debug nearest", buffer = bufnr })
-                    map("n", "<leader>dR", function() vim.cmd.RustLsp("debuggables") end, { desc = "Rust debuggables ", buffer = bufnr })
+                    map("n", "<leader>dn", "<cmd>RustLsp debug<cr>", { desc = "Debug nearest", buffer = bufnr })
+                    map("n", "<leader>dR", "<cmd>RustLsp debuggables<cr>", { desc = "Rust debuggables ", buffer = bufnr })
+
+                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
+                    map("n", "gr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
+                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
+                    map("n", "gC", "<cmd>RustLsp opencargo<cr>", { buffer = bufnr, desc = "Open Cargo.toml" })
+                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
+                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
+                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
+
+                    map("n", "K", "<cmd>RustLsp hover actions<cr>", { buffer = bufnr, desc = "Hover" })
+
+                    map({ "n", "v" }, "<leader>ca", "<cmd>RustLsp codeAction<cr>", { buffer = bufnr, desc = "Code action" })
+                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
+                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
+
+                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
+                    map({ "n", "v" }, "J", "<cmd>RustLsp joinLines<cr>", { buffer = bufnr, desc = "Join lines" })
+                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
 
                     map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
                     map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
+                    -- stylua: ignore end
 
-                    map({ "n", "v" }, "<leader>ca", function() vim.cmd.RustLsp("codeAction") end, { buffer = bufnr, desc = "Code action" })
+                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    if client.server_capabilities.codeLensProvider then
+                        -- stylua: ignore start
+                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
+                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
+                        -- stylua: ignore end
+
+                        vim.lsp.codelens.refresh()
+                        vim.api.nvim_create_autocmd(
+                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
+                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
+                        )
+                    end
+
+                    vim.b[bufnr].autoformat = true
+                    -- stylua: ignore
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
                 end,
                 default_settings = {
                     -- rust-analyzer language server configuration
@@ -1106,6 +1146,7 @@ return {
             { "<leader>ds", function() require("dap").session() end, desc = "Session" },
             { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
             { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+            { "<leader>dX", "<cmd>DapClearBreakpoints<cr>", desc = "Clear breakpoints" },
         },
         config = function()
             -- Setup mason-nvim-dap here
