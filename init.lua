@@ -141,7 +141,7 @@ map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add commen
 map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add comment above" })
 
 -- lazy
-map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>pl", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- New file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New file" })

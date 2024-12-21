@@ -189,6 +189,7 @@ return {
                         { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
                         { icon = " ", key = "s", desc = "Restore Session", section = "session" },
                         { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+                        { icon = "󱌢 ", key = "m", desc = "Mason", action = ":Mason" },
                         { icon = " ", key = "q", desc = "Quit", action = ":qa" },
                         -- stylua: ignore end
                     },
@@ -239,6 +240,7 @@ return {
                 { "<leader>g", group = "Git" },
                 { "<leader>gh", group = "Hunks" },
                 { "<leader>m", group = "Markdown" },
+                { "<leader>p", group = "Plugins" },
                 { "<leader>q", group = "Quit/session" },
                 { "<leader>s", group = "Search" },
                 { "<leader>u", group = "Ui" },
@@ -615,7 +617,7 @@ return {
         "williamboman/mason.nvim",
         build = ":MasonUpdate",
         cmd = "Mason",
-        keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+        keys = { { "<leader>pm", "<cmd>Mason<cr>", desc = "Mason" } },
         opts = {
             ui = {
                 keymaps = { apply_language_filter = "F" },
