@@ -1,5 +1,6 @@
 local M = {}
 
+---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
         -- code
@@ -14,7 +15,7 @@ function M.highlight(palette, opts)
         String = { fg = palette.fg4 },
 
         Struct = { fg = palette.fg3 },
-        Structure = { link = 'Struct' },
+        Structure = { link = "Struct" },
 
         Keyword = { fg = palette.fg3 },
 
@@ -27,22 +28,22 @@ function M.highlight(palette, opts)
         Exception = { fg = palette.fg2 },
         Function = { fg = palette.fg3 },
         Statement = { fg = palette.fg4 },
-        Variable = { fg = palette.fg5 },
+        Variable = { fg = palette.fg4 },
 
         Label = { fg = palette.fg4 },
 
-        Repeat = { link = 'Normal' },
-        Include = { link = 'Normal' },
-        PreProc = { link = 'Normal' },
-        Define = { link = 'Normal' },
-        Macro = { link = 'Normal' },
-        PreCondit = { link = 'Normal' },
-        StorageClass = { link = 'Normal' },
-        Typedef = { link = 'Normal' },
-        Method = { link = 'Normal' },
+        Repeat = { link = "Normal" },
+        Include = { link = "Normal" },
+        PreProc = { link = "Normal" },
+        Define = { link = "Normal" },
+        Macro = { link = "Normal" },
+        PreCondit = { link = "Normal" },
+        StorageClass = { link = "Normal" },
+        Typedef = { link = "Normal" },
+        Method = { link = "Normal" },
 
         --errors
-        ErrorMsg = { fg = palette.fg4 },
+        ErrorMsg = { fg = palette.fg5 },
         WarningMsg = { fg = palette.fg4 },
 
         --spell
@@ -52,16 +53,17 @@ function M.highlight(palette, opts)
         SpellRare = { fg = palette.fg4, underline = true },
 
         --markdown
-        ['@markup.link.markdown_inline'] = { link = 'String' },
-        ['@markup.link.label.markdown'] = { fg = palette.fg3 },
-        ['@markup.link.label.markdown_inline'] = { fg = palette.fg3 },
-        ['@lsp.type.class.markdown'] = { fg = palette.fg3 },
+        ["@markup.italic"] = { italic = false },
+        ["@markup.link.markdown_inline"] = { link = "String" },
+        ["@markup.link.label.markdown"] = { fg = palette.fg3 },
+        ["@markup.link.label.markdown_inline"] = { fg = palette.fg3 },
+        ["@lsp.type.class.markdown"] = { fg = palette.fg3 },
 
         -- treesitter
-        ['@constructor'] = { link = 'Struct' },
-        ['@keyword'] = { link = 'Keyword' },
-        ['@variable'] = { link = 'Variable' },
-        ['@variable.parameter'] = { link = 'Label' },
+        ["@constructor"] = { link = "Struct" },
+        ["@keyword"] = { link = "Keyword" },
+        ["@variable"] = { link = "Variable" },
+        ["@variable.parameter"] = { link = "Label" },
     }
 end
 
