@@ -1068,6 +1068,7 @@ return {
             signature = { enabled = true },
             completion = {
                 documentation = { auto_show = true },
+                ghost_text = { enabled = true },
             },
         },
     },
