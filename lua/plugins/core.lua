@@ -126,7 +126,19 @@ return {
                         },
                     },
                     lualine_x = {},
-                    lualine_y = {},
+                    lualine_y = {
+                        {
+                            "macro",
+                            fmt = function()
+                                local reg = vim.fn.reg_recording()
+                                if reg == "" then
+                                    return ""
+                                end
+                                return "󰑊 " .. reg
+                            end,
+                            padding = { right = 2 },
+                        },
+                    },
                     lualine_z = { { "location", padding = { right = 1 } }, { "progress", padding = 0 } },
                 },
                 inactive_sections = {
