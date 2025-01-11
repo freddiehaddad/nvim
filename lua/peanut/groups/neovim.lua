@@ -3,11 +3,6 @@ local M = {}
 ---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
-        -- TODO:
-        -- Need to identify these highlight groups
-        VisualNC = { fg = "#ff0000" },
-        -- TODO:
-
         Normal = { fg = palette.fg2 },
         Bold = { bold = true },
         Italic = { italic = false },
@@ -25,7 +20,7 @@ function M.highlight(palette, opts)
 
         MatchParen = { fg = palette.fg5 },
 
-        LineNr = { fg = palette.fg1 },
+        LineNr = { fg = palette.bg4 },
         LineNrAbove = { link = "LineNr" },
         LineNrBelow = { link = "LineNr" },
 
@@ -62,7 +57,11 @@ function M.highlight(palette, opts)
         -- files / folders
         Directory = { fg = palette.fg1 },
 
+        -- Highlight groups haven't seen used but are defined.
+        Error = { bg = palette.fg5, fg = palette.bg1 },
+        NvimInternalError = { link = "Error" },
         Question = { fg = palette.fg1 },
+        VisualNC = { fg = "#ff0000" },
     }
 end
 
