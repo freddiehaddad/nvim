@@ -61,6 +61,8 @@ function M.highlight(palette, opts)
 
         -- files / folders
         Directory = { fg = palette.fg1 },
+
+        Question = { fg = palette.fg1 },
     }
 end
 
