@@ -4,7 +4,7 @@ local colors = {
     bg3 = "#1f292d", -- scrollbar (used for PemnuSbar, etc.)
     bg4 = "#2a363c",
 
-    fg1 = "#648290",
+    fg1 = "#5c7884",
     fg2 = "#a8a59f",
     fg3 = "#7f8d7c",
     fg4 = "#8e8567",
