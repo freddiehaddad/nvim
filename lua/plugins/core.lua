@@ -90,7 +90,7 @@ return {
                         },
                     },
                     lualine_b = {
-                        { "filetype", icon_only = true, padding = { left = 2 } },
+                        { "filetype", icon_only = true, padding = { left = 2 }, color = "StatusLine" },
                         {
                             "filename",
                             symbols = {
@@ -100,6 +100,7 @@ return {
                                 newfile = "󰰔 ",
                             },
                             padding = 0,
+                            color = "StatusLine",
                         },
                     },
                     lualine_c = {
@@ -137,12 +138,19 @@ return {
                                 return "󰑊 " .. reg
                             end,
                             padding = { right = 2 },
+                            color = "StatusLine",
                         },
                     },
-                    lualine_z = { { "location", padding = { right = 1 } }, { "progress", padding = 0 } },
+                    lualine_z = {
+                        { "location", padding = { right = 1 }, color = "StatusLine" },
+                        { "progress", padding = 0, color = "StatusLine" },
+                    },
                 },
                 inactive_sections = {
-                    lualine_a = { { "filetype", icon_only = true, padding = 0 }, { "filename", padding = 0 } },
+                    lualine_a = {
+                        { "filetype", icon_only = true, padding = 0, color = "StatusLine" },
+                        { "filename", padding = 0, color = "StatusLine" },
+                    },
                     lualine_b = {},
                     lualine_c = {},
                     lualine_x = {},
