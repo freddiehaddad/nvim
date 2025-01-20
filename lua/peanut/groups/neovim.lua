@@ -38,6 +38,7 @@ function M.highlight(palette, opts)
 
         NormalFloat = { bg = palette.bg2 },
         FloatBorder = { fg = palette.fg1, bg = palette.bg2 },
+        FloatTitle = { bg = palette.bg2 },
 
         Pmenu = { fg = palette.fg2, bg = palette.bg2 },
         PmenuSel = { bg = palette.bg3 },
