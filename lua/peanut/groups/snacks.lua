@@ -3,6 +3,7 @@ local M = {}
 ---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
+        SnacksBackdrop = { link = "Float" },
         SnacksNotifierHistory = { bg = palette.bg2 },
 
         -- SnacksNormal	NormalFloat	-- Normal for the float window
