@@ -40,6 +40,9 @@ function M.highlight(palette, opts)
         FloatBorder = { fg = palette.fg1, bg = palette.bg2 },
         FloatTitle = { bg = palette.bg2 },
 
+        Folded = { bg = palette.bg2, fg = palette.fg1 },
+        QuickFixLine = { fg = palette.fg4 },
+
         Pmenu = { fg = palette.fg2, bg = palette.bg2 },
         PmenuSel = { bg = palette.bg3 },
         PmenuKind = { link = "Pmenu" },
