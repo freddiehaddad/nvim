@@ -8,8 +8,6 @@ function M.highlight(palette, opts)
         StatusLineSeparator = { link = "StatusLine" },
         StatusLineTerm = { link = "StatusLine" },
         StatusLineTermNC = { link = "StatusLine" },
-
-        FelineComponent = { link = "StatusLine" },
     }
 end
 
