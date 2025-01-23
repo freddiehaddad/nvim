@@ -3,9 +3,7 @@ local M = {}
 ---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
-        SnacksBackdrop = { link = "Float" },
         SnacksNotifierHistory = { bg = palette.bg2 },
-
         -- SnacksNormal	NormalFloat	-- Normal for the float window
         -- SnacksWinBar	Title	-- Title of the window
         -- SnacksBackdrop	none	-- Backdrop
@@ -13,26 +11,26 @@ function M.highlight(palette, opts)
         -- SnacksWinBarNC	SnacksWinBar	-- Title for non-current windows
         -- SnacksScratchKey	DiagnosticVirtualText	-- Keymap help in the footer
         -- SnacksScratchDesc	DiagnosticInfo	-- Keymap help desc in the footer
-        -- SnacksNotifierInfo	none	-- Notification window for Info
-        -- SnacksNotifierWarn	none	-- Notification window for Warn
-        -- SnacksNotifierDebug	none	-- Notification window for Debug
-        -- SnacksNotifierError	none	-- Notification window for Error
-        -- SnacksNotifierTrace	none	-- Notification window for Trace
-        -- SnacksNotifierIconInfo	none	-- Icon for Info notification
-        -- SnacksNotifierIconWarn	none	-- Icon for Warn notification
-        -- SnacksNotifierIconDebug	none	-- Icon for Debug notification
-        -- SnacksNotifierIconError	none	-- Icon for Error notification
-        -- SnacksNotifierIconTrace	none	-- Icon for Trace notification
-        -- SnacksNotifierTitleInfo	none	-- Title for Info notification
-        -- SnacksNotifierTitleWarn	none	-- Title for Warn notification
-        -- SnacksNotifierTitleDebug	none	-- Title for Debug notification
-        -- SnacksNotifierTitleError	none	-- Title for Error notification
-        -- SnacksNotifierTitleTrace	none	-- Title for Trace notification
-        -- SnacksNotifierBorderInfo	none	-- Border for Info notification
-        -- SnacksNotifierBorderWarn	none	-- Border for Warn notification
-        -- SnacksNotifierBorderDebug	none	-- Border for Debug notification
-        -- SnacksNotifierBorderError	none	-- Border for Error notification
-        -- SnacksNotifierBorderTrace	none	-- Border for Trace notification
+        SnacksNotifierInfo = { fg = palette.fg4, bg = palette.bg2 },
+        SnacksNotifierWarn = { fg = palette.fg4, bg = palette.bg2 },
+        SnacksNotifierDebug = { fg = palette.fg1, bg = palette.bg2 },
+        SnacksNotifierError = { fg = palette.fg5, bg = palette.bg2 },
+        SnacksNotifierTrace = { fg = palette.fg3, bg = palette.bg2 },
+        SnacksNotifierIconInfo = { link = "SnacksNotifierInfo" },
+        SnacksNotifierIconWarn = { link = "SnacksNotifierWarn" },
+        SnacksNotifierIconDebug = { link = "SnacksNotifierDebug" },
+        SnacksNotifierIconError = { link = "SnacksNotifierError" },
+        SnacksNotifierIconTrace = { link = "SnacksNotifierTrace" },
+        SnacksNotifierTitleInfo = { link = "SnacksNotifierInfo" },
+        SnacksNotifierTitleWarn = { link = "SnacksNotifierWarn" },
+        SnacksNotifierTitleDebug = { link = "SnacksNotifierDebug" },
+        SnacksNotifierTitleError = { link = "SnacksNotifierError" },
+        SnacksNotifierTitleTrace = { link = "SnacksNotifierTrace" },
+        SnacksNotifierBorderInfo = { link = "SnacksNotifierInfo" },
+        SnacksNotifierBorderWarn = { link = "SnacksNotifierWarn" },
+        SnacksNotifierBorderDebug = { link = "SnacksNotifierDebug" },
+        SnacksNotifierBorderError = { link = "SnacksNotifierError" },
+        SnacksNotifierBorderTrace = { link = "SnacksNotifierTrace" },
         -- SnacksNotifierFooterInfo	DiagnosticInfo	-- Footer for Info notification
         -- SnacksNotifierFooterWarn	DiagnosticWarn	-- Footer for Warn notification
         -- SnacksNotifierFooterDebug	DiagnosticHint	-- Footer for Debug notification
