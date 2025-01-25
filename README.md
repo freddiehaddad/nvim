@@ -4,9 +4,9 @@ This is my custom [Neovim] configuration designed around my custom color scheme.
 
 ## Color Scheme
 
-![palette](https://github.com/user-attachments/assets/ff8370dc-8199-43f9-a1e9-8554ae8c2732)
+![palette](https://github.com/user-attachments/assets/d1c86525-0489-4f9f-a417-c9c0b5b04f81)
 
-<https://coolors.co/07090a-101517-1f292d-2a363c-5c7884-a8a59f-7f8d7c-8e8567-845c6d>
+<https://coolors.co/07090a-101517-1f292d-2a363c-5c7884-9e9b94-7f8d7c-8e8567-845c6d>
 
 ## Screenshots
 
