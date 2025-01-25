@@ -1009,8 +1009,7 @@ return {
                     map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
 
                     map("n", "<leader>mp", "<cmd>Markview splitToggle<cr>", { buffer = bufnr, desc = "Markdown preview" })
-                    map("n", "<leader>mt", "<cmd>Markview toggle<cr>", { buffer = bufnr, desc = "Markdown toggle" })
-                    map("n", "<leader>mT", "<cmd>Markview toggleAll<cr>", { buffer = bufnr, desc = "Markdown toggle all" })
+                    map("n", "<leader>mt", "<cmd>Markview Toggle<cr>", { buffer = bufnr, desc = "Markdown toggle" })
                     -- stylua: ignore end
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -1321,7 +1320,7 @@ return {
     {
         "OXY2DEV/markview.nvim",
         opts = {
-            initial_state = false,
+            preview = { enable = false },
         },
         ft = "markdown",
     },
