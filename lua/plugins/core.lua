@@ -390,7 +390,8 @@ return {
             { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
             { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
             { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
-            { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "grep (cwd)" },
+            { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Grep (cwd)" },
+            { "<leader>sG", desc = "Glob grep (cwd)" },
             { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help pages" },
             { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "highlight groups" },
             { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
@@ -436,11 +437,69 @@ return {
                         },
                     },
                 },
+                extensions = { fzf = {} },
             }
         end,
         config = function(_, opts)
             require("telescope").setup(opts)
             require("telescope").load_extension("fzf")
+
+            local live_grep_globbing = function(options)
+                local pickers = require("telescope.pickers")
+                local finders = require("telescope.finders")
+                local make_entry = require("telescope.make_entry")
+                local conf = require("telescope.config").values
+
+                options = options or {}
+                options.cwd = options.cwd or vim.uv.cwd()
+
+                local finder = finders.new_async_job({
+                    command_generator = function(prompt)
+                        if not prompt or prompt == "" then
+                            return nil
+                        end
+
+                        local pieces = vim.split(prompt, "  ")
+                        local args = { "rg" }
+                        if pieces[1] then
+                            table.insert(args, "-e")
+                            table.insert(args, pieces[1])
+                        end
+
+                        if pieces[2] then
+                            table.insert(args, "-g")
+                            table.insert(args, pieces[2])
+                        end
+
+                        return vim.iter({
+                            args,
+                            {
+                                "--color=never",
+                                "--no-heading",
+                                "--with-filename",
+                                "--line-number",
+                                "--column",
+                                "--smart-case",
+                            },
+                        })
+                            :flatten()
+                            :totable()
+                    end,
+                    entry_maker = make_entry.gen_from_vimgrep(options),
+                    cwd = options.cwd,
+                })
+                pickers
+                    .new(options, {
+                        debounce = 100,
+                        prompt_title = "multigrep",
+                        finder = finder,
+                        previewer = conf.grep_previewer(options),
+                        sorter = require("telescope.sorters").empty(),
+                    })
+                    :find()
+            end
+
+            vim.keymap.set("n", "<leader>sG", live_grep_globbing, { desc = "Glob grep (cwd)" })
         end,
     },
 
