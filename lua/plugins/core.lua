@@ -764,7 +764,7 @@ return {
                 },
             },
             -- Not an actual option! Manually install the packages in config.
-            ensure_installed = { "clang-format", "codelldb", "prettier", "stylua" },
+            ensure_installed = { "clang-format", "codelldb", "stylua" },
         },
         config = function(_, opts)
             require("mason").setup(opts)
@@ -1118,7 +1118,7 @@ return {
                 c = { "clang_format" },
                 cpp = { "clang_format" },
                 lua = { "stylua" },
-                markdown = { "prettier" },
+                markdown = { "mdformat" },
                 rust = { "rustfmt" },
                 toml = { "taplo" },
             },
