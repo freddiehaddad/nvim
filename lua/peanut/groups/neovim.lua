@@ -3,33 +3,33 @@ local M = {}
 ---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
-        Normal = { fg = palette.fg2 },
+        Normal = { fg = palette.white },
         Bold = { bold = true },
         Italic = { italic = false },
 
-        Added = { fg = palette.fg3 },
-        Changed = { fg = palette.fg4 },
-        Removed = { fg = palette.fg5 },
-        NonText = { fg = palette.fg1 },
+        Added = { fg = palette.green },
+        Changed = { fg = palette.yellow },
+        Removed = { fg = palette.red },
+        NonText = { fg = palette.blue },
 
         CursorLine = { bg = palette.bg2 },
         CursorColumn = { link = "CursorLine" },
-        CursorLineNr = { fg = palette.fg1 },
+        CursorLineNr = { fg = palette.blue },
         CursorLineSign = { link = "SignColumn" },
         CursorLineFold = { link = "FoldColumn" },
 
-        MatchParen = { fg = palette.fg5 },
+        MatchParen = { fg = palette.red },
 
-        LineNr = { fg = palette.bg4 },
+        LineNr = { fg = palette.accent },
         LineNrAbove = { link = "LineNr" },
         LineNrBelow = { link = "LineNr" },
 
-        SignColumn = { fg = palette.fg1 },
+        SignColumn = { fg = palette.blue },
         FoldColumn = { link = "SignColumn" },
 
         WinSeparator = { fg = palette.bg1 },
 
-        Search = { bg = palette.bg4 },
+        Search = { bg = palette.accent },
         CurSearch = { link = "Search" },
         IncSearch = { link = "Search" },
 
@@ -37,13 +37,13 @@ function M.highlight(palette, opts)
         VisualNOS = { link = "Visual" },
 
         NormalFloat = { bg = palette.bg2 },
-        FloatBorder = { fg = palette.fg1, bg = palette.bg2 },
+        FloatBorder = { fg = palette.blue, bg = palette.bg2 },
         FloatTitle = { bg = palette.bg2 },
 
-        Folded = { bg = palette.bg2, fg = palette.fg1 },
-        QuickFixLine = { fg = palette.fg4 },
+        Folded = { bg = palette.bg2, fg = palette.blue },
+        QuickFixLine = { fg = palette.yellow },
 
-        Pmenu = { fg = palette.fg2, bg = palette.bg2 },
+        Pmenu = { fg = palette.white, bg = palette.bg2 },
         PmenuSel = { bg = palette.bg3 },
         PmenuKind = { link = "Pmenu" },
         PmenuKindSel = { link = "PmenuSel" },
@@ -52,19 +52,19 @@ function M.highlight(palette, opts)
         PmenuThumb = { bg = palette.bg3 },
         PmenuSbar = { bg = palette.bg2 },
 
-        Special = { fg = palette.fg1 },
+        Special = { fg = palette.blue },
 
         -- information
-        Title = { fg = palette.fg2, bold = true },
-        Icon = { fg = palette.fg1 },
+        Title = { fg = palette.white, bold = true },
+        Icon = { fg = palette.blue },
 
         -- files / folders
-        Directory = { fg = palette.fg1 },
+        Directory = { fg = palette.blue },
 
         -- Highlight groups haven't seen used but are defined.
-        Error = { bg = palette.fg5, fg = palette.bg1 },
+        Error = { bg = palette.red, fg = palette.bg1 },
         NvimInternalError = { link = "Error" },
-        Question = { fg = palette.fg1 },
+        Question = { fg = palette.blue },
         VisualNC = { fg = "#ff0000" },
     }
 end

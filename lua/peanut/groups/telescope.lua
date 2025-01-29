@@ -34,7 +34,7 @@ function M.highlight(palette, opts)
         TelescopePromptCounter = { link = "NonText" },
 
         -- Used for highlighting characters that you match.
-        TelescopeMatching = { bg = palette.fg1 },
+        TelescopeMatching = { bg = palette.blue },
 
         -- Used for the prompt prefix
         TelescopePromptPrefix = { link = "Identifier" },
