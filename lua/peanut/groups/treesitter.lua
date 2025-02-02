@@ -9,28 +9,28 @@ function M.highlight(palette, opts)
         Character = { fg = palette.white },
         Float = { fg = palette.white },
 
-        Constant = { fg = palette.yellow },
-        Identifier = { fg = palette.yellow },
-        Number = { fg = palette.yellow },
-        String = { fg = palette.yellow },
+        Constant = { fg = palette.blue },
+        Identifier = { fg = palette.blue },
+        Number = { fg = palette.white },
+        String = { fg = palette.white },
 
-        Struct = { fg = palette.green },
+        Struct = { fg = palette.blue },
         Structure = { link = "Struct" },
 
-        Keyword = { fg = palette.green },
+        Keyword = { fg = palette.blue },
 
         Todo = { fg = palette.white },
         Conditional = { fg = palette.blue },
-        Delimiter = { fg = palette.blue },
-        Operator = { fg = palette.blue },
-        Comment = { fg = palette.blue },
+        Delimiter = { fg = palette.accent },
+        Operator = { fg = palette.accent },
+        Comment = { fg = palette.accent },
 
         Exception = { fg = palette.white },
-        Function = { fg = palette.green },
-        Statement = { fg = palette.yellow },
-        Variable = { fg = palette.yellow },
+        Function = { fg = palette.blue },
+        Statement = { fg = palette.blue },
+        Variable = { fg = palette.blue },
 
-        Label = { fg = palette.yellow },
+        Label = { fg = palette.blue },
 
         Repeat = { link = "Normal" },
         Include = { link = "Normal" },
@@ -47,20 +47,21 @@ function M.highlight(palette, opts)
         WarningMsg = { fg = palette.yellow },
 
         --spell
-        SpellBad = { fg = palette.yellow, underline = true },
-        SpellCap = { fg = palette.yellow, underline = true },
-        SpellLocal = { fg = palette.yellow, underline = true },
-        SpellRare = { fg = palette.yellow, underline = true },
+        SpellBad = { fg = palette.red, underline = true },
+        SpellCap = { fg = palette.red, underline = true },
+        SpellLocal = { fg = palette.red, underline = true },
+        SpellRare = { fg = palette.red, underline = true },
 
         --markdown
         ["@markup.italic"] = { italic = false },
         ["@markup.link.markdown_inline"] = { link = "String" },
-        ["@markup.link.label.markdown"] = { fg = palette.green },
-        ["@markup.link.label.markdown_inline"] = { fg = palette.green },
-        ["@lsp.type.class.markdown"] = { fg = palette.green },
+        ["@markup.link.label.markdown"] = { fg = palette.blue },
+        ["@markup.link.label.markdown_inline"] = { fg = palette.blue },
+        ["@lsp.type.class.markdown"] = { fg = palette.blue },
 
         -- treesitter
         ["@constructor"] = { link = "Struct" },
+        ["@constructor.lua"] = { link = "Delimiter" },
         ["@keyword"] = { link = "Keyword" },
         ["@variable"] = { link = "Variable" },
         ["@variable.parameter"] = { link = "Label" },

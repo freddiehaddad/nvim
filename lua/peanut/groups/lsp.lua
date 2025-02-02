@@ -4,10 +4,10 @@ local M = {}
 function M.highlight(palette, opts)
     return {
         DiagnosticOk = { fg = palette.green },
-        DiagnosticError = { link = "ErrorMsg" },
-        DiagnosticHint = { fg = palette.blue },
+        DiagnosticError = { fg = palette.red },
+        DiagnosticHint = { fg = palette.yellow },
         DiagnosticInfo = { fg = palette.yellow },
-        DiagnosticWarn = { link = "WarningMsg" },
+        DiagnosticWarn = { fg = palette.red },
     }
 end
 

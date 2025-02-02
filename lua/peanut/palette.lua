@@ -7,6 +7,7 @@ local colors = {
 
     white = "#9e9b94",
     blue = "#667b84",
+
     green = "#7f8d7c", -- add, ok
     yellow = "#8e8567", -- change, warn
     red = "#845c6d", -- delete, error

@@ -12,10 +12,10 @@ function M.highlight(palette, opts)
         -- SnacksScratchKey	DiagnosticVirtualText	-- Keymap help in the footer
         -- SnacksScratchDesc	DiagnosticInfo	-- Keymap help desc in the footer
         SnacksNotifierInfo = { fg = palette.yellow, bg = palette.bg2 },
-        SnacksNotifierWarn = { fg = palette.yellow, bg = palette.bg2 },
-        SnacksNotifierDebug = { fg = palette.blue, bg = palette.bg2 },
+        SnacksNotifierWarn = { fg = palette.red, bg = palette.bg2 },
+        SnacksNotifierDebug = { fg = palette.yellow, bg = palette.bg2 },
         SnacksNotifierError = { fg = palette.red, bg = palette.bg2 },
-        SnacksNotifierTrace = { fg = palette.green, bg = palette.bg2 },
+        SnacksNotifierTrace = { fg = palette.yellow, bg = palette.bg2 },
         SnacksNotifierIconInfo = { link = "SnacksNotifierInfo" },
         SnacksNotifierIconWarn = { link = "SnacksNotifierWarn" },
         SnacksNotifierIconDebug = { link = "SnacksNotifierDebug" },

@@ -10,7 +10,7 @@ function M.highlight(palette, opts)
         Added = { fg = palette.green },
         Changed = { fg = palette.yellow },
         Removed = { fg = palette.red },
-        NonText = { fg = palette.blue },
+        NonText = { fg = palette.red },
 
         CursorLine = { bg = palette.bg2 },
         CursorColumn = { link = "CursorLine" },
@@ -18,7 +18,7 @@ function M.highlight(palette, opts)
         CursorLineSign = { link = "SignColumn" },
         CursorLineFold = { link = "FoldColumn" },
 
-        MatchParen = { fg = palette.red },
+        MatchParen = { fg = palette.blue },
 
         LineNr = { fg = palette.accent },
         LineNrAbove = { link = "LineNr" },
@@ -41,7 +41,7 @@ function M.highlight(palette, opts)
         FloatTitle = { bg = palette.bg2 },
 
         Folded = { bg = palette.bg2, fg = palette.blue },
-        QuickFixLine = { fg = palette.yellow },
+        QuickFixLine = { fg = palette.blue },
 
         Pmenu = { fg = palette.white, bg = palette.bg2 },
         PmenuSel = { bg = palette.bg3 },
