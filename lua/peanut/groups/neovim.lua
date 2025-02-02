@@ -27,7 +27,7 @@ function M.highlight(palette, opts)
         SignColumn = { fg = palette.blue },
         FoldColumn = { link = "SignColumn" },
 
-        WinSeparator = { fg = palette.bg1 },
+        WinSeparator = { fg = palette.bg2 },
 
         Search = { bg = palette.accent },
         CurSearch = { link = "Search" },
