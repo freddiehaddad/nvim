@@ -26,7 +26,7 @@ function M.highlight(palette, opts)
         -- Title highlight groups.
         --   Use TelescopeTitle to override the default.
         --   Otherwise set them specifically
-        TelescopeTitle = { link = "TelescopeBorder" },
+        TelescopeTitle = { link = "Title" },
         TelescopePromptTitle = { link = "TelescopeTitle" },
         TelescopeResultsTitle = { link = "TelescopeTitle" },
         TelescopePreviewTitle = { link = "TelescopeTitle" },
@@ -34,7 +34,7 @@ function M.highlight(palette, opts)
         TelescopePromptCounter = { link = "NonText" },
 
         -- Used for highlighting characters that you match.
-        TelescopeMatching = { bg = palette.blue },
+        TelescopeMatching = { bg = palette.blue2 },
 
         -- Used for the prompt prefix
         TelescopePromptPrefix = { link = "Identifier" },

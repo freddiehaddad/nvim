@@ -1,16 +1,18 @@
 local colors = {
-    bg1 = "#07090a", -- main background
+    bg1 = "#0a0908", -- main background
     bg2 = "#101517", -- menus, cursor line
     bg3 = "#1f292d", -- scrollbar (used for PemnuSbar, etc.)
 
-    accent = "#3b4c54", -- statusbar, line numbers, etc.
+    accent = "#556567", -- statusbar, line numbers, etc.
 
-    white = "#9e9b94",
-    blue = "#667b84",
+    white1 = "#9da6aa",
+    white2 = "#b0babf",
+    blue1 = "#306b72",
+    blue2 = "#30726d",
 
-    green = "#7f8d7c", -- add, ok
-    yellow = "#8e8567", -- change, warn
-    red = "#845c6d", -- delete, error
+    green = "#86a28c", -- add, ok
+    yellow = "#a2a07c", -- change, warn
+    red = "#a27c7c", -- delete, error
 }
 
 return colors
