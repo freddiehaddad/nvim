@@ -16,7 +16,7 @@ Code Colors
 ![#9da6aa](https://placehold.co/100x50/9da6aa/ffffff?text=9da6aa)
 ![#aab6bf](https://placehold.co/100x50/aab6bf/ffffff?text=aab6bf)
 ![#306b72](https://placehold.co/100x50/306b72/ffffff?text=306b72)
-![#30726d](https://placehold.co/100x50/30726d/ffffff?text=30726d)
+![#51726f](https://placehold.co/100x50/51726f/ffffff?text=51726f)
 
 Diagnostic Colors
 
