@@ -37,13 +37,13 @@ function M.highlight(palette, opts)
         -- SnacksNotifierFooterError	DiagnosticError	-- Footer for Error notification
         -- SnacksNotifierFooterTrace	DiagnosticHint	-- Footer for Trace notification
         -- SnacksDashboardNormal	Normal	-- Normal for the dashboard
-        -- SnacksDashboardDesc	Special	-- Description text in dashboard
+        SnacksDashboardDesc = { link = "Normal" },
         -- SnacksDashboardFile	Special	-- Dashboard file items
         -- SnacksDashboardDir	NonText	-- Directory items
         -- SnacksDashboardFooter	Title	-- Dashboard footer text
         -- SnacksDashboardHeader	Title	-- Dashboard header text
-        -- SnacksDashboardIcon	Special	-- Dashboard icons
-        -- SnacksDashboardKey	Number	-- Keybind text
+        SnacksDashboardIcon = { link = "Icon" },
+        SnacksDashboardKey = { fg = palette.blue1 },
         -- SnacksDashboardTerminal	SnacksDashboardNormal	-- Terminal text
         -- SnacksDashboardSpecial	Special	-- Special elements
         -- SnacksDashboardTitle	Title	-- Title text
