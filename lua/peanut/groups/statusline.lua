@@ -3,7 +3,7 @@ local M = {}
 ---@diagnostic disable-next-line: unused-local
 function M.highlight(palette, opts)
     return {
-        StatusLine = { fg = palette.accent },
+        StatusLine = { fg = palette.black },
         StatusLineNC = { link = "StatusLine" },
         StatusLineSeparator = { link = "StatusLine" },
         StatusLineTerm = { link = "StatusLine" },

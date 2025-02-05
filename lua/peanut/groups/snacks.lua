@@ -43,7 +43,7 @@ function M.highlight(palette, opts)
         -- SnacksDashboardFooter	Title	-- Dashboard footer text
         -- SnacksDashboardHeader	Title	-- Dashboard header text
         SnacksDashboardIcon = { link = "Icon" },
-        SnacksDashboardKey = { fg = palette.blue1 },
+        SnacksDashboardKey = { fg = palette.blue },
         -- SnacksDashboardTerminal	SnacksDashboardNormal	-- Terminal text
         -- SnacksDashboardSpecial	Special	-- Special elements
         -- SnacksDashboardTitle	Title	-- Title text

@@ -30,7 +30,7 @@ function M.highlight(palette, opts)
         -- LazyReasonRuntime       @macro
         -- LazyReasonSource        Character
         -- LazyReasonStart         @variable.member
-        LazySpecial = { fg = palette.blue1 },
+        LazySpecial = { fg = palette.blue },
         -- LazyTaskError           ErrorMsg                task errors
         -- LazyTaskOutput          MsgArea                 task output
         -- LazyUrl                 @markup.link            url

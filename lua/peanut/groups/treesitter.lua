@@ -4,33 +4,33 @@ local M = {}
 function M.highlight(palette, opts)
     return {
         -- code
-        Type = { fg = palette.blue1 },
-        Boolean = { fg = palette.blue2 },
-        Character = { fg = palette.blue2 },
-        Float = { fg = palette.blue2 },
+        Type = { fg = palette.yellow },
+        Boolean = { fg = palette.blue },
+        Character = { fg = palette.blue },
+        Float = { fg = palette.blue },
 
-        Constant = { fg = palette.blue2 },
-        Identifier = { fg = palette.blue2 },
-        Number = { fg = palette.blue2 },
-        String = { fg = palette.white1 },
+        Constant = { fg = palette.blue },
+        Identifier = { fg = palette.white },
+        Number = { fg = palette.blue },
+        String = { fg = palette.white },
 
-        Struct = { fg = palette.blue2 },
+        Struct = { fg = palette.blue },
         Structure = { link = "Struct" },
 
-        Keyword = { fg = palette.blue1 },
+        Keyword = { fg = palette.blue },
 
         Todo = { fg = palette.yellow },
-        Conditional = { fg = palette.blue1 },
-        Delimiter = { fg = palette.blue1 },
-        Operator = { fg = palette.blue1 },
-        Comment = { fg = palette.blue1 },
+        Conditional = { fg = palette.black },
+        Delimiter = { fg = palette.black },
+        Operator = { fg = palette.blue },
+        Comment = { fg = palette.black },
 
-        Exception = { fg = palette.white1 },
-        Function = { fg = palette.white1 },
-        Statement = { fg = palette.white1 },
-        Variable = { fg = palette.white1 },
+        Exception = { fg = palette.yellow },
+        Function = { fg = palette.blue },
+        Statement = { fg = palette.cyan },
+        Variable = { fg = palette.white },
 
-        Label = { fg = palette.blue2 },
+        Label = { fg = palette.cyan },
 
         Repeat = { link = "Normal" },
         Include = { link = "Normal" },
@@ -40,7 +40,7 @@ function M.highlight(palette, opts)
         PreCondit = { link = "Normal" },
         StorageClass = { link = "Normal" },
         Typedef = { link = "Normal" },
-        Method = { fg = palette.blue2 },
+        Method = { fg = palette.blue },
 
         --errors
         ErrorMsg = { fg = palette.red },
@@ -55,9 +55,9 @@ function M.highlight(palette, opts)
         --markdown
         ["@markup.italic"] = { italic = false },
         ["@markup.link.markdown_inline"] = { link = "String" },
-        ["@markup.link.label.markdown"] = { fg = palette.blue2 },
-        ["@markup.link.label.markdown_inline"] = { fg = palette.blue2 },
-        ["@lsp.type.class.markdown"] = { fg = palette.blue2 },
+        ["@markup.link.label.markdown"] = { fg = palette.blue },
+        ["@markup.link.label.markdown_inline"] = { fg = palette.blue },
+        ["@lsp.type.class.markdown"] = { fg = palette.blue },
 
         -- treesitter
         ["@constructor"] = { link = "Struct" },
