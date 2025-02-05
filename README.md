@@ -12,12 +12,12 @@ Background Colors
 
 Accent Colors
 
-![black](https://placehold.co/100x50/556567/ffffff?text=556567)
+![black](https://placehold.co/100x50/3d4b4d/ffffff?text=3d4b4d)
 
 Code Colors
 
-![white](https://placehold.co/100x50/b4b8ab/ffffff?text=b4b8ab)
-![cyan](https://placehold.co/100x50/809397/ffffff?text=809397)
+![white](https://placehold.co/100x50/a8aaa4/ffffff?text=a8aaa4)
+![cyan](https://placehold.co/100x50/688686/ffffff?text=688686)
 ![blue](https://placehold.co/100x50/58707b/ffffff?text=58707b)
 
 Diagnostic Colors

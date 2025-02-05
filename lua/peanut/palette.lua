@@ -3,10 +3,10 @@ local colors = {
     bg2 = "#101517", -- menus, cursor line
     bg3 = "#1f292d", -- scrollbar (used for PemnuSbar, etc.)
 
-    black = "#556567", -- statusbar, line numbers, etc.
+    black = "#3d4b4d", -- statusbar, line numbers, etc.
 
-    white = "#b4b8ab", -- code
-    cyan = "#809397", -- code
+    white = "#a8aaa4", -- code
+    cyan = "#688686", -- code
     blue = "#58707b", -- code
 
     green = "#86a28c", -- add, ok
