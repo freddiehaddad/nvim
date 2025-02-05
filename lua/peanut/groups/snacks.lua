@@ -36,14 +36,15 @@ function M.highlight(palette, opts)
         -- SnacksNotifierFooterDebug	DiagnosticHint	-- Footer for Debug notification
         -- SnacksNotifierFooterError	DiagnosticError	-- Footer for Error notification
         -- SnacksNotifierFooterTrace	DiagnosticHint	-- Footer for Trace notification
-        -- SnacksDashboardNormal	Normal	-- Normal for the dashboard
-        SnacksDashboardDesc = { link = "Normal" },
-        -- SnacksDashboardFile	Special	-- Dashboard file items
+        -- SnacksDashboardNormal = { fg = palette.black },
+        SnacksDashboardDesc = { fg = palette.black },
+        SnacksDashboardFile = { fg = palette.black },
         -- SnacksDashboardDir	NonText	-- Directory items
-        -- SnacksDashboardFooter	Title	-- Dashboard footer text
-        -- SnacksDashboardHeader	Title	-- Dashboard header text
+        SnacksDashboardHeader = { fg = palette.black },
+        SnacksDashboardFooter = { fg = palette.black },
+        -- SnacksDashboardSpecial = { fg = palette.black },
         SnacksDashboardIcon = { link = "Icon" },
-        SnacksDashboardKey = { fg = palette.blue },
+        SnacksDashboardKey = { fg = palette.cyan },
         -- SnacksDashboardTerminal	SnacksDashboardNormal	-- Terminal text
         -- SnacksDashboardSpecial	Special	-- Special elements
         -- SnacksDashboardTitle	Title	-- Title text

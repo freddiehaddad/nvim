@@ -232,10 +232,14 @@ return {
                     { section = "header" },
                     { section = "keys", gap = 1, padding = 2 },
                     {
+                        text = {
+                            {
+                                [[▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀
+                                  n e o v i m]],
+                                hl = "SnacksDashboardHeader",
+                            },
+                        },
                         padding = 1,
-                        title = [[
-                      ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀                          
-                                                            n e o v i m                             ]],
                     },
                     { section = "startup" },
                 },
