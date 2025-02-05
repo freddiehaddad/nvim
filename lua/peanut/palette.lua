@@ -5,9 +5,9 @@ local colors = {
 
     accent = "#556567", -- statusbar, line numbers, etc.
 
-    white1 = "#9da6aa",
-    white2 = "#aab6bf",
-    blue1 = "#306b72",
+    white1 = "#b4b8ab",
+    white2 = "#809397",
+    blue1 = "#58707b",
     blue2 = "#51726f",
 
     green = "#86a28c", -- add, ok

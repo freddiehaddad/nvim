@@ -13,9 +13,9 @@ Background Colors
 
 Code Colors
 
-![#9da6aa](https://placehold.co/100x50/9da6aa/ffffff?text=9da6aa)
-![#aab6bf](https://placehold.co/100x50/aab6bf/ffffff?text=aab6bf)
-![#306b72](https://placehold.co/100x50/306b72/ffffff?text=306b72)
+![#b4b8ab](https://placehold.co/100x50/b4b8ab/ffffff?text=b4b8ab)
+![#809397](https://placehold.co/100x50/809397/ffffff?text=809397)
+![#58707b](https://placehold.co/100x50/58707b/ffffff?text=58707b)
 ![#51726f](https://placehold.co/100x50/51726f/ffffff?text=51726f)
 
 Diagnostic Colors
@@ -24,9 +24,8 @@ Diagnostic Colors
 ![#a2a07c](https://placehold.co/100x50/a2a07c/ffffff?text=a2a07c)
 ![#a27c7c](https://placehold.co/100x50/a27c7c/ffffff?text=a27c7c)
 
-## Screenshots
+## Preview
 
-![dashboard](https://github.com/user-attachments/assets/820deb5a-88b9-42c7-8763-03227db14229)
-![code](https://github.com/user-attachments/assets/53b29b27-53ee-422f-8507-46387066334d)
+![screenshot](https://github.com/user-attachments/assets/3875a9cd-07ad-4925-86f6-76b88e37fceb)
 
 [neovim]: https://github.com/neovim/neovim
