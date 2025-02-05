@@ -4,33 +4,33 @@ local M = {}
 function M.highlight(palette, opts)
     return {
         -- code
-        Type = { fg = palette.yellow },
-        Boolean = { fg = palette.blue },
-        Character = { fg = palette.blue },
-        Float = { fg = palette.blue },
+        Type = { fg = palette.blue },
+        Boolean = { fg = palette.white },
+        Character = { fg = palette.white },
+        Float = { fg = palette.white },
 
-        Constant = { fg = palette.blue },
+        Constant = { fg = palette.white },
         Identifier = { fg = palette.white },
-        Number = { fg = palette.blue },
-        String = { fg = palette.white },
+        Number = { fg = palette.white },
+        String = { fg = palette.accent },
 
-        Struct = { fg = palette.blue },
+        Struct = { fg = palette.cyan },
         Structure = { link = "Struct" },
 
         Keyword = { fg = palette.blue },
 
-        Todo = { fg = palette.yellow },
-        Conditional = { fg = palette.black },
+        Todo = { fg = palette.white },
+        Conditional = { fg = palette.white },
         Delimiter = { fg = palette.black },
-        Operator = { fg = palette.blue },
+        Operator = { fg = palette.black },
         Comment = { fg = palette.black },
 
-        Exception = { fg = palette.yellow },
-        Function = { fg = palette.blue },
-        Statement = { fg = palette.cyan },
-        Variable = { fg = palette.white },
+        Exception = { fg = palette.white },
+        Function = { fg = palette.white },
+        Statement = { fg = palette.white },
+        Variable = { fg = palette.cyan },
 
-        Label = { fg = palette.cyan },
+        Label = { fg = palette.white },
 
         Repeat = { link = "Normal" },
         Include = { link = "Normal" },
@@ -40,24 +40,24 @@ function M.highlight(palette, opts)
         PreCondit = { link = "Normal" },
         StorageClass = { link = "Normal" },
         Typedef = { link = "Normal" },
-        Method = { fg = palette.blue },
+        Method = { fg = palette.white },
 
         --errors
         ErrorMsg = { fg = palette.red },
         WarningMsg = { fg = palette.yellow },
 
         --spell
-        SpellBad = { fg = palette.red, underline = true },
-        SpellCap = { fg = palette.red, underline = true },
-        SpellLocal = { fg = palette.red, underline = true },
-        SpellRare = { fg = palette.red, underline = true },
+        SpellBad = { fg = palette.bg1, bg = palette.red },
+        SpellCap = { fg = palette.bg1, bg = palette.red },
+        SpellLocal = { fg = palette.bg1, bg = palette.red },
+        SpellRare = { fg = palette.bg1, bg = palette.red },
 
         --markdown
         ["@markup.italic"] = { italic = false },
         ["@markup.link.markdown_inline"] = { link = "String" },
-        ["@markup.link.label.markdown"] = { fg = palette.blue },
-        ["@markup.link.label.markdown_inline"] = { fg = palette.blue },
-        ["@lsp.type.class.markdown"] = { fg = palette.blue },
+        ["@markup.link.label.markdown"] = { fg = palette.white },
+        ["@markup.link.label.markdown_inline"] = { fg = palette.white },
+        ["@lsp.type.class.markdown"] = { fg = palette.white },
 
         -- treesitter
         ["@constructor"] = { link = "Struct" },
@@ -65,6 +65,7 @@ function M.highlight(palette, opts)
         ["@keyword"] = { link = "Keyword" },
         ["@variable"] = { link = "Variable" },
         ["@variable.parameter"] = { link = "Label" },
+        ["@lsp.type.builtinType"] = { link = "Type" },
     }
 end
 

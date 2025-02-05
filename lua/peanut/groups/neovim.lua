@@ -53,7 +53,7 @@ function M.highlight(palette, opts)
         PmenuThumb = { bg = palette.bg3 },
         PmenuSbar = { bg = palette.bg2 },
 
-        Special = { fg = palette.blue },
+        Special = { fg = palette.white },
 
         -- information
         Title = { fg = palette.white, bold = true },
