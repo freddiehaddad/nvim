@@ -66,6 +66,7 @@ function M.highlight(palette, opts)
         Error = { bg = palette.red, fg = palette.bg1 },
         NvimInternalError = { link = "Error" },
         Question = { fg = palette.blue },
+        Conceal = { fg = palette.black },
     }
 end
 
