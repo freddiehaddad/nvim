@@ -37,10 +37,10 @@ function M.highlight(palette, opts)
         -- SnacksNotifierFooterError	DiagnosticError	-- Footer for Error notification
         -- SnacksNotifierFooterTrace	DiagnosticHint	-- Footer for Trace notification
         -- SnacksDashboardNormal = { fg = palette.black },
-        SnacksDashboardDesc = { fg = palette.black },
-        SnacksDashboardFile = { fg = palette.black },
+        SnacksDashboardDesc = { fg = palette.cyan },
+        SnacksDashboardFile = { fg = palette.cyan },
         -- SnacksDashboardDir	NonText	-- Directory items
-        SnacksDashboardHeader = { fg = palette.black },
+        SnacksDashboardHeader = { fg = palette.white },
         SnacksDashboardFooter = { fg = palette.black },
         -- SnacksDashboardSpecial = { fg = palette.black },
         SnacksDashboardIcon = { link = "Icon" },
