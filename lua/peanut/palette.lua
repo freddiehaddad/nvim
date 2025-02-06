@@ -11,7 +11,7 @@ local colors = {
 
     green = "#4a9696", -- add, ok
     yellow = "#a2a07c", -- change, warn
-    red = "#8b556f", -- delete, error
+    red = "#985d79", -- delete, error
 }
 
 return colors

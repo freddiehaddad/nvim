@@ -24,7 +24,7 @@ Diagnostic Colors
 
 ![green](https://placehold.co/100x50/4a9696/ffffff?text=4a9696)
 ![yellow](https://placehold.co/100x50/a2a07c/ffffff?text=a2a07c)
-![red](https://placehold.co/100x50/8b556f/ffffff?text=8b556f)
+![red](https://placehold.co/100x50/985d79/ffffff?text=985d79)
 
 ## Preview
 
