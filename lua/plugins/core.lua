@@ -260,7 +260,7 @@ return {
                 },
             },
             scroll = { enabled = true },
-            statuscolumn = { enabled = true },
+            statuscolumn = {},
         },
         keys = {
             { "<leader>bd", "<cmd>lua Snacks.bufdelete()<cr>", desc = "Delete buffer" },
