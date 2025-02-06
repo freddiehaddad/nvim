@@ -28,6 +28,6 @@ Diagnostic Colors
 
 ## Preview
 
-![screenshot](https://github.com/user-attachments/assets/b9e742ab-4f7f-45aa-a656-e4681be292d5)
+![screenshot](https://github.com/user-attachments/assets/b4a389ed-d3a7-473b-9c82-7b3e10c27430)
 
 [neovim]: https://github.com/neovim/neovim
