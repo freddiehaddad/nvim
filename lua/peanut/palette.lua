@@ -5,14 +5,14 @@ local colors = {
 
     accent = "#424B4B", -- selection, cursor
 
-    black = "#656B6A",
-    white = "#8F9695",
+    black = "#707776",
+    white = "#829090",
 
-    blue = "#5A7582",
-    cyan = "#7692A0",
+    blue = "#4D7695",
+    cyan = "#5899A7",
 
-    red = "#757568",
-    magenta = "#929284",
+    red = "#A2763B",
+    magenta = "#B9A970",
 }
 
 return colors

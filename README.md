@@ -16,15 +16,15 @@ Accent Colors
 
 Code Colors
 
-![black](https://placehold.co/100x50/656B6A/ffffff?text=656B6A)
-![white](https://placehold.co/100x50/8F9695/ffffff?text=8F9695)
-![blue](https://placehold.co/100x50/5A7582/ffffff?text=5A7582)
-![cyan](https://placehold.co/100x50/7692A0/ffffff?text=7692A0)
-![red](https://placehold.co/100x50/757568/ffffff?text=757568)
-![magenta](https://placehold.co/100x50/929284/ffffff?text=929284)
+![black](https://placehold.co/100x50/707776/ffffff?text=707776)
+![white](https://placehold.co/100x50/829090/ffffff?text=829090)
+![blue](https://placehold.co/100x50/4D7695/ffffff?text=4D7695)
+![cyan](https://placehold.co/100x50/5899A7/ffffff?text=5899A7)
+![red](https://placehold.co/100x50/A2763B/ffffff?text=A2763B)
+![magenta](https://placehold.co/100x50/B9A970/ffffff?text=B9A970)
 
 ## Preview
 
-![screenshot](https://github.com/user-attachments/assets/b9ae4237-21d8-4d3c-bfd5-95c6850e1b0f)
+![screenshot](https://github.com/user-attachments/assets/5757d92c-9acc-4e5b-a5dd-8c332be2e4eb)
 
 [neovim]: https://github.com/neovim/neovim
