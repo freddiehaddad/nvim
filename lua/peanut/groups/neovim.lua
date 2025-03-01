@@ -13,7 +13,7 @@ function M.highlight(palette, opts)
 
         NonText = { fg = palette.accent }, -- Inlay hints
 
-        CursorLine = { bg = palette.bg2 },
+        CursorLine = { bg = palette.cl1 },
         CursorColumn = { link = "CursorLine" },
         CursorLineNr = { fg = palette.black },
         CursorLineSign = { link = "SignColumn" },
@@ -44,7 +44,7 @@ function M.highlight(palette, opts)
         FloatTitle = { bg = palette.bg2 },
 
         Pmenu = { fg = palette.white, bg = palette.bg2 },
-        PmenuSel = { fg = palette.white, bg = palette.bg3 },
+        PmenuSel = { fg = palette.white, bg = palette.cl2 },
         PmenuKind = { link = "Pmenu" },
         PmenuKindSel = { link = "PmenuSel" },
         PmenuExtra = { link = "Pmenu" },

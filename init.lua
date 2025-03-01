@@ -13,7 +13,7 @@ local opt = vim.opt
 opt.clipboard = "unnamedplus"
 opt.cmdheight = 0
 opt.cursorline = true
-opt.fillchars:append({ eob = " ", foldopen = "", foldclose = "" })
+opt.fillchars:append({ eob = " ", foldopen = "", foldclose = "", horiz = " ", vert = " " })
 opt.laststatus = 3
 opt.mouse = ""
 opt.number = true

@@ -40,7 +40,7 @@ function M.highlight(palette, opts)
         -- TelescopePromptPrefix = { link = "Icon" },
         --
         -- Used for highlighting the matched line inside Previewer. Works only for (vim_buffer_ previewer)
-        TelescopePreviewLine = { bg = palette.bg3 },
+        TelescopePreviewLine = { bg = palette.cl2 },
         -- TelescopePreviewMatch = { link = "Search" },
         --
         -- TelescopePreviewPipe = { link = "Constant" },
