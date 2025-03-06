@@ -8,14 +8,14 @@ function M.highlight(palette, opts)
         Italic = { italic = false },
 
         Added = { fg = palette.blue },
-        Changed = { fg = palette.black },
+        Changed = { fg = palette.cyan },
         Removed = { fg = palette.red },
 
         NonText = { fg = palette.accent }, -- Inlay hints
 
         CursorLine = { bg = palette.cl1 },
         CursorColumn = { link = "CursorLine" },
-        CursorLineNr = { fg = palette.black },
+        CursorLineNr = { fg = palette.magenta },
         CursorLineSign = { link = "SignColumn" },
         CursorLineFold = { link = "FoldColumn" },
 

@@ -6,29 +6,29 @@ This is my custom [Neovim] configuration designed around my custom color scheme.
 
 Background Colors
 
-![bg1](https://placehold.co/100x50/070603/ffffff?text=070603)
-![bg2](https://placehold.co/100x50/221F15/ffffff?text=221F15)
+![bg1](https://placehold.co/100x50/080a0f/ffffff?text=080a0f)
+![bg2](https://placehold.co/100x50/1c2428/ffffff?text=1c2428)
 
 Cursor Line Colors
 
-![cl1](https://placehold.co/100x50/2A241A/ffffff?text=2A241A)
-![cl2](https://placehold.co/100x50/605637/ffffff?text=605637)
+![cl1](https://placehold.co/100x50/121e22/ffffff?text=121e22)
+![cl2](https://placehold.co/100x50/2b3938/ffffff?text=2b3938)
 
 Accent Colors
 
-![accent](https://placehold.co/100x50/4F4E3C/ffffff?text=4F4E3C)
+![accent](https://placehold.co/100x50/475d68/ffffff?text=475d68)
 
 Code Colors
 
-![black](https://placehold.co/100x50/61604C/ffffff?text=61604C)
-![white](https://placehold.co/100x50/A09F88/ffffff?text=A09F88)
-![blue](https://placehold.co/100x50/908F5F/ffffff?text=908F5F)
-![cyan](https://placehold.co/100x50/836A4B/ffffff?text=836A4B)
-![red](https://placehold.co/100x50/A2763B/ffffff?text=A2763B)
-![magenta](https://placehold.co/100x50/B9A970/ffffff?text=B9A970)
+![black](https://placehold.co/100x50/52595f/ffffff?text=52595f)
+![white](https://placehold.co/100x50/a4b2be/ffffff?text=a4b2be)
+![blue](https://placehold.co/100x50/4d88b3/ffffff?text=4d88b3)
+![cyan](https://placehold.co/100x50/34929f/ffffff?text=34929f)
+![red](https://placehold.co/100x50/8278a4/ffffff?text=8278a4)
+![magenta](https://placehold.co/100x50/398472/ffffff?text=398472)
 
 ## Preview
 
-![screenshot](https://github.com/user-attachments/assets/c9e075ea-6c83-45f1-8fc4-f44d825fbc24)
+![screenshot](https://github.com/user-attachments/assets/1ed8fb90-dfe4-4486-9201-347b24c045ce)
 
 [neovim]: https://github.com/neovim/neovim
