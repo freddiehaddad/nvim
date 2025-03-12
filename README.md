@@ -6,13 +6,13 @@ This is my custom [Neovim] configuration designed around my custom color scheme.
 
 Background Colors
 
-![bg1](https://placehold.co/100x50/0f0808/ffffff?text=0f0808)
-![bg2](https://placehold.co/100x50/262118/ffffff?text=262118)
+![bg1](https://placehold.co/100x50/050503/ffffff?text=050503)
+![bg2](https://placehold.co/100x50/1d1f1d/ffffff?text=1d1f1d)
 
 Cursor Line Colors
 
-![cl1](https://placehold.co/100x50/302f28/ffffff?text=302f28)
-![cl2](https://placehold.co/100x50/4d4716/ffffff?text=4d4716)
+![cl1](https://placehold.co/100x50/1d1e1d/ffffff?text=1d1e1d)
+![cl2](https://placehold.co/100x50/4f4d2c/ffffff?text=4f4d2c)
 
 Accent Colors
 

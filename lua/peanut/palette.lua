@@ -1,9 +1,9 @@
 local colors = {
-    bg1 = "#0f0808", -- main background
-    bg2 = "#262118", -- menu background
+    bg1 = "#050503", -- main background
+    bg2 = "#1d1f1d", -- menu background
 
-    cl1 = "#302f28", -- main cursor line
-    cl2 = "#4d4716", -- menu cursor line
+    cl1 = "#1d1e1d", -- main cursor line
+    cl2 = "#4f4d2c", -- menu cursor line
 
     accent = "#646861", -- selection
 
