@@ -1,20 +1,20 @@
 local colors = {
-    bg1 = "#080a0f", -- main background
-    bg2 = "#1c2428", -- menu background
+    bg1 = "#0f0808", -- main background
+    bg2 = "#262118", -- menu background
 
-    cl1 = "#121e22", -- main cursor line
-    cl2 = "#2b3938", -- menu cursor line
+    cl1 = "#302f28", -- main cursor line
+    cl2 = "#4d4716", -- menu cursor line
 
-    accent = "#475d68", -- selection
+    accent = "#646861", -- selection
 
     black = "#52595f",
-    white = "#a4b2be",
+    white = "#afafaf",
 
-    blue = "#4d88b3",
-    cyan = "#34929f",
+    blue = "#3b80a8",
+    cyan = "#648d96",
 
-    red = "#8278a4",
-    magenta = "#398472",
+    red = "#969564",
+    magenta = "#967f64",
 }
 
 return colors
