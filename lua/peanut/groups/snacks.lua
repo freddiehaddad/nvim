@@ -11,11 +11,11 @@ function M.highlight(palette, opts)
         -- SnacksWinBarNC	SnacksWinBar	-- Title for non-current windows
         -- SnacksScratchKey	DiagnosticVirtualText	-- Keymap help in the footer
         -- SnacksScratchDesc	DiagnosticInfo	-- Keymap help desc in the footer
-        SnacksNotifierInfo = { fg = palette.blue, bg = palette.bg2 },
+        SnacksNotifierInfo = { fg = palette.cyan, bg = palette.bg2 },
         SnacksNotifierWarn = { fg = palette.red, bg = palette.bg2 },
-        SnacksNotifierDebug = { fg = palette.white, bg = palette.bg2 },
+        SnacksNotifierDebug = { fg = palette.blue, bg = palette.bg2 },
         SnacksNotifierError = { fg = palette.magenta, bg = palette.bg2 },
-        SnacksNotifierTrace = { fg = palette.black, bg = palette.bg2 },
+        SnacksNotifierTrace = { fg = palette.white, bg = palette.bg2 },
         SnacksNotifierIconInfo = { link = "SnacksNotifierInfo" },
         SnacksNotifierIconWarn = { link = "SnacksNotifierWarn" },
         SnacksNotifierIconDebug = { link = "SnacksNotifierDebug" },
