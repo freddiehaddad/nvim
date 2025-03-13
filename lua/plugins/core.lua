@@ -214,6 +214,21 @@ return {
                     Snacks.toggle.option("wrap", { name = "wrap" }):map("<leader>uw")
                 end,
             })
+
+            vim.api.nvim_create_autocmd("LspProgress", {
+                ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+                callback = function(ev)
+                    local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+                    vim.notify(vim.lsp.status(), "info", {
+                        id = "lsp_progress",
+                        title = "LSP Progress",
+                        opts = function(notif)
+                            notif.icon = ev.data.params.value.kind == "end" and " "
+                                or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+                        end,
+                    })
+                end,
+            })
         end,
         opts = {
             dashboard = {
@@ -379,7 +394,6 @@ return {
         cmd = "Telescope",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "j-hui/fidget.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
@@ -454,7 +468,6 @@ return {
         config = function(_, opts)
             require("telescope").setup(opts)
             require("telescope").load_extension("fzf")
-            require("telescope").load_extension("fidget")
 
             local live_grep_globbing = function(options)
                 local pickers = require("telescope.pickers")
@@ -1166,17 +1179,6 @@ return {
             library = {
                 { path = "snacks.nvim", words = { "Snacks" } },
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-            },
-        },
-    },
-
-    -- LSP progress
-    {
-        "j-hui/fidget.nvim",
-        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-        opts = {
-            notification = {
-                window = { normal_hl = "", border_hl = "", border = "single", winblend = 0 },
             },
         },
     },
