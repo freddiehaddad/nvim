@@ -7,7 +7,7 @@ This is my custom [Neovim] configuration designed around my custom color scheme.
 Background Colors
 
 ![bg1](https://placehold.co/100x50/050503/ffffff?text=050503)
-![bg2](https://placehold.co/100x50/1d1f1d/ffffff?text=1d1f1d)
+![bg2](https://placehold.co/100x50/161713/ffffff?text=161713)
 
 Cursor Line Colors
 
@@ -20,15 +20,15 @@ Accent Colors
 
 Code Colors
 
-![black](https://placehold.co/100x50/52595f/ffffff?text=52595f)
-![white](https://placehold.co/100x50/afafaf/ffffff?text=afafaf)
-![blue](https://placehold.co/100x50/3b80a8/ffffff?text=3b80a8)
-![cyan](https://placehold.co/100x50/648d96/ffffff?text=648d96)
+![black](https://placehold.co/100x50/51504a/ffffff?text=51504a)
+![white](https://placehold.co/100x50/afaca0/ffffff?text=afaca0)
+![blue](https://placehold.co/100x50/648d96/ffffff?text=648d96)
+![cyan](https://placehold.co/100x50/578b74/ffffff?text=578b74)
 ![red](https://placehold.co/100x50/969564/ffffff?text=969564)
 ![magenta](https://placehold.co/100x50/967f64/ffffff?text=967f64)
 
 ## Preview
 
-![screenshot](https://github.com/user-attachments/assets/20debc45-d26a-46e0-a4c9-b034676fc3d8)
+![screenshot](https://github.com/user-attachments/assets/9cda3177-c948-41bf-b2f0-79e38686e41f)
 
 [neovim]: https://github.com/neovim/neovim
