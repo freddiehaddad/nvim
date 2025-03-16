@@ -441,14 +441,14 @@ return {
                     multi_icon = " ",
                     -- use square corners
                     borderchars = {
-                        "─",
-                        "│",
-                        "─",
-                        "│",
-                        "┌",
-                        "┐",
-                        "┘",
-                        "└",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
                     },
                     mappings = {
                         i = {
