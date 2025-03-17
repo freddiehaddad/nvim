@@ -15,7 +15,7 @@ function M.highlight(palette, opts)
 
         CursorLine = { bg = palette.cl1 },
         CursorColumn = { link = "CursorLine" },
-        CursorLineNr = { fg = palette.magenta },
+        CursorLineNr = { fg = palette.white },
         CursorLineSign = { link = "SignColumn" },
         CursorLineFold = { link = "FoldColumn" },
 
