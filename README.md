@@ -6,7 +6,7 @@ This is my custom [Neovim] configuration designed around my custom color scheme.
 
 Background Colors
 
-![bg1](https://placehold.co/100x50/fff6e2/ffffff?text=fff6e2)
+![bg1](https://placehold.co/100x50/faf1de/ffffff?text=faf1de)
 ![bg2](https://placehold.co/100x50/dbdccf/ffffff?text=dbdccf)
 
 Cursor Line Colors

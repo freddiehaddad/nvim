@@ -1,5 +1,5 @@
 local colors = {
-    bg1 = "#fff6e2", -- main background
+    bg1 = "#faf1de", -- main background
     bg2 = "#dbdccf", -- menu background
 
     cl1 = "#dbdccf", -- main cursor line
