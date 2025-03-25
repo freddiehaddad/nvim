@@ -30,6 +30,12 @@ return {
         end,
     },
 
+    -- Copilot
+    {
+        "github/copilot.vim",
+        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    },
+
     -- File explorer
     {
         "stevearc/oil.nvim",
