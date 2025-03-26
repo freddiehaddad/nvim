@@ -9,13 +9,13 @@ local colors = {
     search = "#b4b69a",
 
     black = "#90856c",
-    white = "#443b2a",
+    white = "#514530",
 
-    blue = "#475e67",
-    cyan = "#4e5b2c", -- green
+    blue = "#2f4953",
+    cyan = "#4a542d", -- green
 
-    red = "#763c31",
-    magenta = "#454152",
+    red = "#552720",
+    magenta = "#46263e",
 }
 
 return colors

@@ -22,10 +22,10 @@ Accent Colors
 Code Colors
 
 ![black](https://placehold.co/100x50/90856c/ffffff?text=90856c)
-![white](https://placehold.co/100x50/443b2a/ffffff?text=443b2a)
-![blue](https://placehold.co/100x50/475e67/ffffff?text=475e67)
-![cyan](https://placehold.co/100x50/4e5b2c/ffffff?text=4e5b2c)
-![red](https://placehold.co/100x50/763c31/ffffff?text=763c31)
-![magenta](https://placehold.co/100x50/454152/ffffff?text=454152)
+![white](https://placehold.co/100x50/514530/ffffff?text=514530)
+![blue](https://placehold.co/100x50/2f4953/ffffff?text=2f4953)
+![cyan](https://placehold.co/100x50/4a542d/ffffff?text=4a542d)
+![red](https://placehold.co/100x50/552720/ffffff?text=552720)
+![magenta](https://placehold.co/100x50/46263e/ffffff?text=46263e)
 
 [neovim]: https://github.com/neovim/neovim
