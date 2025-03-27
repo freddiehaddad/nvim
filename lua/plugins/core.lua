@@ -595,7 +595,7 @@ return {
         init = function(plugin)
             vim.opt.foldenable = false
             vim.opt.foldmethod = "expr"
-            -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
             -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
             -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
             -- no longer trigger the **nvim-treesitter** module to be loaded in time.
