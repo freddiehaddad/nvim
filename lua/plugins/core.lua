@@ -898,8 +898,6 @@ return {
                 ),
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
-                    -- disable to avoid treesitter/lsp highlighting conflicts
-                    client.server_capabilities.semanticTokensProvider = nil
 
                     -- stylua: ignore start
                     local map = vim.keymap.set
@@ -952,7 +950,7 @@ return {
                         enable = true,
                     },
                     scan_cmake_in_package = true,
-                    semantic_token = false,
+                    semantic_token = true,
                 },
                 capabilities = vim.tbl_deep_extend("force", {
                     workspace = {
