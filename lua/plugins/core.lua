@@ -79,6 +79,8 @@ return {
             local lualine_require = require("lualine_require")
             lualine_require.require = require
 
+            local palette = require("peanut.palette")
+
             vim.o.laststatus = vim.g.lualine_laststatus
             local opts = {
                 options = {
@@ -97,8 +99,14 @@ return {
                         "dapui_watches",
                     },
                     theme = {
-                        normal = { "StatusLine" },
-                        inactive = { "StatusLine" },
+                        normal = {
+                            a = { fg = palette.accent },
+                            b = { fg = palette.accent },
+                            c = { fg = palette.accent },
+                            x = { fg = palette.accent },
+                            y = { fg = palette.accent },
+                            z = { fg = palette.accent },
+                        },
                     },
                 },
                 extensions = { "lazy", "mason", "nvim-dap-ui", "oil", "trouble", "quickfix" },
@@ -113,7 +121,7 @@ return {
                         },
                     },
                     lualine_b = {
-                        { "filetype", icon_only = true, padding = { left = 2 }, color = "StatusLine" },
+                        { "filetype", icon_only = true, padding = { left = 2 } },
                         {
                             "filename",
                             symbols = {
@@ -123,7 +131,6 @@ return {
                                 newfile = "󰰔 ",
                             },
                             padding = { left = 1 },
-                            color = "StatusLine",
                         },
                     },
                     lualine_c = {
@@ -149,7 +156,7 @@ return {
                             padding = { left = 1 },
                         },
                     },
-                    lualine_x = { { "lsp_status", icon = "", symbols = { done = "●" }, color = "StatusLine" } },
+                    lualine_x = { { "lsp_status", icon = "", symbols = { done = "●" } } },
                     lualine_y = {
                         {
                             "macro",
@@ -161,18 +168,17 @@ return {
                                 return "󰑋 " .. reg
                             end,
                             padding = { right = 2 },
-                            color = "StatusLine",
                         },
                     },
                     lualine_z = {
-                        { "location", padding = { right = 1 }, color = "StatusLine" },
-                        { "progress", padding = 0, color = "StatusLine" },
+                        { "location", padding = { right = 1 } },
+                        { "progress", padding = 0 },
                     },
                 },
                 inactive_sections = {
                     lualine_a = {
-                        { "filetype", icon_only = true, padding = 0, color = "StatusLine" },
-                        { "filename", padding = 0, color = "StatusLine" },
+                        { "filetype", icon_only = true, padding = 0 },
+                        { "filename", padding = 0 },
                     },
                     lualine_b = {},
                     lualine_c = {},
