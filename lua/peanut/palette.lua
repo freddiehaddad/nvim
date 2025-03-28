@@ -11,11 +11,11 @@ local colors = {
     black = "#99886d",
     white = "#514530",
 
-    blue = "#4b5966",
-    cyan = "#4f583d", -- green
+    blue = "#496a68",
+    cyan = "#485b27", -- green
 
     red = "#674239",
-    magenta = "#496a68",
+    magenta = "#736929",
 }
 
 return colors
