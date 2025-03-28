@@ -11,21 +11,21 @@ Background Colors
 
 Cursor Line Colors
 
-![cl1](https://placehold.co/100x50/dbdccf/ffffff?text=dbdccf)
-![cl2](https://placehold.co/100x50/bbac74/ffffff?text=bbac74)
+![cl1](https://placehold.co/100x50/dbd6b0/ffffff?text=dbd6b0)
+![cl2](https://placehold.co/100x50/bbc1a3/ffffff?text=bbc1a3)
 
 Accent Colors
 
-![accent](https://placehold.co/100x50/656468/ffffff?text=656468)
+![accent](https://placehold.co/100x50/99886d/ffffff?text=99886d)
 ![search](https://placehold.co/100x50/b4b69a/ffffff?text=b4b69a)
 
 Code Colors
 
-![black](https://placehold.co/100x50/90856c/ffffff?text=90856c)
+![black](https://placehold.co/100x50/99886d/ffffff?text=99886d)
 ![white](https://placehold.co/100x50/514530/ffffff?text=514530)
-![blue](https://placehold.co/100x50/2f4953/ffffff?text=2f4953)
-![cyan](https://placehold.co/100x50/4a542d/ffffff?text=4a542d)
-![red](https://placehold.co/100x50/552720/ffffff?text=552720)
-![magenta](https://placehold.co/100x50/46263e/ffffff?text=46263e)
+![blue](https://placehold.co/100x50/4b5966/ffffff?text=4b5966)
+![cyan](https://placehold.co/100x50/4f583d/ffffff?text=4f583d)
+![red](https://placehold.co/100x50/674239/ffffff?text=674239)
+![magenta](https://placehold.co/100x50/496a68/ffffff?text=496a68)
 
 [neovim]: https://github.com/neovim/neovim
