@@ -1,4 +1,3 @@
--- Colorscheme
 vim.cmd("colorscheme peanut")
 
 -- Options
@@ -9,12 +8,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 
 local opt = vim.opt
-
 opt.clipboard = "unnamedplus"
 opt.cmdheight = 0
 opt.cursorline = true
 opt.fillchars:append({
     eob = " ",
+    fold = " ",
     foldopen = "",
     foldclose = "",
     foldsep = " ",
@@ -26,6 +25,8 @@ opt.fillchars:append({
     vertright = " ",
     verthoriz = " ",
 })
+opt.foldenable = true
+opt.foldlevel = 99
 opt.laststatus = 3
 opt.mouse = ""
 opt.number = true
@@ -79,8 +80,10 @@ map("n", "<C-Right>", "<cmd>vertical resize +1<cr>", { desc = "Increase window w
 
 -- Split windows
 map("n", "<leader>w=", "<C-W>=", { desc = "Equally high and wide", remap = true })
-map("n", "<leader>wh", "<C-W>s", { desc = "Split window below", remap = true })
-map("n", "<leader>wv", "<C-W>v", { desc = "Split window right", remap = true })
+map("n", "<leader>wh", "<cmd>rightbelow split<cr>", { desc = "Split window below" })
+map("n", "<leader>wH", "<cmd>leftabove split<cr>", { desc = "Split window above" })
+map("n", "<leader>wv", "<cmd>rightbelow vsplit<cr>", { desc = "Split window right" })
+map("n", "<leader>wV", "<cmd>leftabove vsplit<cr>", { desc = "Split window left" })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })
 
 -- Move lines
@@ -236,6 +239,11 @@ end
 vim.opt.runtimepath:prepend(lazy_path)
 
 -- Load Lazy plugin manager
+local hl = vim.api.nvim_set_hl
+local palette = vim.g.colors_palette
+hl(0, "LazyButton", { link = "Pmenu" })
+hl(0, "LazyButtonActive", { bg = palette.msearch.bright })
+hl(0, "LazyH1", { link = "LazyButtonActive" })
 require("lazy").setup({
     spec = { { import = "plugins" } },
     rocks = { enabled = false },

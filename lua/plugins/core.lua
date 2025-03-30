@@ -27,12 +27,24 @@ return {
                 require("mini.icons").mock_nvim_web_devicons()
                 return package.loaded["nvim-web-devicons"]
             end
+
+            local hl = vim.api.nvim_set_hl
+            hl(0, "MiniIconsAzure", { link = "Icon" })
+            hl(0, "MiniIconsBlue", { link = "Icon" })
+            hl(0, "MiniIconsCyan", { link = "Icon" })
+            hl(0, "MiniIconsGreen", { link = "Icon" })
+            hl(0, "MiniIconsGrey", { link = "Icon" })
+            hl(0, "MiniIconsOrange", { link = "Icon" })
+            hl(0, "MiniIconsPurple", { link = "Icon" })
+            hl(0, "MiniIconsRed", { link = "Icon" })
+            hl(0, "MiniIconsYellow", { link = "Icon" })
         end,
     },
 
     -- Copilot
     {
         "github/copilot.vim",
+        enabled = false,
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     },
 
@@ -79,7 +91,7 @@ return {
             local lualine_require = require("lualine_require")
             lualine_require.require = require
 
-            local palette = require("peanut.palette")
+            local palette = vim.g.colors_palette
 
             vim.o.laststatus = vim.g.lualine_laststatus
             local opts = {
@@ -100,12 +112,24 @@ return {
                     },
                     theme = {
                         normal = {
-                            a = { fg = palette.accent },
-                            b = { fg = palette.accent },
-                            c = { fg = palette.accent },
-                            x = { fg = palette.accent },
-                            y = { fg = palette.accent },
-                            z = { fg = palette.accent },
+                            a = { fg = palette.black.dim },
+                            b = { fg = palette.black.dim },
+                            c = { fg = palette.black.dim },
+                            x = { fg = palette.black.dim },
+                            y = { fg = palette.black.dim },
+                            z = { fg = palette.black.dim },
+                        },
+                        insert = {
+                            a = { fg = palette.blue.dim },
+                        },
+                        visual = {
+                            a = { fg = palette.cyan.dim },
+                        },
+                        replace = {
+                            a = { fg = palette.yellow.dim },
+                        },
+                        inactive = {
+                            a = { fg = palette.black.dim },
                         },
                     },
                 },
@@ -214,6 +238,38 @@ return {
         priority = 1000,
         lazy = false,
         init = function()
+            local palette = vim.g.colors_palette
+            local hl = vim.api.nvim_set_hl
+            hl(0, "SnacksNotifierHistory", { bg = palette.bg.bright })
+
+            hl(0, "SnacksNotifierInfo", { fg = palette.cyan.bright, bg = palette.bg.bright })
+            hl(0, "SnacksNotifierWarn", { fg = palette.yellow.bright, bg = palette.bg.bright })
+            hl(0, "SnacksNotifierError", { fg = palette.red.bright, bg = palette.bg.bright })
+            hl(0, "SnacksNotifierDebug", { fg = palette.magenta.bright, bg = palette.bg.bright })
+            hl(0, "SnacksNotifierTrace", { fg = palette.blue.bright, bg = palette.bg.bright })
+
+            hl(0, "SnacksNotifierIconInfo", { link = "SnacksNotifierInfo" })
+            hl(0, "SnacksNotifierIconWarn", { link = "SnacksNotifierWarn" })
+            hl(0, "SnacksNotifierIconDebug", { link = "SnacksNotifierDebug" })
+            hl(0, "SnacksNotifierIconError", { link = "SnacksNotifierError" })
+            hl(0, "SnacksNotifierIconTrace", { link = "SnacksNotifierTrace" })
+            hl(0, "SnacksNotifierTitleInfo", { link = "SnacksNotifierInfo" })
+            hl(0, "SnacksNotifierTitleWarn", { link = "SnacksNotifierWarn" })
+            hl(0, "SnacksNotifierTitleDebug", { link = "SnacksNotifierDebug" })
+            hl(0, "SnacksNotifierTitleError", { link = "SnacksNotifierError" })
+            hl(0, "SnacksNotifierTitleTrace", { link = "SnacksNotifierTrace" })
+            hl(0, "SnacksNotifierBorderInfo", { link = "SnacksNotifierInfo" })
+            hl(0, "SnacksNotifierBorderWarn", { link = "SnacksNotifierWarn" })
+            hl(0, "SnacksNotifierBorderDebug", { link = "SnacksNotifierDebug" })
+            hl(0, "SnacksNotifierBorderError", { link = "SnacksNotifierError" })
+            hl(0, "SnacksNotifierBorderTrace", { link = "SnacksNotifierTrace" })
+            hl(0, "SnacksDashboardDesc", { fg = palette.black.dim })
+            hl(0, "SnacksDashboardFile", { fg = palette.black.dim })
+            hl(0, "SnacksDashboardHeader", { fg = palette.white.bright })
+            hl(0, "SnacksDashboardFooter", { fg = palette.white.bright })
+            hl(0, "SnacksDashboardIcon", { link = "Icon" })
+            hl(0, "SnacksDashboardKey", { fg = palette.black.dim })
+
             vim.api.nvim_create_autocmd("User", {
                 pattern = "VeryLazy",
                 callback = function()
@@ -278,7 +334,7 @@ return {
                 },
             },
             scroll = { enabled = true },
-            statuscolumn = {},
+            statuscolumn = { enabled = false },
         },
         keys = {
             { "<leader>bd", "<cmd>lua Snacks.bufdelete()<cr>", desc = "Delete buffer" },
@@ -291,6 +347,27 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        init = function()
+            local hl = vim.api.nvim_set_hl
+            hl(0, "WhichKey", { link = "Function" })
+            hl(0, "WhichKeyBorder", { link = "FloatBorder" })
+            hl(0, "WhichKeyDesc", { link = "Identifier" })
+            hl(0, "WhichKeyGroup", { link = "Keyword" })
+            hl(0, "WhichKeyIcon", { link = "@markup.link" })
+            hl(0, "WhichKeyIconAzure", { link = "Icon" })
+            hl(0, "WhichKeyIconBlue", { link = "Icon" })
+            hl(0, "WhichKeyIconCyan", { link = "Icon" })
+            hl(0, "WhichKeyIconGreen", { link = "Icon" })
+            hl(0, "WhichKeyIconGrey", { link = "Icon" })
+            hl(0, "WhichKeyIconOrange", { link = "Icon" })
+            hl(0, "WhichKeyIconPurple", { link = "Icon" })
+            hl(0, "WhichKeyIconRed", { link = "Icon" })
+            hl(0, "WhichKeyIconYellow", { link = "Icon" })
+            hl(0, "WhichKeyNormal", { link = "NormalFloat" })
+            hl(0, "WhichKeySeparator", { link = "Comment" })
+            hl(0, "WhichKeyTitle", { link = "Title" })
+            hl(0, "WhichKeyValue", { link = "Comment" })
+        end,
         opts = {
             icons = { separator = ":" },
             spec = {
@@ -389,6 +466,16 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         cmd = "Telescope",
+        init = function()
+            local hl = vim.api.nvim_set_hl
+            local palette = vim.g.colors_palette
+            hl(0, "TelescopeMatching", { bg = palette.msearch.bright })
+            hl(0, "TelescopePreviewLine", { bg = palette.msearch.bright })
+            hl(0, "TelescopePreviewMatch", { bg = palette.msearch.bright })
+            hl(0, "TelescopeNormal", { link = "NormalFloat" })
+            hl(0, "TelescopeSelection", { link = "PmenuSel" })
+            hl(0, "TelescopeTitle", { link = "Title" })
+        end,
         dependencies = {
             "nvim-lua/plenary.nvim",
             {
@@ -584,7 +671,6 @@ return {
         cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
         init = function(plugin)
-            vim.opt.foldenable = false
             vim.opt.foldmethod = "expr"
             vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
             -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
@@ -700,6 +786,11 @@ return {
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
 
+                    if client:supports_method("textDocument/foldingRange") then
+                        local win = vim.api.nvim_get_current_win()
+                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    end
+
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
                         map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
@@ -779,6 +870,25 @@ return {
         build = ":MasonUpdate",
         cmd = "Mason",
         keys = { { "<leader>pm", "<cmd>Mason<cr>", desc = "Mason" } },
+        init = function()
+            local hl = vim.api.nvim_set_hl
+            hl(0, "MasonNormal", { link = "NormalFloat" })
+            hl(0, "MasonHeader", { link = "Title" })
+            hl(0, "MasonHeaderSecondary", { link = "Normal" })
+            hl(0, "MasonHighlight", { link = "Normal" })
+            hl(0, "MasonHighlightBlock", { link = "Normal" })
+            hl(0, "MasonHighlightBlockBold", { link = "PmenuSel" })
+            hl(0, "MasonHighlightSecondary", { link = "Normal" })
+            hl(0, "MasonHighlightBlockSecondary", { link = "Normal" })
+            hl(0, "MasonHighlightBlockBoldSecondary", { link = "Normal" })
+            hl(0, "MasonLink", { link = "PmenuSel" })
+            hl(0, "MasonMuted", { link = "Normal" })
+            hl(0, "MasonMutedBlock", { link = "Normal" })
+            hl(0, "MasonMutedBlockBold", { link = "Normal" })
+            hl(0, "MasonError", { link = "ErrorMsg" })
+            hl(0, "MasonWarning", { link = "WarningMsg" })
+            hl(0, "MasonHeading", { link = "Title" })
+        end,
         opts = {
             ui = {
                 keymaps = { apply_language_filter = "F" },
@@ -913,6 +1023,11 @@ return {
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
 
+                    if client:supports_method("textDocument/foldingRange") then
+                        local win = vim.api.nvim_get_current_win()
+                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    end
+
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
                         map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
@@ -981,6 +1096,11 @@ return {
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
 
+                    if client:supports_method("textDocument/foldingRange") then
+                        local win = vim.api.nvim_get_current_win()
+                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    end
+
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
                         map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
@@ -1033,6 +1153,11 @@ return {
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    if client:supports_method("textDocument/foldingRange") then
+                        local win = vim.api.nvim_get_current_win()
+                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    end
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
@@ -1088,6 +1213,11 @@ return {
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    if client:supports_method("textDocument/foldingRange") then
+                        local win = vim.api.nvim_get_current_win()
+                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    end
 
                     if client.server_capabilities.codeLensProvider then
                         -- stylua: ignore start
@@ -1228,6 +1358,43 @@ return {
     -- UI for the debugger
     {
         "rcarriga/nvim-dap-ui",
+        init = function()
+            local hl = vim.api.nvim_set_hl
+            hl(0, "DapStoppedLine", { link = "Accent" })
+            hl(0, "DapUINormal", { link = "Normal" })
+            hl(0, "DapUIVariable", { link = "Variable" })
+            hl(0, "DapUIScope", { link = "Normal" })
+            hl(0, "DapUIType", { link = "Type" })
+            hl(0, "DapUIValue", { link = "Identifier" })
+            hl(0, "DapUIModifiedValue", { link = "Todo" })
+            hl(0, "DapUIDecoration", { link = "Operator" })
+            hl(0, "DapUIThread", { link = "Normal" })
+            hl(0, "DapUIStoppedThread", { link = "Normal" })
+            hl(0, "DapUIFrameName", { link = "Normal" })
+            hl(0, "DapUISource", { link = "Normal" })
+            hl(0, "DapUILineNumber", { link = "LineNr" })
+            hl(0, "DapUIFloatNormal", { link = "NormalFloat" })
+            hl(0, "DapUIFloatBorder", { link = "Normal" })
+            hl(0, "DapUIWatchesEmpty", { link = "Normal" })
+            hl(0, "DapUIWatchesValue", { link = "Normal" })
+            hl(0, "DapUIWatchesError", { link = "DiagnosticError" })
+            hl(0, "DapUIBreakpointsPath", { link = "Directory" })
+            hl(0, "DapUIBreakpointsInfo", { link = "DiagnosticInfo" })
+            hl(0, "DapUIBreakpointsCurrentLine", { link = "Normal" })
+            hl(0, "DapUIBreakpointsLine", { link = "DapUILineNumber" })
+            hl(0, "DapUIBreakpointsDisabledLine", { link = "DiagnosticInfo" })
+            hl(0, "DapUICurrentFrameName", { link = "DapUIBreakpointsCurrentLine" })
+            hl(0, "DapUIStepOver", { link = "Normal" })
+            hl(0, "DapUIStepInto", { link = "Normal" })
+            hl(0, "DapUIStepBack", { link = "Normal" })
+            hl(0, "DapUIStepOut", { link = "Normal" })
+            hl(0, "DapUIStop", { link = "Normal" })
+            hl(0, "DapUIPlayPause", { link = "Normal" })
+            hl(0, "DapUIRestart", { link = "Normal" })
+            hl(0, "DapUIUnavailable", { link = "Error" })
+            hl(0, "DapUIWinSelect", { link = "CusorLine" })
+            hl(0, "DapUIEndofBuffer", { link = "EndofBuffer" })
+        end,
         dependencies = {
             "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
@@ -1296,6 +1463,27 @@ return {
     {
         "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio" },
+        init = function()
+            local hl = vim.api.nvim_set_hl
+            hl(0, "NeotestPassed", { link = "DiagnosticOk" })
+            hl(0, "NeotestFailed", { link = "DiagnosticError" })
+            hl(0, "NeotestRunning", { link = "DiagnosticInfo" })
+            hl(0, "NeotestSkipped", { link = "DiagnosticWarn" })
+            hl(0, "NeotestTest", { link = "Function" })
+            hl(0, "NeotestNamespace", { link = "Identifier" })
+            hl(0, "NeotestFocused", { link = "DiagnosticInfo" })
+            hl(0, "NeotestFile", { link = "Normal" })
+            hl(0, "NeotestDir", { link = "Directory" })
+            hl(0, "NeotestAdapterName", { link = "Title" })
+            hl(0, "NeotestWinSelect", { link = "Normal" })
+            hl(0, "NeotestMarked", { link = "Identifier" })
+            hl(0, "NeotestTarget", { link = "Normal" })
+            hl(0, "NeotestWatching", { link = "Normal" })
+            hl(0, "NeotestUnknown", { link = "DiagnosticError" })
+            hl(0, "NeotestBorder", { link = "Normal" })
+            hl(0, "NeotestIndent", { link = "LineNr" })
+            hl(0, "NeotestExpandMarker", { link = "LineNr" })
+        end,
         opts = {
             adapters = {
                 ["rustaceanvim.neotest"] = {},
