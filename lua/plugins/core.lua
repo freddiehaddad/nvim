@@ -1500,18 +1500,6 @@ return {
             icons = { expanded = "┐", final_child_prefix = "└" },
         },
         config = function(_, opts)
-            local neotest_ns = vim.api.nvim_create_namespace("neotest")
-            vim.diagnostic.config({
-                virtual_text = {
-                    format = function(diagnostic)
-                        -- Replace newline and tab characters with space for more compact diagnostics
-                        local message =
-                            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-                        return message
-                    end,
-                },
-            }, neotest_ns)
-
             if opts.adapters then
                 local adapters = {}
                 for name, config in pairs(opts.adapters or {}) do
