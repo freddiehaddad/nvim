@@ -888,6 +888,13 @@ return {
             hl(0, "MasonError", { link = "ErrorMsg" })
             hl(0, "MasonWarning", { link = "WarningMsg" })
             hl(0, "MasonHeading", { link = "Title" })
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "mason",
+                callback = function()
+                    vim.opt_local.cursorline = false
+                end,
+            })
         end,
         opts = {
             ui = {
