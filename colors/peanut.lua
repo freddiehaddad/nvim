@@ -11,7 +11,7 @@ vim.g.colors_palette = {
     msearch    = { dim = "#66663e", bright = "#66663e" },
 
     black      = { dim = "#4e4b42", bright = "#69665a", bg = "#424038" },
-    red        = { dim = "#cda074", bright = "#d4ae88", bg = "#5a3d20" },
+    red        = { dim = "#cd9474", bright = "#d4a488", bg = "#5a3720" },
     green      = { dim = "#9e7a58", bright = "#ad8c6e", bg = "#4e3d2c" },
     yellow     = { dim = "#c0a064", bright = "#c8ad7a", bg = "#574523" },
     blue       = { dim = "#a14b31", bright = "#c15a3b", bg = "#5e2c1d" },
