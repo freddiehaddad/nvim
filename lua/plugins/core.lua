@@ -941,7 +941,8 @@ return {
             -- diagnostics
             local diagnostics = {
                 underline = true,
-                update_in_insert = false,
+                update_in_insert = true,
+                virtual_lines = { current_line = true },
                 virtual_text = {
                     spacing = 4,
                     source = "if_many",
