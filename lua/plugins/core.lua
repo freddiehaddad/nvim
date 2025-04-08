@@ -786,6 +786,15 @@ return {
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
 
+                    -- toggle virtual diagnostics
+                    map("n", "<leader>ud", function()
+                        if vim.diagnostic.config().virtual_text then
+                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+                        else
+                            vim.diagnostic.config(vim.g.diagnostic_config)
+                        end
+                    end, { buffer = bufnr, desc = "Toggle virtual text" })
+
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
                         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
@@ -972,6 +981,7 @@ return {
                 },
             }
             vim.diagnostic.config(diagnostics)
+            vim.g.diagnostic_config = diagnostics
         end,
         config = function()
             require("lspconfig").lua_ls.setup({
@@ -1030,6 +1040,15 @@ return {
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    -- toggle virtual diagnostics
+                    map("n", "<leader>ud", function()
+                        if vim.diagnostic.config().virtual_text then
+                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+                        else
+                            vim.diagnostic.config(vim.g.diagnostic_config)
+                        end
+                    end, { buffer = bufnr, desc = "Toggle virtual text" })
 
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
@@ -1104,6 +1123,15 @@ return {
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
 
+                    -- toggle virtual diagnostics
+                    map("n", "<leader>ud", function()
+                        if vim.diagnostic.config().virtual_text then
+                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+                        else
+                            vim.diagnostic.config(vim.g.diagnostic_config)
+                        end
+                    end, { buffer = bufnr, desc = "Toggle virtual text" })
+
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
                         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
@@ -1161,6 +1189,15 @@ return {
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    -- toggle virtual diagnostics
+                    map("n", "<leader>ud", function()
+                        if vim.diagnostic.config().virtual_text then
+                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+                        else
+                            vim.diagnostic.config(vim.g.diagnostic_config)
+                        end
+                    end, { buffer = bufnr, desc = "Toggle virtual text" })
 
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
@@ -1221,6 +1258,15 @@ return {
 
                     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
                     Snacks.toggle.inlay_hints():map("<leader>uh")
+
+                    -- toggle virtual diagnostics
+                    map("n", "<leader>ud", function()
+                        if vim.diagnostic.config().virtual_text then
+                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+                        else
+                            vim.diagnostic.config(vim.g.diagnostic_config)
+                        end
+                    end, { buffer = bufnr, desc = "Toggle virtual text" })
 
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
