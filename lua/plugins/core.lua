@@ -971,7 +971,7 @@ return {
                     },
                 },
             }
-            vim.diagnostic.config(vim.deepcopy(diagnostics))
+            vim.diagnostic.config(diagnostics)
         end,
         config = function()
             require("lspconfig").lua_ls.setup({
