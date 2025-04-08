@@ -939,10 +939,10 @@ return {
         dependencies = { "williamboman/mason-lspconfig.nvim", "saghen/blink.cmp" },
         init = function()
             local icons = {
-                error = "󰯹 ",
-                warn = "󰰯 ",
-                hint = "󰰂 ",
-                info = "󰰅 ",
+                ERROR = "󰯹 ",
+                WARN = "󰰯 ",
+                HINT = "󰰂 ",
+                INFO = "󰰅 ",
             }
 
             -- diagnostics
@@ -954,8 +954,8 @@ return {
                     spacing = 4,
                     source = "if_many",
                     prefix = function(diagnostic)
-                        for d, icon in pairs(icons) do
-                            if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+                        for sev, icon in pairs(icons) do
+                            if diagnostic.severity == vim.diagnostic.severity[sev] then
                                 return icon
                             end
                         end
@@ -964,10 +964,10 @@ return {
                 severity_sort = true,
                 signs = {
                     text = {
-                        [vim.diagnostic.severity.ERROR] = icons.error,
-                        [vim.diagnostic.severity.WARN] = icons.warn,
-                        [vim.diagnostic.severity.HINT] = icons.hint,
-                        [vim.diagnostic.severity.INFO] = icons.info,
+                        [vim.diagnostic.severity.ERROR] = icons.ERROR,
+                        [vim.diagnostic.severity.WARN] = icons.WARN,
+                        [vim.diagnostic.severity.HINT] = icons.HINT,
+                        [vim.diagnostic.severity.INFO] = icons.INFO,
                     },
                 },
             }
