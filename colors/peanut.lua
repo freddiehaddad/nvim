@@ -156,4 +156,6 @@ hl(0, "String", { fg = palette.green.dim })
 hl(0, "Todo", { link = "SpecialComment" })
 hl(0, "Type", { fg = palette.blue.dim })
 
-hl(0, "@variable", { fg = palette.magenta.bright })
+-- treesitter highlights
+hl(0, "@variable", { fg = palette.magenta.dim })
+hl(0, "@module", { fg = palette.magenta.bright })
