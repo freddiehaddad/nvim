@@ -24,6 +24,24 @@ vim.g.colors_palette = {
 local palette = vim.g.colors_palette
 local hl = vim.api.nvim_set_hl
 
+-- Palette
+hl(0, "Color0", { fg = palette.black.dim })
+hl(0, "Color8", { fg = palette.black.bright })
+hl(0, "Color1", { fg = palette.red.dim })
+hl(0, "Color9", { fg = palette.red.bright })
+hl(0, "Color2", { fg = palette.green.dim })
+hl(0, "Color10", { fg = palette.green.bright })
+hl(0, "Color3", { fg = palette.yellow.dim })
+hl(0, "Color11", { fg = palette.yellow.bright })
+hl(0, "Color4", { fg = palette.blue.dim })
+hl(0, "Color12", { fg = palette.blue.bright })
+hl(0, "Color5", { fg = palette.magenta.dim })
+hl(0, "Color13", { fg = palette.magenta.bright })
+hl(0, "Color6", { fg = palette.cyan.dim })
+hl(0, "Color14", { fg = palette.cyan.bright })
+hl(0, "Color7", { fg = palette.white.dim })
+hl(0, "Color15", { fg = palette.white.bright })
+
 -- Custom highlights
 hl(0, "Icon", { fg = palette.black.bright })
 
