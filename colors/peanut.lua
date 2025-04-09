@@ -2,8 +2,8 @@
 --
 -- :autocmd BufWritePost <buffer> source %
 
---stylua: ignore
 vim.g.colors_palette = {
+    --stylua: ignore start
     bg         = { dim = "#000000", bright = "#1d1d12" },
     cursorline = { dim = "#1e1010", bright = "#46462b" },
 
@@ -18,6 +18,7 @@ vim.g.colors_palette = {
     magenta    = { dim = "#734c4d", bright = "#8d5e5f", bg = "#493132" },
     cyan       = { dim = "#979797", bright = "#a5a5a5", bg = "#3d3d3d" },
     white      = { dim = "#a6a18d", bright = "#b2ae9d", bg = "#454236" },
+    --stylua: ignore end
 }
 
 local palette = vim.g.colors_palette
