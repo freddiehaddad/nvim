@@ -91,8 +91,6 @@ return {
             local lualine_require = require("lualine_require")
             lualine_require.require = require
 
-            local palette = vim.g.colors_palette
-
             vim.o.laststatus = vim.g.lualine_laststatus
             local opts = {
                 options = {
@@ -112,24 +110,24 @@ return {
                     },
                     theme = {
                         normal = {
-                            a = { fg = palette.black.dim },
-                            b = { fg = palette.black.dim },
-                            c = { fg = palette.black.dim },
-                            x = { fg = palette.black.dim },
-                            y = { fg = palette.black.dim },
-                            z = { fg = palette.black.dim },
+                            a = "Color0",
+                            b = "Color0",
+                            c = "Color0",
+                            x = "Color0",
+                            y = "Color0",
+                            z = "Color0",
                         },
                         insert = {
-                            a = { fg = palette.blue.dim },
+                            a = "Color4",
                         },
                         visual = {
-                            a = { fg = palette.cyan.dim },
+                            a = "Color6",
                         },
                         replace = {
-                            a = { fg = palette.yellow.dim },
+                            a = "Color3",
                         },
                         inactive = {
-                            a = { fg = palette.black.dim },
+                            a = "Color0",
                         },
                     },
                 },
@@ -238,15 +236,14 @@ return {
         priority = 1000,
         lazy = false,
         init = function()
-            local palette = vim.g.colors_palette
             local hl = vim.api.nvim_set_hl
-            hl(0, "SnacksNotifierHistory", { bg = palette.bg.bright })
+            hl(0, "SnacksNotifierHistory", { link = "NormalFloat" })
 
-            hl(0, "SnacksNotifierInfo", { fg = palette.cyan.bright, bg = palette.bg.bright })
-            hl(0, "SnacksNotifierWarn", { fg = palette.yellow.bright, bg = palette.bg.bright })
-            hl(0, "SnacksNotifierError", { fg = palette.red.bright, bg = palette.bg.bright })
-            hl(0, "SnacksNotifierDebug", { fg = palette.magenta.bright, bg = palette.bg.bright })
-            hl(0, "SnacksNotifierTrace", { fg = palette.blue.bright, bg = palette.bg.bright })
+            hl(0, "SnacksNotifierInfo", { link = "Info" })
+            hl(0, "SnacksNotifierWarn", { link = "Warn" })
+            hl(0, "SnacksNotifierError", { link = "Error" })
+            hl(0, "SnacksNotifierDebug", { link = "Debug" })
+            hl(0, "SnacksNotifierTrace", { link = "Trace" })
 
             hl(0, "SnacksNotifierIconInfo", { link = "SnacksNotifierInfo" })
             hl(0, "SnacksNotifierIconWarn", { link = "SnacksNotifierWarn" })
@@ -263,12 +260,12 @@ return {
             hl(0, "SnacksNotifierBorderDebug", { link = "SnacksNotifierDebug" })
             hl(0, "SnacksNotifierBorderError", { link = "SnacksNotifierError" })
             hl(0, "SnacksNotifierBorderTrace", { link = "SnacksNotifierTrace" })
-            hl(0, "SnacksDashboardDesc", { fg = palette.black.dim })
-            hl(0, "SnacksDashboardFile", { fg = palette.black.dim })
-            hl(0, "SnacksDashboardHeader", { fg = palette.white.bright })
-            hl(0, "SnacksDashboardFooter", { fg = palette.white.bright })
+            hl(0, "SnacksDashboardDesc", { link = "Color0" })
+            hl(0, "SnacksDashboardFile", { link = "Color0" })
+            hl(0, "SnacksDashboardHeader", { link = "Color15" })
+            hl(0, "SnacksDashboardFooter", { link = "Color15" })
             hl(0, "SnacksDashboardIcon", { link = "Icon" })
-            hl(0, "SnacksDashboardKey", { fg = palette.black.dim })
+            hl(0, "SnacksDashboardKey", { link = "Color0" })
 
             vim.api.nvim_create_autocmd("User", {
                 pattern = "VeryLazy",
@@ -468,10 +465,9 @@ return {
         cmd = "Telescope",
         init = function()
             local hl = vim.api.nvim_set_hl
-            local palette = vim.g.colors_palette
-            hl(0, "TelescopeMatching", { bg = palette.msearch.bright })
-            hl(0, "TelescopePreviewLine", { bg = palette.msearch.bright })
-            hl(0, "TelescopePreviewMatch", { bg = palette.msearch.bright })
+            hl(0, "TelescopeMatching", { link = "MSearchBright" })
+            hl(0, "TelescopePreviewLine", { link = "MSearchBright" })
+            hl(0, "TelescopePreviewMatch", { link = "MSearchBright" })
             hl(0, "TelescopeNormal", { link = "NormalFloat" })
             hl(0, "TelescopeSelection", { link = "PmenuSel" })
             hl(0, "TelescopeTitle", { link = "Title" })

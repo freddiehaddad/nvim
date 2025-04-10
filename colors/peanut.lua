@@ -1,8 +1,16 @@
 -- Peanut Colorscheme
 --
+-- Dim
+-- https://coolors.co/4e4b42-cd9474-9e7a58-c0a064-a14b31-875a5b-979797-a6a18d
+--
+-- Bright
+-- https://coolors.co/635f54-d9af96-b6997c-d0b88b-c56244-a57879-adadad-b7b3a4
+--
+-- Backgrounds
+-- https://coolors.co/37352f-4b2d1b-413325-48391e-4e2518-3d2929-333333-39372d
 -- :autocmd BufWritePost <buffer> source %
 
-vim.g.colors_palette = {
+local palette = {
     --stylua: ignore start
     bg         = { dim = "#000000", bright = "#1d1d12" },
     cursorline = { dim = "#1e1010", bright = "#46462b" },
@@ -10,40 +18,55 @@ vim.g.colors_palette = {
     search     = { dim = "#372e17", bright = "#4b2222" },
     msearch    = { dim = "#66663e", bright = "#66663e" },
 
-    black      = { dim = "#4e4b42", bright = "#69665a", bg = "#424038" },
-    red        = { dim = "#cd9474", bright = "#d4a488", bg = "#5a3720" },
-    green      = { dim = "#9e7a58", bright = "#ad8c6e", bg = "#4e3d2c" },
-    yellow     = { dim = "#c0a064", bright = "#c8ad7a", bg = "#574523" },
-    blue       = { dim = "#a14b31", bright = "#c15a3b", bg = "#5e2c1d" },
-    magenta    = { dim = "#734c4d", bright = "#8d5e5f", bg = "#493132" },
-    cyan       = { dim = "#979797", bright = "#a5a5a5", bg = "#3d3d3d" },
-    white      = { dim = "#a6a18d", bright = "#b2ae9d", bg = "#454236" },
+    black      = { dim = "#4e4b42", bright = "#635f54", bg = "#37352f" },
+    red        = { dim = "#cd9474", bright = "#d9af96", bg = "#4b2d1b" },
+    green      = { dim = "#9e7a58", bright = "#b6997c", bg = "#413325" },
+    yellow     = { dim = "#c0a064", bright = "#d0b88b", bg = "#48391e" },
+    blue       = { dim = "#a14b31", bright = "#c56244", bg = "#4e2518" },
+    magenta    = { dim = "#875a5b", bright = "#a57879", bg = "#3d2929" },
+    cyan       = { dim = "#979797", bright = "#adadad", bg = "#333333" },
+    white      = { dim = "#a6a18d", bright = "#b7b3a4", bg = "#39372d" },
     --stylua: ignore end
 }
 
-local palette = vim.g.colors_palette
 local hl = vim.api.nvim_set_hl
 
 -- Palette
 hl(0, "Color0", { fg = palette.black.dim })
 hl(0, "Color8", { fg = palette.black.bright })
+hl(0, "Color16", { bg = palette.black.bg })
 hl(0, "Color1", { fg = palette.red.dim })
 hl(0, "Color9", { fg = palette.red.bright })
+hl(0, "Color17", { bg = palette.red.bg })
 hl(0, "Color2", { fg = palette.green.dim })
 hl(0, "Color10", { fg = palette.green.bright })
+hl(0, "Color18", { bg = palette.green.bg })
 hl(0, "Color3", { fg = palette.yellow.dim })
 hl(0, "Color11", { fg = palette.yellow.bright })
+hl(0, "Color19", { bg = palette.yellow.bg })
 hl(0, "Color4", { fg = palette.blue.dim })
 hl(0, "Color12", { fg = palette.blue.bright })
+hl(0, "Color20", { bg = palette.blue.bg })
 hl(0, "Color5", { fg = palette.magenta.dim })
 hl(0, "Color13", { fg = palette.magenta.bright })
+hl(0, "Color21", { bg = palette.magenta.bg })
 hl(0, "Color6", { fg = palette.cyan.dim })
 hl(0, "Color14", { fg = palette.cyan.bright })
+hl(0, "Color22", { bg = palette.cyan.bg })
 hl(0, "Color7", { fg = palette.white.dim })
 hl(0, "Color15", { fg = palette.white.bright })
+hl(0, "Color23", { bg = palette.white.bg })
 
 -- Custom highlights
 hl(0, "Icon", { fg = palette.black.bright })
+
+hl(0, "Info", { fg = palette.cyan.bright, bg = palette.cyan.bg })
+hl(0, "Warn", { fg = palette.yellow.bright, bg = palette.yellow.bg })
+hl(0, "Error", { fg = palette.red.bright, bg = palette.red.bg })
+hl(0, "Debug", { fg = palette.magenta.bright, bg = palette.magenta.bg })
+hl(0, "Trace", { fg = palette.yellow.bright, bg = palette.yellow.bg })
+
+hl(0, "MSearchBright", { bg = palette.msearch.bright })
 
 -- Neovim highlights
 hl(0, "Normal", { fg = palette.white.dim })
@@ -113,7 +136,6 @@ hl(0, "WinSeparator", {})
 
 hl(0, "NvimInternalError", { bg = palette.red.bright, fg = palette.black.dim })
 
-hl(0, "Error", { fg = palette.red.bright })
 hl(0, "SpellBad", { fg = palette.red.bright, bg = palette.red.bg })
 hl(0, "SpellCap", { fg = palette.yellow.bright, bg = palette.yellow.bg })
 hl(0, "SpellLocal", { fg = palette.green.bright, bg = palette.green.bg })

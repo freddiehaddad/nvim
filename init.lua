@@ -240,9 +240,8 @@ vim.opt.runtimepath:prepend(lazy_path)
 
 -- Load Lazy plugin manager
 local hl = vim.api.nvim_set_hl
-local palette = vim.g.colors_palette
 hl(0, "LazyButton", { link = "Pmenu" })
-hl(0, "LazyButtonActive", { bg = palette.msearch.bright })
+hl(0, "LazyButtonActive", { link = "MSearchBright" })
 hl(0, "LazyH1", { link = "LazyButtonActive" })
 require("lazy").setup({
     spec = { { import = "plugins" } },
