@@ -8,6 +8,8 @@
 --
 -- Backgrounds
 -- https://coolors.co/37352f-4b2d1b-413325-48391e-4e2518-3d2929-333333-39372d
+--
+-- Auto reload while customizing theme
 -- :autocmd BufWritePost <buffer> source %
 
 local palette = {
@@ -18,14 +20,14 @@ local palette = {
     search     = { dim = "#372e17", bright = "#4b2222" },
     msearch    = { dim = "#66663e", bright = "#66663e" },
 
-    black      = { dim = "#4e4b42", bright = "#635f54", bg = "#37352f" },
-    red        = { dim = "#cd9474", bright = "#d9af96", bg = "#4b2d1b" },
-    green      = { dim = "#9e7a58", bright = "#b6997c", bg = "#413325" },
-    yellow     = { dim = "#c0a064", bright = "#d0b88b", bg = "#48391e" },
-    blue       = { dim = "#a14b31", bright = "#c56244", bg = "#4e2518" },
-    magenta    = { dim = "#875a5b", bright = "#a57879", bg = "#3d2929" },
-    cyan       = { dim = "#979797", bright = "#adadad", bg = "#333333" },
-    white      = { dim = "#a6a18d", bright = "#b7b3a4", bg = "#39372d" },
+    black      = { dim = "#4e4b42", bright = "#635f54", bg = "#37352f" }, -- color 0  8
+    red        = { dim = "#cd9474", bright = "#d9af96", bg = "#4b2d1b" }, -- color 1  9
+    green      = { dim = "#9e7a58", bright = "#b6997c", bg = "#413325" }, -- color 2 10
+    yellow     = { dim = "#c0a064", bright = "#d0b88b", bg = "#48391e" }, -- color 3 11
+    blue       = { dim = "#a14b31", bright = "#c56244", bg = "#4e2518" }, -- color 4 12
+    magenta    = { dim = "#875a5b", bright = "#a57879", bg = "#3d2929" }, -- color 5 13
+    cyan       = { dim = "#979797", bright = "#adadad", bg = "#333333" }, -- color 6 14
+    white      = { dim = "#a6a18d", bright = "#b7b3a4", bg = "#39372d" }, -- color 7 15
     --stylua: ignore end
 }
 
@@ -160,11 +162,11 @@ hl(0, "RedrawDebugRecompose", { bg = palette.red.bg })
 
 hl(0, "Character", { fg = palette.green.bright })
 hl(0, "Comment", { fg = palette.black.bright })
-hl(0, "Constant", { fg = palette.red.bright })
+hl(0, "Constant", { fg = palette.yellow.bright })
 hl(0, "Delimiter", { fg = palette.black.dim })
 hl(0, "Directory", { fg = palette.blue.bright })
-hl(0, "Function", { fg = palette.cyan.dim })
-hl(0, "Identifier", { fg = palette.magenta.dim })
+hl(0, "Function", { fg = palette.yellow.dim })
+hl(0, "Identifier", { fg = palette.cyan.dim })
 hl(0, "Keyword", { fg = palette.blue.dim })
 hl(0, "NonText", { fg = palette.black.bright })
 hl(0, "Number", { link = "Constant" })
@@ -179,5 +181,7 @@ hl(0, "Todo", { link = "SpecialComment" })
 hl(0, "Type", { fg = palette.blue.dim })
 
 -- treesitter highlights
-hl(0, "@variable", { fg = palette.magenta.dim })
 hl(0, "@module", { fg = palette.magenta.bright })
+hl(0, "@variable", { fg = palette.white.dim })
+
+-- semantic tokens
