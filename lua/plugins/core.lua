@@ -956,7 +956,8 @@ return {
                 update_in_insert = true,
                 virtual_lines = { current_line = true },
                 virtual_text = {
-                    spacing = 4,
+                    current_line = true,
+                    spacing = 2,
                     source = "if_many",
                     prefix = function(diagnostic)
                         for sev, icon in pairs(icons) do
