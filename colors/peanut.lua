@@ -15,7 +15,7 @@
 local palette = {
     --stylua: ignore start
     bg         = { dim = "#000000", bright = "#1d1d12" },
-    cursorline = { dim = "#1e1010", bright = "#46462b" },
+    cursorline = { dim = "#201717", bright = "#46462b" },
 
     search     = { dim = "#372e17", bright = "#4b2222" },
     msearch    = { dim = "#66663e", bright = "#66663e" },
@@ -183,5 +183,6 @@ hl(0, "Type", { fg = palette.blue.dim })
 -- treesitter highlights
 hl(0, "@module", { fg = palette.magenta.bright })
 hl(0, "@variable", { fg = palette.white.dim })
+hl(0, "@function.builtin", { fg = palette.yellow.bright })
 
 -- semantic tokens
