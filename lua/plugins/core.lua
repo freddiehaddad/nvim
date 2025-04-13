@@ -1409,43 +1409,6 @@ return {
     -- UI for the debugger
     {
         "rcarriga/nvim-dap-ui",
-        init = function()
-            local hl = vim.api.nvim_set_hl
-            hl(0, "DapStoppedLine", { link = "Accent" })
-            hl(0, "DapUINormal", { link = "Normal" })
-            hl(0, "DapUIVariable", { link = "Variable" })
-            hl(0, "DapUIScope", { link = "Normal" })
-            hl(0, "DapUIType", { link = "Type" })
-            hl(0, "DapUIValue", { link = "Identifier" })
-            hl(0, "DapUIModifiedValue", { link = "Todo" })
-            hl(0, "DapUIDecoration", { link = "Operator" })
-            hl(0, "DapUIThread", { link = "Normal" })
-            hl(0, "DapUIStoppedThread", { link = "Normal" })
-            hl(0, "DapUIFrameName", { link = "Normal" })
-            hl(0, "DapUISource", { link = "Normal" })
-            hl(0, "DapUILineNumber", { link = "LineNr" })
-            hl(0, "DapUIFloatNormal", { link = "NormalFloat" })
-            hl(0, "DapUIFloatBorder", { link = "Normal" })
-            hl(0, "DapUIWatchesEmpty", { link = "Normal" })
-            hl(0, "DapUIWatchesValue", { link = "Normal" })
-            hl(0, "DapUIWatchesError", { link = "DiagnosticError" })
-            hl(0, "DapUIBreakpointsPath", { link = "Directory" })
-            hl(0, "DapUIBreakpointsInfo", { link = "DiagnosticInfo" })
-            hl(0, "DapUIBreakpointsCurrentLine", { link = "Normal" })
-            hl(0, "DapUIBreakpointsLine", { link = "DapUILineNumber" })
-            hl(0, "DapUIBreakpointsDisabledLine", { link = "DiagnosticInfo" })
-            hl(0, "DapUICurrentFrameName", { link = "DapUIBreakpointsCurrentLine" })
-            hl(0, "DapUIStepOver", { link = "Normal" })
-            hl(0, "DapUIStepInto", { link = "Normal" })
-            hl(0, "DapUIStepBack", { link = "Normal" })
-            hl(0, "DapUIStepOut", { link = "Normal" })
-            hl(0, "DapUIStop", { link = "Normal" })
-            hl(0, "DapUIPlayPause", { link = "Normal" })
-            hl(0, "DapUIRestart", { link = "Normal" })
-            hl(0, "DapUIUnavailable", { link = "Error" })
-            hl(0, "DapUIWinSelect", { link = "CusorLine" })
-            hl(0, "DapUIEndofBuffer", { link = "EndofBuffer" })
-        end,
         dependencies = {
             "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
