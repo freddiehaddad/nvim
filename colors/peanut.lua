@@ -14,8 +14,8 @@
 
 local palette = {
     --stylua: ignore start
-    bg         = { dim = "#000000", bright = "#1d1d12" },
-    cursorline = { dim = "#201717", bright = "#46462b" },
+    bg         = { dim = "#000000", bright = "#1c1c16" },
+    cursorline = { dim = "#171c17", bright = "#464630" },
 
     search     = { dim = "#372e17", bright = "#4b2222" },
     msearch    = { dim = "#66663e", bright = "#66663e" },
