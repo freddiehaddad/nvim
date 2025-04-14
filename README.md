@@ -2,7 +2,22 @@
 
 This is my custom [Neovim] configuration designed around my custom color scheme.
 
-[neovim]: https://github.com/neovim/neovim
+## Theme Colors
+
+NOTE: These colors will not appear correct if your desktop OS does not have HDR
+enabled.
+
+### Dim
+
+https://coolors.co/3e413a-cd9474-9e7a58-c0a064-a14b31-875a5b-979797-a6a18d
+
+### Bright
+
+https://coolors.co/52564d-cd9474-9e7a58-c0a064-a14b31-875a5b-979797-a6a18d
+
+### Backgrounds
+
+https://coolors.co/333630-4b2d1b-413325-48391e-4e2518-3d2929-333333-39372d
 
 ## Screenshots
 
@@ -13,3 +28,5 @@ This is my custom [Neovim] configuration designed around my custom color scheme.
 ![lsp](https://github.com/user-attachments/assets/71b82e9a-5a98-4339-a102-be6a7501a16c)
 ![dap](https://github.com/user-attachments/assets/f0371d6c-76bf-483f-b78f-027fdf387b02)
 ![testing](https://github.com/user-attachments/assets/9573aab1-053e-4d10-ba2c-971e098002f0)
+
+[neovim]: https://github.com/neovim/neovim
