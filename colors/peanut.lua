@@ -1,13 +1,13 @@
 -- Peanut Colorscheme
 --
 -- Dim
--- https://coolors.co/4e4b42-cd9474-9e7a58-c0a064-a14b31-875a5b-979797-a6a18d
+-- https://coolors.co/3e413a-cd9474-9e7a58-c0a064-a14b31-875a5b-979797-a6a18d
 --
 -- Bright
--- https://coolors.co/635f54-d9af96-b6997c-d0b88b-c56244-a57879-adadad-b7b3a4
+-- https://coolors.co/52564d-cd9474-9e7a58-c0a064-a14b31-875a5b-979797-a6a18d
 --
 -- Backgrounds
--- https://coolors.co/37352f-4b2d1b-413325-48391e-4e2518-3d2929-333333-39372d
+-- https://coolors.co/333630-4b2d1b-413325-48391e-4e2518-3d2929-333333-39372d
 --
 -- Auto reload while customizing theme
 -- :autocmd BufWritePost <buffer> source %
@@ -20,7 +20,7 @@ local palette = {
     search     = { dim = "#372e17", bright = "#4b2222" },
     msearch    = { dim = "#66663e", bright = "#66663e" },
 
-    black      = { dim = "#4e4b42", bright = "#635f54", bg = "#37352f" }, -- color 0  8
+    black      = { dim = "#3e413a", bright = "#52564d", bg = "#333630" }, -- color 0  8
     red        = { dim = "#cd9474", bright = "#d9af96", bg = "#4b2d1b" }, -- color 1  9
     green      = { dim = "#9e7a58", bright = "#b6997c", bg = "#413325" }, -- color 2 10
     yellow     = { dim = "#c0a064", bright = "#d0b88b", bg = "#48391e" }, -- color 3 11
