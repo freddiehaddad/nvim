@@ -27,17 +27,6 @@ return {
                 require("mini.icons").mock_nvim_web_devicons()
                 return package.loaded["nvim-web-devicons"]
             end
-
-            local hl = vim.api.nvim_set_hl
-            hl(0, "MiniIconsAzure", { link = "Icon" })
-            hl(0, "MiniIconsBlue", { link = "Icon" })
-            hl(0, "MiniIconsCyan", { link = "Icon" })
-            hl(0, "MiniIconsGreen", { link = "Icon" })
-            hl(0, "MiniIconsGrey", { link = "Icon" })
-            hl(0, "MiniIconsOrange", { link = "Icon" })
-            hl(0, "MiniIconsPurple", { link = "Icon" })
-            hl(0, "MiniIconsRed", { link = "Icon" })
-            hl(0, "MiniIconsYellow", { link = "Icon" })
         end,
     },
 
@@ -110,24 +99,24 @@ return {
                     },
                     theme = {
                         normal = {
-                            a = "Color0",
-                            b = "Color0",
-                            c = "Color0",
-                            x = "Color0",
-                            y = "Color0",
-                            z = "Color0",
+                            a = "Identifier",
+                            b = "LineNr",
+                            c = "LineNr",
+                            x = "LineNr",
+                            y = "LineNr",
+                            z = "LineNr",
                         },
                         insert = {
-                            a = "Color4",
+                            a = "GitSignsChange",
                         },
                         visual = {
-                            a = "Color6",
+                            a = "Visual",
                         },
                         replace = {
-                            a = "Color3",
+                            a = "GitSignsDelete",
                         },
                         inactive = {
-                            a = "Color0",
+                            a = "LineNr",
                         },
                     },
                 },
@@ -160,9 +149,9 @@ return {
                         {
                             "diff",
                             diff_color = {
-                                added = "DiffAdd",
-                                modified = "DiffChange",
-                                removed = "DiffDelete",
+                                added = "GitSignsAdd",
+                                modified = "GitSignsChange",
+                                removed = "GitSignsDelete",
                             },
                             symbols = { added = "󰯭 ", modified = "󰯳 ", removed = "󰯶 " },
                             source = function()
@@ -236,37 +225,6 @@ return {
         priority = 1000,
         lazy = false,
         init = function()
-            local hl = vim.api.nvim_set_hl
-            hl(0, "SnacksNotifierHistory", { link = "NormalFloat" })
-
-            hl(0, "SnacksNotifierInfo", { link = "Info" })
-            hl(0, "SnacksNotifierWarn", { link = "Warn" })
-            hl(0, "SnacksNotifierError", { link = "Error" })
-            hl(0, "SnacksNotifierDebug", { link = "Debug" })
-            hl(0, "SnacksNotifierTrace", { link = "Trace" })
-
-            hl(0, "SnacksNotifierIconInfo", { link = "SnacksNotifierInfo" })
-            hl(0, "SnacksNotifierIconWarn", { link = "SnacksNotifierWarn" })
-            hl(0, "SnacksNotifierIconDebug", { link = "SnacksNotifierDebug" })
-            hl(0, "SnacksNotifierIconError", { link = "SnacksNotifierError" })
-            hl(0, "SnacksNotifierIconTrace", { link = "SnacksNotifierTrace" })
-            hl(0, "SnacksNotifierTitleInfo", { link = "SnacksNotifierInfo" })
-            hl(0, "SnacksNotifierTitleWarn", { link = "SnacksNotifierWarn" })
-            hl(0, "SnacksNotifierTitleDebug", { link = "SnacksNotifierDebug" })
-            hl(0, "SnacksNotifierTitleError", { link = "SnacksNotifierError" })
-            hl(0, "SnacksNotifierTitleTrace", { link = "SnacksNotifierTrace" })
-            hl(0, "SnacksNotifierBorderInfo", { link = "SnacksNotifierInfo" })
-            hl(0, "SnacksNotifierBorderWarn", { link = "SnacksNotifierWarn" })
-            hl(0, "SnacksNotifierBorderDebug", { link = "SnacksNotifierDebug" })
-            hl(0, "SnacksNotifierBorderError", { link = "SnacksNotifierError" })
-            hl(0, "SnacksNotifierBorderTrace", { link = "SnacksNotifierTrace" })
-            hl(0, "SnacksDashboardDesc", { link = "Color0" })
-            hl(0, "SnacksDashboardFile", { link = "Color0" })
-            hl(0, "SnacksDashboardHeader", { link = "Color15" })
-            hl(0, "SnacksDashboardFooter", { link = "Color15" })
-            hl(0, "SnacksDashboardIcon", { link = "Icon" })
-            hl(0, "SnacksDashboardKey", { link = "Color0" })
-
             vim.api.nvim_create_autocmd("User", {
                 pattern = "VeryLazy",
                 callback = function()
@@ -316,8 +274,9 @@ return {
                 },
             },
             styles = {
-                notification = { border = "single" },
-                notification_history = { border = "single" },
+                notification = { border = "single", wo = { winblend = 0 } },
+                notification_history = { backdrop = 25, border = "single" },
+                input = { backdrop = 25, border = "single" },
             },
             input = { enabled = true },
             notifier = {
@@ -344,27 +303,6 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        init = function()
-            local hl = vim.api.nvim_set_hl
-            hl(0, "WhichKey", { link = "Function" })
-            hl(0, "WhichKeyBorder", { link = "FloatBorder" })
-            hl(0, "WhichKeyDesc", { link = "Identifier" })
-            hl(0, "WhichKeyGroup", { link = "Keyword" })
-            hl(0, "WhichKeyIcon", { link = "@markup.link" })
-            hl(0, "WhichKeyIconAzure", { link = "Icon" })
-            hl(0, "WhichKeyIconBlue", { link = "Icon" })
-            hl(0, "WhichKeyIconCyan", { link = "Icon" })
-            hl(0, "WhichKeyIconGreen", { link = "Icon" })
-            hl(0, "WhichKeyIconGrey", { link = "Icon" })
-            hl(0, "WhichKeyIconOrange", { link = "Icon" })
-            hl(0, "WhichKeyIconPurple", { link = "Icon" })
-            hl(0, "WhichKeyIconRed", { link = "Icon" })
-            hl(0, "WhichKeyIconYellow", { link = "Icon" })
-            hl(0, "WhichKeyNormal", { link = "NormalFloat" })
-            hl(0, "WhichKeySeparator", { link = "Comment" })
-            hl(0, "WhichKeyTitle", { link = "Title" })
-            hl(0, "WhichKeyValue", { link = "Comment" })
-        end,
         opts = {
             icons = { separator = ":" },
             spec = {
@@ -463,15 +401,6 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         cmd = "Telescope",
-        init = function()
-            local hl = vim.api.nvim_set_hl
-            hl(0, "TelescopeMatching", { link = "MSearchBright" })
-            hl(0, "TelescopePreviewLine", { link = "MSearchBright" })
-            hl(0, "TelescopePreviewMatch", { link = "MSearchBright" })
-            hl(0, "TelescopeNormal", { link = "NormalFloat" })
-            hl(0, "TelescopeSelection", { link = "PmenuSel" })
-            hl(0, "TelescopeTitle", { link = "Title" })
-        end,
         dependencies = {
             "nvim-lua/plenary.nvim",
             {
@@ -546,6 +475,52 @@ return {
             }
         end,
         config = function(_, opts)
+            -- configure backdrop dimming
+            local backdrop = 25
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "TelescopePrompt",
+                callback = function(ctx)
+                    local backdropName = "TelescopeBackdrop"
+                    local telescopeBufnr = ctx.buf
+
+                    -- `Telescope` does not set a zindex, so it uses the default value
+                    -- of `nvim_open_win`, which is 50: https://neovim.io/doc/user/api.html#nvim_open_win()
+                    local telescopeZindex = 50
+
+                    local backdropBufnr = vim.api.nvim_create_buf(false, true)
+                    local winnr = vim.api.nvim_open_win(backdropBufnr, false, {
+                        relative = "editor",
+                        border = "none",
+                        row = 0,
+                        col = 0,
+                        width = vim.o.columns,
+                        height = vim.o.lines,
+                        focusable = false,
+                        style = "minimal",
+                        zindex = telescopeZindex - 1, -- ensure it's below the reference window
+                    })
+
+                    vim.api.nvim_set_hl(0, backdropName, { bg = "#000000", default = true })
+                    vim.wo[winnr].winhighlight = "Normal:" .. backdropName
+                    vim.wo[winnr].winblend = backdrop
+                    vim.bo[backdropBufnr].buftype = "nofile"
+
+                    -- close backdrop when the reference buffer is closed
+                    vim.api.nvim_create_autocmd({ "WinClosed", "BufLeave" }, {
+                        once = true,
+                        buffer = telescopeBufnr,
+                        callback = function()
+                            if vim.api.nvim_win_is_valid(winnr) then
+                                vim.api.nvim_win_close(winnr, true)
+                            end
+                            if vim.api.nvim_buf_is_valid(backdropBufnr) then
+                                vim.api.nvim_buf_delete(backdropBufnr, { force = true })
+                            end
+                        end,
+                    })
+                end,
+            })
+
             require("telescope").setup(opts)
             require("telescope").load_extension("fzf")
 
@@ -876,24 +851,6 @@ return {
         cmd = "Mason",
         keys = { { "<leader>pm", "<cmd>Mason<cr>", desc = "Mason" } },
         init = function()
-            local hl = vim.api.nvim_set_hl
-            hl(0, "MasonNormal", { link = "NormalFloat" })
-            hl(0, "MasonHeader", { link = "Title" })
-            hl(0, "MasonHeaderSecondary", { link = "Normal" })
-            hl(0, "MasonHighlight", { link = "Normal" })
-            hl(0, "MasonHighlightBlock", { link = "Normal" })
-            hl(0, "MasonHighlightBlockBold", { link = "PmenuSel" })
-            hl(0, "MasonHighlightSecondary", { link = "Normal" })
-            hl(0, "MasonHighlightBlockSecondary", { link = "Normal" })
-            hl(0, "MasonHighlightBlockBoldSecondary", { link = "Normal" })
-            hl(0, "MasonLink", { link = "PmenuSel" })
-            hl(0, "MasonMuted", { link = "Normal" })
-            hl(0, "MasonMutedBlock", { link = "Normal" })
-            hl(0, "MasonMutedBlockBold", { link = "Normal" })
-            hl(0, "MasonError", { link = "ErrorMsg" })
-            hl(0, "MasonWarning", { link = "WarningMsg" })
-            hl(0, "MasonHeading", { link = "Title" })
-
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = "mason",
                 callback = function()
@@ -903,6 +860,7 @@ return {
         end,
         opts = {
             ui = {
+                backdrop = 25,
                 keymaps = { apply_language_filter = "F" },
                 icons = {
                     package_installed = "● ",
@@ -986,6 +944,8 @@ return {
                     Lua = {
                         workspace = {
                             checkThirdParty = false,
+                            maxPreload = 10000, -- performance
+                            preloadFileSize = 1000, -- performance
                         },
                         codeLens = {
                             enable = true,
@@ -1477,27 +1437,6 @@ return {
     {
         "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio" },
-        init = function()
-            local hl = vim.api.nvim_set_hl
-            hl(0, "NeotestPassed", { link = "DiagnosticOk" })
-            hl(0, "NeotestFailed", { link = "DiagnosticError" })
-            hl(0, "NeotestRunning", { link = "DiagnosticInfo" })
-            hl(0, "NeotestSkipped", { link = "DiagnosticWarn" })
-            hl(0, "NeotestTest", { link = "Function" })
-            hl(0, "NeotestNamespace", { link = "Identifier" })
-            hl(0, "NeotestFocused", { link = "DiagnosticInfo" })
-            hl(0, "NeotestFile", { link = "Normal" })
-            hl(0, "NeotestDir", { link = "Directory" })
-            hl(0, "NeotestAdapterName", { link = "Title" })
-            hl(0, "NeotestWinSelect", { link = "Normal" })
-            hl(0, "NeotestMarked", { link = "Identifier" })
-            hl(0, "NeotestTarget", { link = "Normal" })
-            hl(0, "NeotestWatching", { link = "Normal" })
-            hl(0, "NeotestUnknown", { link = "DiagnosticError" })
-            hl(0, "NeotestBorder", { link = "Normal" })
-            hl(0, "NeotestIndent", { link = "LineNr" })
-            hl(0, "NeotestExpandMarker", { link = "LineNr" })
-        end,
         opts = {
             adapters = {
                 ["rustaceanvim.neotest"] = {},
