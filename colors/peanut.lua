@@ -46,71 +46,71 @@ function util.blend_bg(hex, amount, bg)
 end
 util.darken = util.blend_bg
 
--- Palette
+-- Palette (standard)
 local palette = {
     --stylua: ignore start
-    foreground    = "#c2beb0", -- Desaturated muted foreground
-    background    = "#101010", -- Slightly warmer muted background
+    foreground    = "#e8e8d3",
+    background    = "#151515",
 
-    grey          = "#7a7a7a", -- Less saturated grey
-    grey_one      = "#1e1e1c", -- Warmer grey
-    grey_two      = "#e9e5dc", -- Muted off-white
-    grey_three    = "#302e2c", -- Warmer dark grey
-    regent_grey   = "#8a8c91", -- Less saturated
-    scorpion      = "#585855", -- Desaturated
-    cod_grey      = "#121210", -- Warmer dark
-    tundora       = "#3c3b38", -- Warmer mid-tone
-    zambezi       = "#58534f", -- Less saturated brown-grey
-    silver_rust   = "#c2bdb8", -- Desaturated light tone
-    silver        = "#bebebe", -- Desaturated silver
-    alto          = "#d8d4ca", -- Muted light tone
-    gravel        = "#3c3936", -- Warmer dark tone
-    boulder       = "#6f6f6c", -- Desaturated mid-grey
-    cocoa_brown   = "#2c2824", -- Warmer brown
-    grey_chateau  = "#93989c", -- Desaturated blue-grey
-    bright_grey   = "#353b3e", -- Desaturated blue-grey
-    shuttle_grey  = "#4d5459", -- Desaturated blue-grey
-    mine_shaft    = "#1d1c1a", -- Warmer dark
-    temptress     = "#38100a", -- Desaturated dark red
-    bayoux_blue   = "#4f5c69", -- Desaturated blue
-    total_white   = "#d1cdc6", -- Warm white muted
-    total_black   = "#0d0c0b", -- Warm black
-    cadet_blue    = "#a5acb1", -- Desaturated blue
-    perano        = "#a6c3d9", -- Desaturated light blue
-    wewak         = "#bd8695", -- Desaturated pink
-    mantis        = "#6aa84c", -- Desaturated green
-    raw_sienna    = "#c88a77", -- Desaturated orange
-    highland      = "#73916a", -- Desaturated green
-    hoki          = "#617b87", -- Desaturated blue
-    green_smoke   = "#909c6e", -- Desaturated yellow-green
-    costa_del_sol = "#4e5a3a", -- Desaturated olive
-    biloba_flower = "#b8aed3", -- Desaturated purple
-    morning_glory = "#83adc3", -- Desaturated light blue
-    goldenrod     = "#e8c88c", -- Desaturated gold
-    ship_cove     = "#7a8aa6", -- Desaturated blue
-    koromiko      = "#d8a16c", -- Desaturated orange
-    brandy        = "#c9c08c", -- Desaturated yellow
-    old_brick     = "#893124", -- Desaturated brick red
-    dark_blue     = "#1e1e7a", -- Desaturated dark blue
-    ripe_plum     = "#4a1c4f", -- Desaturated plum
-    casal         = "#2a5c56", -- Desaturated teal
-    purple        = "#5c1e68", -- Desaturated purple
-    tea_green     = "#c5d3b2", -- Desaturated light green
-    dell          = "#3c5c25", -- Desaturated forest green
-    calypso       = "#28505f", -- Desaturated teal
-    black_olive   = "#2e3824", -- Desaturated olive green
-    caput_mortuum = "#4d201b", -- Desaturated maroon
+    grey          = "#888888",
+    grey_one      = "#1c1c1c",
+    grey_two      = "#f0f0f0",
+    grey_three    = "#333333",
+    regent_grey   = "#9098A0",
+    scorpion      = "#606060",
+    cod_grey      = "#101010",
+    tundora       = "#404040",
+    zambezi       = "#605958",
+    silver_rust   = "#ccc5c4",
+    silver        = "#c7c7c7",
+    alto          = "#dddddd",
+    gravel        = "#403c41",
+    boulder       = "#777777",
+    cocoa_brown   = "#302028",
+    grey_chateau  = "#a0a8b0",
+    bright_grey   = "#384048",
+    shuttle_grey  = "#535d66",
+    mine_shaft    = "#1f1f1f",
+    temptress     = "#40000a",
+    bayoux_blue   = "#556779",
+    total_white   = "#ffffff",
+    total_black   = "#000000",
+    cadet_blue    = "#b0b8c0",
+    perano        = "#b0d0f0",
+    wewak         = "#cc88a3",
+    mantis        = "#70b950",
+    raw_sienna    = "#d98870",
+    highland      = "#799d6a",
+    hoki          = "#668799",
+    green_smoke   = "#99ad6a",
+    costa_del_sol = "#556633",
+    biloba_flower = "#c6b6ee",
+    morning_glory = "#8fbfdc",
+    goldenrod     = "#fad07a",
+    ship_cove     = "#8197bf",
+    koromiko      = "#e6a75a",
+    brandy        = "#dad085",
+    old_brick     = "#902020",
+    dark_blue     = "#0000df",
+    ripe_plum     = "#540063",
+    casal         = "#2D7067",
+    purple        = "#700089",
+    tea_green     = "#d2ebbe",
+    dell          = "#437019",
+    calypso       = "#2B5B77",
+    black_olive   = "#333d1f",
+    caput_mortuum = "#561313",
 
-    error         = "#cc4d4d", -- Desaturated red
-    warning       = "#d9a45a", -- Desaturated orange
-    info          = "#7db7cc", -- Desaturated blue
-    hint          = "#c0a48c", -- Desaturated tan
-    ok            = "#98b67c", -- Desaturated green
+    error         = "#ff0000",
+    warning       = "#ffaf00",
+    info          = "#87d7ff",
+    hint          = "#d7af87",
+    ok            = "#afd787",
     --stylua: ignore end
 }
 
 palette.cursor_line = {
-    bg = util.lighten(palette.background, 0.85),
+    bg = util.lighten("#001520", 0.90),
 }
 
 palette.cursor_line_nr = {
@@ -118,8 +118,8 @@ palette.cursor_line_nr = {
 }
 
 palette.git = {
-    add = palette.black_olive, -- Less saturated
-    delete = palette.caput_mortuum, -- Less saturated
+    add = palette.black_olive,
+    delete = palette.caput_mortuum,
     change = palette.grey_one,
     text = palette.grey_three,
 }
@@ -137,6 +137,98 @@ palette.none = "NONE"
 
 palette.float_bg = palette.cocoa_brown
 palette.float_border = palette.zambezi
+
+-- Palette (muted)
+-- local palette = {
+--     --stylua: ignore start
+--     foreground    = "#c2beb0", -- Desaturated muted foreground
+--     background    = "#101010", -- Slightly warmer muted background
+--
+--     grey          = "#7a7a7a", -- Less saturated grey
+--     grey_one      = "#1e1e1c", -- Warmer grey
+--     grey_two      = "#e9e5dc", -- Muted off-white
+--     grey_three    = "#302e2c", -- Warmer dark grey
+--     regent_grey   = "#8a8c91", -- Less saturated
+--     scorpion      = "#585855", -- Desaturated
+--     cod_grey      = "#121210", -- Warmer dark
+--     tundora       = "#3c3b38", -- Warmer mid-tone
+--     zambezi       = "#58534f", -- Less saturated brown-grey
+--     silver_rust   = "#c2bdb8", -- Desaturated light tone
+--     silver        = "#bebebe", -- Desaturated silver
+--     alto          = "#d8d4ca", -- Muted light tone
+--     gravel        = "#3c3936", -- Warmer dark tone
+--     boulder       = "#6f6f6c", -- Desaturated mid-grey
+--     cocoa_brown   = "#2c2824", -- Warmer brown
+--     grey_chateau  = "#93989c", -- Desaturated blue-grey
+--     bright_grey   = "#353b3e", -- Desaturated blue-grey
+--     shuttle_grey  = "#4d5459", -- Desaturated blue-grey
+--     mine_shaft    = "#1d1c1a", -- Warmer dark
+--     temptress     = "#38100a", -- Desaturated dark red
+--     bayoux_blue   = "#4f5c69", -- Desaturated blue
+--     total_white   = "#d1cdc6", -- Warm white muted
+--     total_black   = "#0d0c0b", -- Warm black
+--     cadet_blue    = "#a5acb1", -- Desaturated blue
+--     perano        = "#a6c3d9", -- Desaturated light blue
+--     wewak         = "#bd8695", -- Desaturated pink
+--     mantis        = "#6aa84c", -- Desaturated green
+--     raw_sienna    = "#c88a77", -- Desaturated orange
+--     highland      = "#73916a", -- Desaturated green
+--     hoki          = "#617b87", -- Desaturated blue
+--     green_smoke   = "#909c6e", -- Desaturated yellow-green
+--     costa_del_sol = "#4e5a3a", -- Desaturated olive
+--     biloba_flower = "#b8aed3", -- Desaturated purple
+--     morning_glory = "#83adc3", -- Desaturated light blue
+--     goldenrod     = "#e8c88c", -- Desaturated gold
+--     ship_cove     = "#7a8aa6", -- Desaturated blue
+--     koromiko      = "#d8a16c", -- Desaturated orange
+--     brandy        = "#c9c08c", -- Desaturated yellow
+--     old_brick     = "#893124", -- Desaturated brick red
+--     dark_blue     = "#1e1e7a", -- Desaturated dark blue
+--     ripe_plum     = "#4a1c4f", -- Desaturated plum
+--     casal         = "#2a5c56", -- Desaturated teal
+--     purple        = "#5c1e68", -- Desaturated purple
+--     tea_green     = "#c5d3b2", -- Desaturated light green
+--     dell          = "#3c5c25", -- Desaturated forest green
+--     calypso       = "#28505f", -- Desaturated teal
+--     black_olive   = "#2e3824", -- Desaturated olive green
+--     caput_mortuum = "#4d201b", -- Desaturated maroon
+--
+--     error         = "#cc4d4d", -- Desaturated red
+--     warning       = "#d9a45a", -- Desaturated orange
+--     info          = "#7db7cc", -- Desaturated blue
+--     hint          = "#c0a48c", -- Desaturated tan
+--     ok            = "#98b67c", -- Desaturated green
+--     --stylua: ignore end
+-- }
+
+-- palette.cursor_line = {
+--     bg = util.lighten(palette.background, 0.85),
+-- }
+--
+-- palette.cursor_line_nr = {
+--     fg = palette.silver_rust,
+-- }
+--
+-- palette.git = {
+--     add = palette.black_olive, -- Less saturated
+--     delete = palette.caput_mortuum, -- Less saturated
+--     change = palette.grey_one,
+--     text = palette.grey_three,
+-- }
+--
+-- palette.diag = {
+--     error = palette.error,
+--     warning = palette.warning,
+--     info = palette.info,
+--     hint = palette.hint,
+--     ok = palette.ok,
+-- }
+--
+-- palette.visual = palette.tundora
+-- palette.none = "NONE"
+--
+-- palette.float_bg = palette.cocoa_brown
+-- palette.float_border = palette.zambezi
 
 -- Highlights
 local hl = vim.api.nvim_set_hl
