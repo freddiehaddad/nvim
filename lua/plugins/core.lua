@@ -476,10 +476,10 @@ return {
         end,
         config = function(_, opts)
             -- configure backdrop dimming
-            local backdrop = 25
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = "TelescopePrompt",
                 callback = function(ctx)
+                    local backdrop = 25
                     local backdropName = "TelescopeBackdrop"
                     local telescopeBufnr = ctx.buf
 
