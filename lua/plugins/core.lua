@@ -1450,6 +1450,7 @@ return {
             },
             floating = { border = "none" },
             icons = { expanded = "┐", final_child_prefix = "└" },
+            summary = { animated = false },
         },
         config = function(_, opts)
             if opts.adapters then
