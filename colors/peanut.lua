@@ -101,7 +101,7 @@ local palette = {
     black_olive   = "#333d1f",
     caput_mortuum = "#561313",
 
-    error         = "#ff0000",
+    error         = "#da1c00",
     warning       = "#ffaf00",
     info          = "#87d7ff",
     hint          = "#d7af87",
