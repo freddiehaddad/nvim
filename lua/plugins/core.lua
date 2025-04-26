@@ -1455,7 +1455,7 @@ return {
         config = function(_, opts)
             if opts.adapters then
                 local adapters = {}
-                for name, config in pairs(opts.adapters or {}) do
+                for name in pairs(opts.adapters or {}) do
                     local adapter = require(name)
                     adapters[#adapters + 1] = adapter
                 end
