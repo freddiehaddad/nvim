@@ -299,6 +299,13 @@ return {
         },
     },
 
+    -- Automatic handling of closing to avoid leaving insert mode
+    {
+        "echasnovski/mini.pairs",
+        event = "InsertEnter",
+        opts = {},
+    },
+
     -- Key binding help
     {
         "folke/which-key.nvim",
