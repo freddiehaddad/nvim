@@ -227,6 +227,15 @@ autocmd("FileType", {
     end,
 })
 
+-- Highlight when yanking (copying) text
+autocmd("TextYankPost", {
+    desc = "Highlight when yanking (copying) text",
+    group = augroup("HighlightYank"),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
 -- Install Lazy plugin manager
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local lazy_is_installed = vim.uv.fs_stat(lazy_path)
