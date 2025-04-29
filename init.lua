@@ -8,7 +8,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 
 local opt = vim.opt
-opt.clipboard = "unnamedplus"
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
+--  Remove this option if you want your OS clipboard to remain independent.
+vim.schedule(function()
+    opt.clipboard = "unnamedplus"
+end)
+
 opt.cmdheight = 0
 opt.cursorline = true
 opt.fillchars:append({
