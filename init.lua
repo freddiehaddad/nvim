@@ -32,6 +32,7 @@ opt.fillchars:append({
 })
 opt.foldenable = true
 opt.foldlevel = 99
+opt.ignorecase = true
 opt.laststatus = 3
 opt.mouse = ""
 opt.number = true
@@ -41,6 +42,7 @@ opt.scrolloff = 2
 opt.showmode = false
 opt.showtabline = 0
 opt.sidescrolloff = 2
+opt.smartcase = true
 opt.smoothscroll = true
 opt.splitright = true
 opt.splitbelow = true
