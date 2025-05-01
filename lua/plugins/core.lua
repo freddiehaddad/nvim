@@ -305,8 +305,8 @@ return {
         event = "InsertEnter",
         opts = {
             mappings = {
-                ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]" },
-                [">"] = { action = "close", pair = "<>", neigh_pattern = "[^<=]" },
+                ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]." },
+                [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
             },
         },
     },
