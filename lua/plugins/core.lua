@@ -303,7 +303,12 @@ return {
     {
         "echasnovski/mini.pairs",
         event = "InsertEnter",
-        opts = {},
+        opts = {
+            mappings = {
+                ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]" },
+                [">"] = { action = "close", pair = "<>", neigh_pattern = "[^<=]" },
+            },
+        },
     },
 
     -- Key binding help
