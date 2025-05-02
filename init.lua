@@ -154,20 +154,20 @@ map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix list" })
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 
 -- Diagnostic
-local diagnostic_goto = function(next, severity)
-    local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-    severity = severity and vim.diagnostic.severity[severity] or nil
+local diagnostic_goto = function(count, severity)
+    local opts = { count = count, severity = severity and vim.diagnostic.severity[severity] or nil }
+
     return function()
-        go({ severity = severity })
+        vim.diagnostic.jump(opts)
     end
 end
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line diagnostics" })
-map("n", "]d", diagnostic_goto(true), { desc = "Next diagnostic" })
-map("n", "[d", diagnostic_goto(false), { desc = "Prev diagnostic" })
-map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next error" })
-map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev error" })
-map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next warning" })
-map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev warning" })
+map("n", "]d", diagnostic_goto(1), { desc = "Next diagnostic" })
+map("n", "[d", diagnostic_goto(-1), { desc = "Prev diagnostic" })
+map("n", "]e", diagnostic_goto(1, "ERROR"), { desc = "Next error" })
+map("n", "[e", diagnostic_goto(-1, "ERROR"), { desc = "Prev error" })
+map("n", "]w", diagnostic_goto(1, "WARN"), { desc = "Next warning" })
+map("n", "[w", diagnostic_goto(-1, "WARN"), { desc = "Prev warning" })
 
 -- Autocmds
 local autocmd = vim.api.nvim_create_autocmd
