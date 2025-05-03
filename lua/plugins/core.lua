@@ -923,7 +923,7 @@ return {
             -- diagnostics
             local diagnostics = {
                 underline = true,
-                update_in_insert = true,
+                update_in_insert = false,
                 virtual_lines = { current_line = true },
                 virtual_text = {
                     current_line = true,
