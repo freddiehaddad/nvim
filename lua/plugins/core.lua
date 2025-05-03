@@ -1312,17 +1312,9 @@ return {
             keymap = {
                 preset = "default",
                 ["<C-space>"] = {},
-                ["<C-s>"] = { "show", "show_signature", "hide_signature" },
+                ["<C-s>"] = { "hide", "show_signature", "hide_signature" },
                 ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
-                ["<C-e>"] = {
-                    function(cmp)
-                        if cmp.is_menu_visible() then
-                            cmp.cancel()
-                        else
-                            cmp.show()
-                        end
-                    end,
-                },
+                ["<C-e>"] = { "hide", "show" },
             },
             signature = { enabled = true },
             appearance = { nerd_font_variant = "normal" },
