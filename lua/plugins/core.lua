@@ -1306,11 +1306,26 @@ return {
         build = "cargo build --release",
         depedencies = "rafamadriz/friendly-snippets",
         event = "InsertEnter",
+        ---@module 'blink.cmp'
+        ---@type blink.cmp.Config
         opts = {
             keymap = {
                 preset = "default",
-                ["<c-k>"] = { "show", "show_documentation", "hide_documentation" },
+                ["<C-space>"] = {},
+                ["<C-s>"] = { "show", "show_signature", "hide_signature" },
+                ["<C-k>"] = { "show", "show_documentation", "hide_documentation" },
+                ["<C-e>"] = {
+                    function(cmp)
+                        if cmp.is_menu_visible() then
+                            cmp.cancel()
+                        else
+                            cmp.show()
+                        end
+                    end,
+                },
             },
+            signature = { enabled = true },
+            appearance = { nerd_font_variant = "normal" },
             completion = { ghost_text = { enabled = true } },
         },
     },
