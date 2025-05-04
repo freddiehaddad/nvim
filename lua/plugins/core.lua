@@ -1302,9 +1302,8 @@ return {
     -- Completion support
     {
         "saghen/blink.cmp",
-        -- lazy = false,
         build = "cargo build --release",
-        depedencies = "rafamadriz/friendly-snippets",
+        dependencies = "rafamadriz/friendly-snippets",
         event = "InsertEnter",
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
