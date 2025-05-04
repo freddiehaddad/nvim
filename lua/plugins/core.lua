@@ -47,6 +47,8 @@ return {
             { "<leader>O", function() require("oil").open(vim.uv.cwd()) end, desc = "Oil (cwd)" },
             --stylua: ignore end
         },
+        ---@module "oil.nvim"
+        ---@type oil.setupOpts
         opts = {
             default_file_explorer = false,
             keymaps = {
@@ -216,6 +218,9 @@ return {
             { "<leader>ql", "<cmd>lua require('persistence').load({last=true})<cr>", desc = "Restore last session" },
             { "<leader>qd", "<cmd>lua require('persistence').stop()<cr>", desc = "Don't save current session" },
         },
+        ---@module "persistence"
+        ---@type Persistence.Config
+        ---@diagnostic disable: missing-fields
         opts = {},
     },
 
@@ -238,6 +243,8 @@ return {
                 end,
             })
         end,
+        ---@module "snacks"
+        ---@type snacks.Config
         opts = {
             dashboard = {
                 width = 46,
@@ -315,6 +322,9 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        ---@module "which-key"
+        ---@type wk.Config
+        ---@diagnostic disable: missing-fields
         opts = {
             icons = { separator = ":" },
             spec = {
@@ -363,6 +373,8 @@ return {
     {
         "lewis6991/gitsigns.nvim",
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+        ---@module "gitsigns"
+        ---@type Gitsigns.Config
         opts = {
             signs = {
                 add = { text = "▎" },
@@ -599,13 +611,10 @@ return {
     {
         "folke/trouble.nvim",
         cmd = { "Trouble" },
-        opts = {
-            modes = {
-                lsp = {
-                    win = { position = "right" },
-                },
-            },
-        },
+
+        ---@module "trouble"
+        ---@type trouble.Config
+        opts = {},
         keys = {
             { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (trouble)" },
             { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer diagnostics (trouble)" },
@@ -668,6 +677,7 @@ return {
             { "<c-i>", desc = "Increment Selection" },
             { "<bs>", desc = "Decrement Selection", mode = "x" },
         },
+
         opts = {
             ensure_installed = {
                 "c",
@@ -730,6 +740,8 @@ return {
     {
         "mrcjkb/rustaceanvim",
         ft = "rust",
+        ---@module "rustaceanvim"
+        ---@type rustaceanvim.Config
         opts = {
             tools = {
                 test = "example",
@@ -1278,6 +1290,8 @@ return {
                 desc = "Format buffer",
             },
         },
+        ---@module 'conform'
+        ---@type conform.setupOpts
         opts = {
             formatters_by_ft = {
                 c = { "clang_format" },
@@ -1452,6 +1466,9 @@ return {
     {
         "nvim-neotest/neotest",
         dependencies = { "nvim-neotest/nvim-nio" },
+
+        ---@module "neotest"
+        ---@type neotest.Config
         opts = {
             adapters = {
                 ["rustaceanvim.neotest"] = {},
@@ -1498,6 +1515,8 @@ return {
     -- Markdown
     {
         "OXY2DEV/markview.nvim",
+        ---@module "markview"
+        ---@type mkv.config
         opts = {
             preview = { enable = false },
         },
