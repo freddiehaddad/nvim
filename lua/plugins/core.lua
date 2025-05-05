@@ -1430,10 +1430,11 @@ return {
                 function()
                     require("dap").continue({
                         before = function(config)
-                            local args = type(config.args) == "function" and (config.args() or {}) or config.args or {}
+                            local args = type(config.args) == "function" and config.args() or config.args or {}
                             local args_str = type(args) == "table" and table.concat(args, " ") or args
                             config = vim.deepcopy(config)
                             config.args = function()
+                                ---@diagnostic disable-next-line
                                 local new_args = vim.fn.expand(vim.fn.input("Run with args: ", args_str))
                                 ---@diagnostic disable-next-line
                                 return require("dap.utils").splitstr(new_args)
