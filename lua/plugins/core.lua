@@ -1291,7 +1291,7 @@ return {
                 desc = "Format buffer",
             },
         },
-        ---@module 'conform'
+        ---@module "conform"
         ---@type conform.setupOpts
         opts = {
             formatters_by_ft = {
@@ -1320,7 +1320,7 @@ return {
         build = "cargo build --release",
         dependencies = "rafamadriz/friendly-snippets",
         event = "InsertEnter",
-        ---@module 'blink.cmp'
+        ---@module "blink.cmp"
         ---@type blink.cmp.Config
         opts = {
             keymap = {
