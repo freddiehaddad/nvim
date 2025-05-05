@@ -1389,22 +1389,18 @@ return {
         opts = { automatic_installation = true, handlers = {}, ensure_installed = {} },
     },
 
-    -- Virtual text for the debugger UI
-    {
-        "theHamsta/nvim-dap-virtual-text",
-        lazy = true,
-        ---@module "nvim-dap-virtual-text"
-        ---@type nvim_dap_virtual_text_options
-        opts = {},
-    },
-
     -- UI for the debugger
     {
         "rcarriga/nvim-dap-ui",
         dependencies = {
             "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
-            "theHamsta/nvim-dap-virtual-text",
+            {
+                "theHamsta/nvim-dap-virtual-text",
+                ---@module "nvim-dap-virtual-text"
+                ---@type nvim_dap_virtual_text_options
+                opts = {},
+            },
         },
         keys = {
             -- stylua: ignore start
