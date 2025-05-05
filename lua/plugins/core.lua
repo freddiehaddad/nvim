@@ -1393,6 +1393,8 @@ return {
     {
         "theHamsta/nvim-dap-virtual-text",
         lazy = true,
+        ---@module "nvim-dap-virtual-text"
+        ---@type nvim_dap_virtual_text_options
         opts = {},
     },
 
