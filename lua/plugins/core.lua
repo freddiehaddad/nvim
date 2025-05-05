@@ -1408,8 +1408,8 @@ return {
             -- stylua: ignore start
             { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint condition" },
             { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-            { "<leader>dc", function() require("dap").continue() end, desc = "Run/Continue" },
-            { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
+            { "<leader>dc", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
+            { "<leader>dC", function() require("dap").continue() end, desc = "Run/Continue" },
             { "<leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
             { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
             { "<leader>dj", function() require("dap").down() end, desc = "down" },
