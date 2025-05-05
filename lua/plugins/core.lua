@@ -766,6 +766,7 @@ return {
                     map("n", "K", "<cmd>RustLsp hover actions<cr>", { buffer = bufnr, desc = "Hover" })
 
                     map({ "n", "v" }, "<leader>ca", "<cmd>RustLsp codeAction<cr>", { buffer = bufnr, desc = "Code action" })
+                    map("n", "<leader>ce", "<cmd>RustLsp explainError current<cr>", { buffer = bufnr, desc = "Explain error" })
                     map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
                     map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
 
