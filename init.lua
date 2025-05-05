@@ -30,6 +30,8 @@ opt.fillchars:append({
     vertright = " ",
     verthoriz = " ",
 })
+opt.fileformat = "unix"
+opt.fileformats = "unix,dos"
 opt.foldenable = true
 opt.foldlevel = 99
 opt.ignorecase = true
