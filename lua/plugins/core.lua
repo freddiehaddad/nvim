@@ -858,7 +858,7 @@ return {
 
     -- Installer for LSP, formatting, and debugging
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         build = ":MasonUpdate",
         cmd = "Mason",
         keys = { { "<leader>pm", "<cmd>Mason<cr>", desc = "Mason" } },
@@ -899,7 +899,7 @@ return {
     },
 
     {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         lazy = true,
         dependencies = "williamboman/mason.nvim",
         opts = {
