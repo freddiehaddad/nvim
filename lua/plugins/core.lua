@@ -314,6 +314,7 @@ return {
             mappings = {
                 ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]." },
                 [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
+                ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^<&]." },
             },
         },
     },
