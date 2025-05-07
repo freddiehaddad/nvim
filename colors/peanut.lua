@@ -713,6 +713,10 @@ hl(0, "TelescopeMultiSelection", { bg = c.shuttle_grey })
 hl(0, "TelescopeMatching", { fg = c.koromiko, bold = true })
 hl(0, "TelescopePromptCounter", { fg = c.grey, bg = c.float_bg })
 
+-- Trouble
+hl(0, "TroubleNormal", { link = "Normal" })
+hl(0, "TroubleNormalNC", { link = "Normal" })
+
 -- WhichKey
 hl(0, "WhichKey", { bg = c.float_bg })
 hl(0, "WhichKeyNormal", { bg = c.float_bg })
