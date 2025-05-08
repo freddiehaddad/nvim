@@ -905,6 +905,7 @@ return {
         dependencies = "williamboman/mason.nvim",
         opts = {
             automatic_installation = { exclude = { "rust_analyzer" } },
+            automatic_enable = false,
         },
     },
 
@@ -912,7 +913,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-        dependencies = { "williamboman/mason-lspconfig.nvim", "saghen/blink.cmp" },
+        dependencies = { "mason-org/mason-lspconfig.nvim", "saghen/blink.cmp" },
         init = function()
             local icons = {
                 ERROR = "󰯹 ",
