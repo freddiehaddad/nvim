@@ -1134,6 +1134,13 @@ return {
                     vim.lsp.protocol.make_client_capabilities(),
                     require("blink.cmp").get_lsp_capabilities()
                 ),
+                cmd = {
+                    "clangd",
+                    "--background-index",
+                    "--clang-tidy",
+                    "--completion-style=detailed",
+                    "--header-insertion=iwyu",
+                },
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
 
