@@ -16,6 +16,7 @@ https://github.com/user-attachments/assets/51d861a0-b026-4d94-a013-6a277ba6e52f
 - Markview
 - Mason
 - Mini Icons
+- Mini Pairs
 - Neotest
 - Oil
 - Persistence
@@ -25,6 +26,15 @@ https://github.com/user-attachments/assets/51d861a0-b026-4d94-a013-6a277ba6e52f
 - Treesitter
 - Snacks
 - Which Key
+
+Out of box support for the following languages:
+
+- C/C++
+- JSON
+- Lua
+- Markdown
+- Rust
+- TOML
 
 The color scheme is heavily integrated into all the plugins making for a very
 consistent visual experience.
