@@ -686,6 +686,7 @@ return {
                 "cpp",
                 "cmake",
                 "html",
+                "json",
                 "lua",
                 "markdown",
                 "markdown_inline",
@@ -885,7 +886,15 @@ return {
                 },
             },
             -- Not an actual option! Manually install the packages in config.
-            ensure_installed = { "clang-format", "codelldb", "stylua" },
+            ensure_installed = {
+                "clang-format",
+                "codelldb",
+                "json-lsp",
+                "lua-language-server",
+                "marksman",
+                "neocmakelsp",
+                "stylua",
+            },
         },
         config = function(_, opts)
             require("mason").setup(opts)
@@ -957,7 +966,17 @@ return {
             vim.g.diagnostic_config = diagnostics
         end,
         config = function()
-            require("lspconfig").lua_ls.setup({
+            local lsp = require("lspconfig")
+
+            lsp.jsonls.setup({
+                capabilities = vim.tbl_deep_extend(
+                    "force",
+                    vim.lsp.protocol.make_client_capabilities(),
+                    require("blink.cmp").get_lsp_capabilities()
+                ),
+            })
+
+            lsp.lua_ls.setup({
                 settings = {
                     Lua = {
                         workspace = {
@@ -1049,7 +1068,7 @@ return {
                 end,
             })
 
-            require("lspconfig").neocmake.setup({
+            lsp.neocmake.setup({
                 init_options = {
                     format = {
                         enable = true,
@@ -1131,7 +1150,7 @@ return {
                 end,
             })
 
-            require("lspconfig").clangd.setup({
+            lsp.clangd.setup({
                 capabilities = vim.tbl_deep_extend(
                     "force",
                     {},
@@ -1205,7 +1224,7 @@ return {
                 end,
             })
 
-            require("lspconfig").marksman.setup({
+            lsp.marksman.setup({
                 capabilities = vim.tbl_deep_extend(
                     "force",
                     { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } },
