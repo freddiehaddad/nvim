@@ -909,7 +909,6 @@ return {
         ---@module "mason-lspconfig"
         ---@type MasonLspconfigSettings
         opts = {
-            automatic_installation = { exclude = { "rust_analyzer" } },
             automatic_enable = false,
         },
     },
