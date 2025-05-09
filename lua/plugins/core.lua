@@ -678,7 +678,8 @@ return {
             { "<c-i>", desc = "Increment Selection" },
             { "<bs>", desc = "Decrement Selection", mode = "x" },
         },
-
+        ---@module "nvim-treesitter"
+        ---@type TSConfig
         opts = {
             ensure_installed = {
                 "c",
@@ -871,6 +872,8 @@ return {
                 end,
             })
         end,
+        ---@module "mason"
+        ---@type MasonSettings
         opts = {
             ui = {
                 backdrop = 25,
@@ -903,6 +906,8 @@ return {
         "mason-org/mason-lspconfig.nvim",
         lazy = true,
         dependencies = "williamboman/mason.nvim",
+        ---@module "mason-lspconfig"
+        ---@type MasonLspconfigSettings
         opts = {
             automatic_installation = { exclude = { "rust_analyzer" } },
             automatic_enable = false,
