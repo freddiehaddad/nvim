@@ -943,6 +943,12 @@ return {
         },
     },
 
+    -- SchemaStore catalog for JSON and YAML.  Explicitly enabled in LSP config.
+    {
+        "b0o/SchemaStore.nvim",
+        ft = { "json", "yaml" },
+    },
+
     -- LSP configuration
     {
         "neovim/nvim-lspconfig",
@@ -990,6 +996,12 @@ return {
             local lsp = require("lspconfig")
 
             lsp.jsonls.setup({
+                settings = {
+                    json = {
+                        schemas = require("schemastore").json.schemas(),
+                        validate = { enable = true },
+                    },
+                },
                 capabilities = vim.tbl_deep_extend(
                     "force",
                     vim.lsp.protocol.make_client_capabilities(),
