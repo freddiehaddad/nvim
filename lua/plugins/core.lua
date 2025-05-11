@@ -907,6 +907,7 @@ return {
             },
             -- Not an actual option! Manually install the packages in config.
             ensure_installed = {
+                "clangd",
                 "clang-format",
                 "codelldb",
                 "json-lsp",
