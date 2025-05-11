@@ -1002,11 +1002,7 @@ return {
                         validate = { enable = true },
                     },
                 },
-                capabilities = vim.tbl_deep_extend(
-                    "force",
-                    vim.lsp.protocol.make_client_capabilities(),
-                    require("blink.cmp").get_lsp_capabilities()
-                ),
+                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
             })
 
             lsp.lua_ls.setup({
@@ -1036,11 +1032,9 @@ return {
                         },
                     },
                 },
-                capabilities = vim.tbl_deep_extend(
-                    "force",
+                capabilities = require("blink.cmp").get_lsp_capabilities(
                     { workspace = { fileOperations = { didRename = true, willRename = true } } },
-                    vim.lsp.protocol.make_client_capabilities(),
-                    require("blink.cmp").get_lsp_capabilities()
+                    true
                 ),
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
@@ -1112,7 +1106,7 @@ return {
                     scan_cmake_in_package = true,
                     semantic_token = true,
                 },
-                capabilities = vim.tbl_deep_extend("force", {
+                capabilities = require("blink.cmp").get_lsp_capabilities({
                     workspace = {
                         didChangeWatchedFiles = { dynamicRegistration = true, relative_pattern_support = true },
                     },
@@ -1123,7 +1117,7 @@ return {
                             },
                         },
                     },
-                }, vim.lsp.protocol.make_client_capabilities(), require("blink.cmp").get_lsp_capabilities()),
+                }, true),
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
 
@@ -1184,12 +1178,7 @@ return {
             })
 
             lsp.clangd.setup({
-                capabilities = vim.tbl_deep_extend(
-                    "force",
-                    {},
-                    vim.lsp.protocol.make_client_capabilities(),
-                    require("blink.cmp").get_lsp_capabilities()
-                ),
+                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
                 cmd = {
                     "clangd",
                     "--background-index",
@@ -1258,11 +1247,9 @@ return {
             })
 
             lsp.marksman.setup({
-                capabilities = vim.tbl_deep_extend(
-                    "force",
+                capabilities = require("blink.cmp").get_lsp_capabilities(
                     { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } },
-                    vim.lsp.protocol.make_client_capabilities(),
-                    require("blink.cmp").get_lsp_capabilities()
+                    true
                 ),
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
