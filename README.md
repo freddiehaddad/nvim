@@ -1,11 +1,11 @@
 # Neovim Configuration
 
+https://github.com/user-attachments/assets/51d861a0-b026-4d94-a013-6a277ba6e52f
+
 This is my custom [Neovim] configuration. It features a single configuration
 file [core.lua] and a custom color scheme called [peanut] which is based off of
 [JellyBean]. In addition to integrated debugging, unit testing, language server
 support, and treesitter highlighting, the following plugins are also included:
-
-https://github.com/user-attachments/assets/51d861a0-b026-4d94-a013-6a277ba6e52f
 
 - Blink
 - Conform
