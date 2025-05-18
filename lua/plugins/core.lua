@@ -318,6 +318,7 @@ return {
             },
             scroll = { enabled = true },
             statuscolumn = { enabled = true },
+            bigfile = { enabled = true },
         },
         keys = {
             { "<leader>bd", "<cmd>lua Snacks.bufdelete()<cr>", desc = "Delete buffer" },
