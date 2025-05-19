@@ -957,10 +957,11 @@ return {
         dependencies = { "mason-org/mason-lspconfig.nvim", "saghen/blink.cmp" },
         init = function()
             local icons = {
-                ERROR = "󰯹 ",
-                WARN = "󰰯 ",
-                HINT = "󰰂 ",
-                INFO = "󰰅 ",
+                -- see vim.diagnostic.severity
+                [1] = "󰯹 ", -- error
+                [2] = "󰰯 ", -- warn
+                [3] = "󰰂 ", -- hint
+                [4] = "󰰅 ", -- info
             }
 
             -- diagnostics
@@ -973,11 +974,7 @@ return {
                     spacing = 2,
                     source = "if_many",
                     prefix = function(diagnostic)
-                        for sev, icon in pairs(icons) do
-                            if diagnostic.severity == vim.diagnostic.severity[sev] then
-                                return icon
-                            end
-                        end
+                        return icons[diagnostic.severity] or "󰘥 "
                     end,
                 },
                 severity_sort = true,
