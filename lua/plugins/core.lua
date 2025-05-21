@@ -1334,6 +1334,7 @@ return {
             formatters_by_ft = {
                 c = { "clang_format" },
                 cpp = { "clang_format" },
+                json = { "jq" },
                 lua = { "stylua" },
                 markdown = { "mdformat" },
                 rust = { "rustfmt" },
