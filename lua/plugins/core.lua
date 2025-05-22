@@ -202,6 +202,8 @@ return {
                             end,
                             padding = { right = 2 },
                         },
+                        { "selectioncount", padding = { right = 2 } },
+                        { "searchcount", padding = { right = 2 } },
                     },
                     lualine_z = {
                         { "location", padding = { right = 1 } },
