@@ -189,7 +189,7 @@ return {
                             padding = { left = 1 },
                         },
                     },
-                    lualine_x = { { "lsp_status", icon = "", symbols = { done = "●" } } },
+                    lualine_x = { { "lsp_status", icon = "", symbols = { done = "●" }, padding = { right = 2 } } },
                     lualine_y = {
                         {
                             "macro",
