@@ -918,6 +918,8 @@ return {
                 "marksman",
                 "neocmakelsp",
                 "stylua",
+                "yamlfmt",
+                "yaml-language-server",
             },
         },
         config = function(_, opts)
@@ -994,6 +996,20 @@ return {
         end,
         config = function()
             local lsp = require("lspconfig")
+
+            lsp.yamlls.setup({
+                settings = {
+                    yaml = {
+                        schemaStore = {
+                            -- disable in favor of schemastore plugin
+                            enable = false,
+                            url = "",
+                        },
+                        schemas = require("schemastore").yaml.schemas(),
+                    },
+                },
+                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
+            })
 
             lsp.jsonls.setup({
                 settings = {
@@ -1341,6 +1357,7 @@ return {
                 markdown = { "mdformat" },
                 rust = { "rustfmt" },
                 toml = { "taplo" },
+                yaml = { "yamlfmt" },
             },
             default_format_opts = {
                 lsp_format = "fallback",
