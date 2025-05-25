@@ -682,29 +682,15 @@ return {
     -- Syntax highlighting and code parsing
     {
         "nvim-treesitter/nvim-treesitter",
-        main = "nvim-treesitter.configs",
+        branch = "main",
         build = ":TSUpdate",
         cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-        init = function(plugin)
-            vim.opt.foldmethod = "expr"
-            vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-            -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-            -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-            -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-            -- Luckily, the only things that those plugins need are the custom queries, which we make available
-            -- during startup.
-            require("lazy.core.loader").add_to_rtp(plugin)
-            require("nvim-treesitter.query_predicates")
-        end,
-        keys = {
-            { "<c-i>", desc = "Increment Selection" },
-            { "<bs>", desc = "Decrement Selection", mode = "x" },
-        },
-        ---@module "nvim-treesitter"
-        ---@type TSConfig
-        opts = {
-            ensure_installed = {
+        -- specified as a dependency to be loaded when using telescope from the
+        -- snacks dashboard.
+        dependencies = "nvim-telescope/telescope.nvim",
+        config = function()
+            require("nvim-treesitter").install({
                 "c",
                 "cpp",
                 "cmake",
@@ -725,23 +711,58 @@ return {
                 "vim",
                 "vimdoc",
                 "yaml",
+            })
+        end,
+    },
+
+    -- Advanced text selection
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main",
+        keys = {
+            {
+                "af",
+                function()
+                    require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+                end,
+                desc = "Select outer function",
+                mode = { "x", "o" },
             },
-            highlight = {
-                enable = true,
+            {
+                "if",
+                function()
+                    require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+                end,
+                desc = "Select inner function",
+                mode = { "x", "o" },
             },
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = "<c-i>",
-                    node_incremental = "<c-i>",
-                    scope_incremental = false,
-                    node_decremental = "<bs>",
-                },
+            {
+                "ac",
+                function()
+                    require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+                end,
+                desc = "Select outer class",
+                mode = { "x", "o" },
             },
-            indent = {
-                enable = true,
+            {
+                "ic",
+                function()
+                    require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+                end,
+                desc = "Select inner class",
+                mode = { "x", "o" },
+            },
+            {
+                "as",
+                function()
+                    require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
+                end,
+                desc = "Select local scope",
+                mode = { "x", "o" },
             },
         },
+        ---@module "nvim-treesitter-textobjects"
+        opts = {},
     },
 
     -- LSP for Cargo.toml
@@ -815,6 +836,7 @@ return {
                         end
                     end, { buffer = bufnr, desc = "Toggle virtual text" })
 
+                    vim.o.foldmethod = "expr"
                     if client:supports_method("textDocument/foldingRange") then
                         local win = vim.api.nvim_get_current_win()
                         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
@@ -1088,9 +1110,11 @@ return {
                         end
                     end, { buffer = bufnr, desc = "Toggle virtual text" })
 
+                    vim.o.foldmethod = "expr"
                     if client:supports_method("textDocument/foldingRange") then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    else
+                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
                     end
 
                     if client.server_capabilities.codeLensProvider then
@@ -1170,9 +1194,11 @@ return {
                         end
                     end, { buffer = bufnr, desc = "Toggle virtual text" })
 
+                    vim.o.foldmethod = "expr"
                     if client:supports_method("textDocument/foldingRange") then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    else
+                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
                     end
 
                     if client.server_capabilities.codeLensProvider then
@@ -1239,9 +1265,11 @@ return {
                         end
                     end, { buffer = bufnr, desc = "Toggle virtual text" })
 
+                    vim.o.foldmethod = "expr"
                     if client:supports_method("textDocument/foldingRange") then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    else
+                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
                     end
 
                     if client.server_capabilities.codeLensProvider then
@@ -1306,9 +1334,11 @@ return {
                         end
                     end, { buffer = bufnr, desc = "Toggle virtual text" })
 
+                    vim.o.foldmethod = "expr"
                     if client:supports_method("textDocument/foldingRange") then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
+                    else
+                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
                     end
 
                     if client.server_capabilities.codeLensProvider then
