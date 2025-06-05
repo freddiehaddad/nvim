@@ -17,6 +17,24 @@ local footer = [[
 
 -- Plugins
 return {
+    -- Colorscheme
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        ---@module "tokyonight"
+        ---@type tokyonight.Config
+        opts = {
+            style = "storm",
+        },
+        config = function(opts)
+            require("tokyonight").setup(opts)
+            vim.cmd([[colorscheme tokyonight-storm]])
+            vim.api.nvim_set_hl(0, "Statusline", { bg = "NONE" })
+            vim.api.nvim_set_hl(0, "StatuslineNC", { bg = "NONE" })
+        end,
+    },
+
     -- Icon provider
     {
         "echasnovski/mini.icons",

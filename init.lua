@@ -1,5 +1,3 @@
-vim.cmd("colorscheme peanut")
-
 -- Options
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
