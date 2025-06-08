@@ -1439,6 +1439,7 @@ return {
             signature = { enabled = true },
             appearance = { nerd_font_variant = "normal" },
             completion = { ghost_text = { enabled = true } },
+            sources = { default = { "lsp", "path", "snippets", "buffer" } },
         },
     },
 
