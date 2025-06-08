@@ -25,11 +25,11 @@ return {
         ---@module "tokyonight"
         ---@type tokyonight.Config
         opts = {
-            style = "storm",
+            style = "night",
         },
         config = function(opts)
             require("tokyonight").setup(opts)
-            vim.cmd([[colorscheme tokyonight-storm]])
+            vim.cmd([[colorscheme tokyonight-night]])
             vim.api.nvim_set_hl(0, "Statusline", { bg = "NONE" })
             vim.api.nvim_set_hl(0, "StatuslineNC", { bg = "NONE" })
         end,
