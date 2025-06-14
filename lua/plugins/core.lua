@@ -959,6 +959,7 @@ return {
                 "marksman",
                 "neocmakelsp",
                 "stylua",
+                "taplo",
                 "yamlfmt",
                 "yaml-language-server",
             },
@@ -1439,7 +1440,7 @@ return {
             signature = { enabled = true },
             appearance = { nerd_font_variant = "normal" },
             completion = { ghost_text = { enabled = true } },
-            sources = { default = { "lsp", "path", "snippets", "buffer" } },
+            sources = { default = { "lsp", "path", "buffer" } },
         },
     },
 
