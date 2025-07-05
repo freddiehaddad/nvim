@@ -1244,9 +1244,11 @@ return {
                 cmd = {
                     "clangd",
                     "--background-index",
+                    "--background-index-priority=normal",
                     "--clang-tidy",
                     "--completion-style=detailed",
                     "--header-insertion=iwyu",
+                    "--enable-config",
                 },
                 on_attach = function(client, bufnr)
                     -- vim.notify(vim.inspect(client))
@@ -1304,6 +1306,16 @@ return {
                         )
                     end
 
+                    vim.b[bufnr].autoformat = true
+                    -- stylua: ignore
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
+                end,
+            })
+
+            lsp.taplo.setup({
+                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
+                on_attach = function(_, bufnr)
+                    local map = vim.keymap.set
                     vim.b[bufnr].autoformat = true
                     -- stylua: ignore
                     map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
