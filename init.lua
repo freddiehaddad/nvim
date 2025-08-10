@@ -1,3 +1,6 @@
+-- Load custom colorscheme
+vim.cmd.colorscheme("rust_inspired")
+
 -- Options
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
