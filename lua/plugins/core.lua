@@ -1,19 +1,210 @@
 -- Dashboard
 local header = [[
-█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀█  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀█   
-█ │░███▀█▀▀▀▀▀▓████▓▄ ▀▀▀▀ │░████▓▄   │▓████▓▄  █   
-█ │▒███████  │▓███████     │▒███████  │▓███████ █   
-█ │▓███████  │▓███████     │▓███████  │▓███████ █   
-▀ │▓███████  │▓███████     │▓███████  │▓███████ █   
-▀ │▓███████  │▓███████▄ ▄  │▓███████  │▓███████ █   
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀█  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀█
+█ │░███▀█▀▀▀▀▀▓████▓▄ ▀▀▀▀ │░████▓▄   │▓████▓▄  █
+█ │▒███████  │▓███████     │▒███████  │▓███████ █
+█ │▓███████  │▓███████     │▓███████  │▓███████ █
+▀ │▓███████  │▓███████     │▓███████  │▓███████ █
+▀ │▓███████  │▓███████▄ ▄  │▓███████  │▓███████ █
 █ │▓███████                │▓███████   ▓███████ █▄▄▄
 █ │▓███████▀▀ ▀    ▀       │▓███████▀▀▀▓█▄█████▄ ▄ █
 █▄▄▄▄▄▄▄▄ ▀ █▀▀▀▀▀▀▀▀▀▀▀▀█▄▄▄▄ ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄ ▄▄▄▄█
-        █ ▀ █                                       
+        █ ▀ █
   <fh>  ▀▀▀▀▀                                       ]]
 local footer = [[
 ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀
                                       n e o v i m   ]]
+
+local function create_lsp_mapper(bufnr)
+    return function(mode, lhs, rhs, desc, opts)
+        opts = opts and vim.tbl_extend("force", opts, { buffer = bufnr }) or { buffer = bufnr }
+        if desc and opts.desc == nil then
+            opts.desc = desc
+        end
+        vim.keymap.set(mode, lhs, rhs, opts)
+    end
+end
+
+local function apply_common_lsp_mappings(bufnr, overrides)
+    overrides = overrides or {}
+    local builtin = require("telescope.builtin")
+    local map_buf = create_lsp_mapper(bufnr)
+
+    local function resolve(name, default)
+        local value = overrides[name]
+        if value == nil then
+            value = default
+        end
+        if value == false then
+            return nil
+        end
+        return value
+    end
+
+    local gd = resolve("gd", function()
+        builtin.lsp_definitions({ reuse_win = true })
+    end)
+    if gd then
+        map_buf("n", "gd", gd, "Go to definition")
+    end
+
+    local gy = resolve("gy", function()
+        builtin.lsp_type_definitions({ reuse_win = true })
+    end)
+    if gy then
+        map_buf("n", "gy", gy, "Go to type definition")
+    end
+
+    local gD = resolve("gD", vim.lsp.buf.declaration)
+    if gD then
+        map_buf("n", "gD", gD, "Go to declaration")
+    end
+
+    local gI = resolve("gI", function()
+        builtin.lsp_implementations({ reuse_win = true })
+    end)
+    if gI then
+        map_buf("n", "gI", gI, "Go to implementation")
+    end
+
+    local gK = resolve("gK", vim.lsp.buf.signature_help)
+    if gK then
+        map_buf("n", "gK", gK, "Signature help")
+    end
+
+    local ca = resolve("ca", vim.lsp.buf.code_action)
+    if ca then
+        map_buf({ "n", "v" }, "<leader>ca", ca, "Code action")
+    end
+
+    local cl = resolve("cl", "<cmd>LspInfo<cr>")
+    if cl then
+        map_buf("n", "<leader>cl", cl, "LSP information")
+    end
+
+    local cr = resolve("cr", vim.lsp.buf.rename)
+    if cr then
+        map_buf("n", "<leader>cr", cr, "Rename buffer")
+    end
+
+    local cA = resolve("cA", function()
+        vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } })
+    end)
+    if cA then
+        map_buf("n", "<leader>cA", cA, "Source action")
+    end
+
+    local cR = resolve("cR", function()
+        if Snacks and Snacks.rename and Snacks.rename.rename_file then
+            Snacks.rename.rename_file()
+        else
+            vim.notify("Snacks rename module not available", vim.log.levels.WARN)
+        end
+    end)
+    if cR then
+        map_buf("n", "<leader>cR", cR, "Rename file")
+    end
+
+    local sr = resolve("sr", function()
+        builtin.lsp_references({ reuse_win = true })
+    end)
+    if sr then
+        map_buf("n", "<leader>sr", sr, "References")
+    end
+
+    local ss = resolve("ss", function()
+        builtin.lsp_document_symbols({ reuse_win = true })
+    end)
+    if ss then
+        map_buf("n", "<leader>ss", ss, "Symbols")
+    end
+
+    local sS = resolve("sS", function()
+        builtin.lsp_dynamic_workspace_symbols({ reuse_win = true })
+    end)
+    if sS then
+        map_buf("n", "<leader>sS", sS, "Symbols (workspace)")
+    end
+
+    if overrides.extra then
+        overrides.extra(map_buf)
+    end
+
+    return map_buf
+end
+
+local function apply_fold_settings(client, bufnr)
+    local foldexpr
+    if client:supports_method("textDocument/foldingRange") then
+        foldexpr = "v:lua.vim.lsp.foldexpr()"
+    else
+        foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    end
+
+    vim.o.foldmethod = "expr"
+    vim.o.foldexpr = foldexpr
+
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == bufnr then
+            vim.wo[win].foldexpr = foldexpr
+        end
+    end
+end
+
+local function apply_common_lsp_tail(client, bufnr)
+    if vim.lsp.inlay_hint then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    if Snacks and Snacks.toggle and Snacks.toggle.inlay_hints then
+        Snacks.toggle.inlay_hints():map("<leader>uh")
+    end
+
+    vim.keymap.set("n", "<leader>ud", function()
+        if vim.diagnostic.config().virtual_text then
+            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+        else
+            vim.diagnostic.config(vim.g.diagnostic_config)
+        end
+    end, { buffer = bufnr, desc = "Toggle virtual text" })
+
+    apply_fold_settings(client, bufnr)
+
+    if client.server_capabilities.codeLensProvider then
+        vim.keymap.set(
+            "n",
+            "<leader>cC",
+            vim.lsp.codelens.refresh,
+            { buffer = bufnr, desc = "Refresh and display codelens" }
+        )
+        vim.keymap.set({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
+
+        vim.lsp.codelens.refresh()
+        vim.api.nvim_create_autocmd(
+            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
+            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
+        )
+    end
+
+    vim.b[bufnr].autoformat = true
+    vim.keymap.set("n", "<leader>uf", function()
+        vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat
+    end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
+end
+
+local function make_on_attach(opts)
+    opts = opts or {}
+    return function(client, bufnr)
+        local map_buf = apply_common_lsp_mappings(bufnr, opts.mappings)
+        if opts.after_maps then
+            opts.after_maps(map_buf, client, bufnr)
+        end
+        apply_common_lsp_tail(client, bufnr)
+        if opts.after then
+            opts.after(client, bufnr, map_buf)
+        end
+    end
+end
 
 -- Plugins
 return {
@@ -43,7 +234,7 @@ return {
         cmd = "Oil",
         keys = {
             --stylua: ignore start
-            { "<leader>o", "<cmd>Oil<cr>", desc = "Oil" },
+            { "<leader>o", "<cmd>Oil<cr>",                                   desc = "Oil" },
             { "<leader>O", function() require("oil").open(vim.uv.cwd()) end, desc = "Oil (cwd)" },
             --stylua: ignore end
         },
@@ -238,7 +429,11 @@ return {
             { "<leader>qs", "<cmd>lua require('persistence').load()<cr>", desc = "Restore session" },
             { "<leader>qS", "<cmd>lua require('persistence').select()<cr>", desc = "Select session" },
             { "<leader>ql", "<cmd>lua require('persistence').load({last=true})<cr>", desc = "Restore last session" },
-            { "<leader>qd", "<cmd>lua require('persistence').stop()<cr>", desc = "Don't save current session" },
+            {
+                "<leader>qd",
+                "<cmd>lua require('persistence').stop()<cr>",
+                desc = "Don't save current session",
+            },
         },
         ---@module "persistence"
         ---@type Persistence.Config
@@ -278,7 +473,7 @@ return {
                         { icon = " ", key = "n", desc = "New File", action = ":enew | startinsert" },
                         { icon = " ", key = "g", desc = "Find Text", action = ":Telescope live_grep" },
                         { icon = " ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
-                        { icon = " ", key = "c", desc = "Config", action = ":Telescope find_files " .. "cwd=" .. vim.fn.stdpath("config")},
+                        { icon = " ", key = "c", desc = "Config", action = ":Telescope find_files " .. "cwd=" .. vim.fn.stdpath("config") },
                         { icon = " ", key = "s", desc = "Restore Session", section = "session" },
                         { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
                         { icon = "󱌢 ", key = "m", desc = "Mason", action = ":Mason" },
@@ -423,8 +618,12 @@ return {
                 end
 
                 -- stylua: ignore start
-                map("n", "]h", function() if vim.wo.diff then vim.cmd.normal({ "]c", bang = true }) else gs.nav_hunk("next") end end, "Next hunk")
-                map("n", "[h", function() if vim.wo.diff then vim.cmd.normal({ "[c", bang = true }) else gs.nav_hunk("prev") end end, "Prev hunk")
+                map("n", "]h",
+                    function() if vim.wo.diff then vim.cmd.normal({ "]c", bang = true }) else gs.nav_hunk("next") end end,
+                    "Next hunk")
+                map("n", "[h",
+                    function() if vim.wo.diff then vim.cmd.normal({ "[c", bang = true }) else gs.nav_hunk("prev") end end,
+                    "Prev hunk")
                 map("n", "]H", function() gs.nav_hunk("last") end, "Last hunk")
                 map("n", "[H", function() gs.nav_hunk("first") end, "First hunk")
                 map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
@@ -460,31 +659,31 @@ return {
         keys = {
             -- find
             { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>", desc = "Buffers" },
-            { "<leader>fc", "<cmd>Telescope find_files cwd=" .. vim.fn.stdpath("config") .. "<cr>", desc = "Config file" },
-            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Files" },
-            { "<leader>fF", "<cmd>Telescope find_files hidden=true<cr>", desc = "Files (hidden)" },
-            { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Files (git)" },
-            { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+            { "<leader>fc", "<cmd>Telescope find_files cwd=" .. vim.fn.stdpath("config") .. "<cr>",                   desc = "Config file" },
+            { "<leader>ff", "<cmd>Telescope find_files<cr>",                                                          desc = "Files" },
+            { "<leader>fF", "<cmd>Telescope find_files hidden=true<cr>",                                              desc = "Files (hidden)" },
+            { "<leader>fg", "<cmd>Telescope git_files<cr>",                                                           desc = "Files (git)" },
+            { "<leader>fr", "<cmd>Telescope oldfiles<cr>",                                                            desc = "Recent" },
             -- search
-            { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto commands" },
-            { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
-            { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command history" },
-            { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-            { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
-            { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
-            { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Grep (cwd)" },
+            { "<leader>sa", "<cmd>Telescope autocommands<cr>",                                                        desc = "Auto commands" },
+            { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>",                                           desc = "Buffer" },
+            { "<leader>sc", "<cmd>Telescope command_history<cr>",                                                     desc = "Command history" },
+            { "<leader>sC", "<cmd>Telescope commands<cr>",                                                            desc = "Commands" },
+            { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>",                                                 desc = "Document diagnostics" },
+            { "<leader>sD", "<cmd>Telescope diagnostics<cr>",                                                         desc = "Workspace diagnostics" },
+            { "<leader>sg", "<cmd>Telescope live_grep<cr>",                                                           desc = "Grep (cwd)" },
             { "<leader>sG", desc = "Glob grep (cwd)" },
-            { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help pages" },
-            { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "highlight groups" },
-            { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
-            { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-            { "<leader>sl", "<cmd>Telescope loclist<cr>", desc = "Location list" },
-            { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Marks" },
-            { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-            { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Quickfix list" },
-            { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-            { "<leader>sw", "<cmd>Telescope grep_string word_match=-w<cr>", desc = "Word" },
-            { "<leader>sw", "<cmd>Telescope grep_string word_match=-w<cr>", desc = "Selection", mode = "v" },
+            { "<leader>sh", "<cmd>Telescope help_tags<cr>",                                                           desc = "Help pages" },
+            { "<leader>sH", "<cmd>Telescope highlights<cr>",                                                          desc = "highlight groups" },
+            { "<leader>sj", "<cmd>Telescope jumplist<cr>",                                                            desc = "Jumplist" },
+            { "<leader>sk", "<cmd>Telescope keymaps<cr>",                                                             desc = "Keymaps" },
+            { "<leader>sl", "<cmd>Telescope loclist<cr>",                                                             desc = "Location list" },
+            { "<leader>sm", "<cmd>Telescope marks<cr>",                                                               desc = "Marks" },
+            { "<leader>so", "<cmd>Telescope vim_options<cr>",                                                         desc = "Options" },
+            { "<leader>sq", "<cmd>Telescope quickfix<cr>",                                                            desc = "Quickfix list" },
+            { "<leader>sR", "<cmd>Telescope resume<cr>",                                                              desc = "Resume" },
+            { "<leader>sw", "<cmd>Telescope grep_string word_match=-w<cr>",                                           desc = "Word" },
+            { "<leader>sw", "<cmd>Telescope grep_string word_match=-w<cr>",                                           desc = "Selection",            mode = "v" },
         },
         opts = function()
             local actions = require("telescope.actions")
@@ -643,7 +842,11 @@ return {
             { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (trouble)" },
             { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer diagnostics (trouble)" },
             { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (trouble)" },
-            { "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (trouble)" },
+            {
+                "<leader>cS",
+                "<cmd>Trouble lsp toggle<cr>",
+                desc = "LSP references/definitions/... (trouble)",
+            },
             { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location list (trouble)" },
             { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix list (trouble)" },
             {
@@ -793,72 +996,21 @@ return {
         opts = {
             server = {
                 -- stylua: ignore
-                on_attach = function(client, bufnr)
-                    -- vim.notify(vim.inspect(client))
-
-                    -- stylua: ignore start
-                    local map = vim.keymap.set
-                    map("n", "<leader>dn", "<cmd>RustLsp debug<cr>", { desc = "Debug nearest", buffer = bufnr })
-                    map("n", "<leader>dR", "<cmd>RustLsp debuggables<cr>", { desc = "Rust debuggables ", buffer = bufnr })
-
-                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
-                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
-                    map("n", "gC", "<cmd>RustLsp openCargo<cr>", { buffer = bufnr, desc = "Open Cargo.toml" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
-                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
-
-                    map("n", "K", "<cmd>RustLsp hover actions<cr>", { buffer = bufnr, desc = "Hover" })
-
-                    map({ "n", "v" }, "<leader>ca", "<cmd>RustLsp codeAction<cr>", { buffer = bufnr, desc = "Code action" })
-                    map("n", "<leader>ce", "<cmd>RustLsp explainError current<cr>", { buffer = bufnr, desc = "Explain error" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
-
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-                    map({ "n", "v" }, "J", "<cmd>RustLsp joinLines<cr>", { buffer = bufnr, desc = "Join lines" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
-
-                    map("n", "<leader>sr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
-                    -- stylua: ignore end
-
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    Snacks.toggle.inlay_hints():map("<leader>uh")
-
-                    -- toggle virtual diagnostics
-                    map("n", "<leader>ud", function()
-                        if vim.diagnostic.config().virtual_text then
-                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-                        else
-                            vim.diagnostic.config(vim.g.diagnostic_config)
-                        end
-                    end, { buffer = bufnr, desc = "Toggle virtual text" })
-
-                    vim.o.foldmethod = "expr"
-                    if client:supports_method("textDocument/foldingRange") then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
-                    end
-
-                    if client.server_capabilities.codeLensProvider then
-                        -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
-                        -- stylua: ignore end
-
-                        vim.lsp.codelens.refresh()
-                        vim.api.nvim_create_autocmd(
-                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
-                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
-                        )
-                    end
-
-                    vim.b[bufnr].autoformat = true
-                    -- stylua: ignore
-                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
-                end,
+                on_attach = make_on_attach({
+                    mappings = {
+                        ca = "<cmd>RustLsp codeAction<cr>",
+                        extra = function(map)
+                            map("n", "gC", "<cmd>RustLsp openCargo<cr>", "Open Cargo.toml")
+                            map("n", "K", "<cmd>RustLsp hover actions<cr>", "Hover")
+                        end,
+                    },
+                    after_maps = function(map)
+                        map("n", "<leader>dn", "<cmd>RustLsp debug<cr>", "Debug nearest")
+                        map("n", "<leader>dR", "<cmd>RustLsp debuggables<cr>", "Rust debuggables")
+                        map("n", "<leader>ce", "<cmd>RustLsp explainError current<cr>", "Explain error")
+                        map({ "n", "v" }, "J", "<cmd>RustLsp joinLines<cr>", "Join lines")
+                    end,
+                }),
                 default_settings = {
                     -- rust-analyzer language server configuration
                     ["rust-analyzer"] = {
@@ -1020,6 +1172,7 @@ return {
         end,
         config = function()
             local lsp = require("lspconfig")
+            local get_capabilities = require("blink.cmp").get_lsp_capabilities
 
             lsp.yamlls.setup({
                 settings = {
@@ -1032,7 +1185,7 @@ return {
                         schemas = require("schemastore").yaml.schemas(),
                     },
                 },
-                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
+                capabilities = get_capabilities({}, true),
             })
 
             lsp.jsonls.setup({
@@ -1042,7 +1195,7 @@ return {
                         validate = { enable = true },
                     },
                 },
-                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
+                capabilities = get_capabilities({}, true),
             })
 
             lsp.lua_ls.setup({
@@ -1072,69 +1225,11 @@ return {
                         },
                     },
                 },
-                capabilities = require("blink.cmp").get_lsp_capabilities(
+                capabilities = get_capabilities(
                     { workspace = { fileOperations = { didRename = true, willRename = true } } },
                     true
                 ),
-                on_attach = function(client, bufnr)
-                    -- vim.notify(vim.inspect(client))
-
-                    -- stylua: ignore start
-                    local map = vim.keymap.set
-                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
-                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
-                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
-
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
-
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
-
-                    map("n", "<leader>sr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
-                    -- stylua: ignore end
-
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    Snacks.toggle.inlay_hints():map("<leader>uh")
-
-                    -- toggle virtual diagnostics
-                    map("n", "<leader>ud", function()
-                        if vim.diagnostic.config().virtual_text then
-                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-                        else
-                            vim.diagnostic.config(vim.g.diagnostic_config)
-                        end
-                    end, { buffer = bufnr, desc = "Toggle virtual text" })
-
-                    vim.o.foldmethod = "expr"
-                    if client:supports_method("textDocument/foldingRange") then
-                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
-                    else
-                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                    end
-
-                    if client.server_capabilities.codeLensProvider then
-                        -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
-                        -- stylua: ignore end
-
-                        vim.lsp.codelens.refresh()
-                        vim.api.nvim_create_autocmd(
-                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
-                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
-                        )
-                    end
-
-                    vim.b[bufnr].autoformat = true
-                    -- stylua: ignore
-                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
-                end,
+                on_attach = make_on_attach(),
             })
 
             lsp.neocmake.setup({
@@ -1148,7 +1243,7 @@ return {
                     scan_cmake_in_package = true,
                     semantic_token = true,
                 },
-                capabilities = require("blink.cmp").get_lsp_capabilities({
+                capabilities = get_capabilities({
                     workspace = {
                         didChangeWatchedFiles = { dynamicRegistration = true, relative_pattern_support = true },
                     },
@@ -1160,69 +1255,11 @@ return {
                         },
                     },
                 }, true),
-                on_attach = function(client, bufnr)
-                    -- vim.notify(vim.inspect(client))
-
-                    -- stylua: ignore start
-                    local map = vim.keymap.set
-                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
-                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
-                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
-
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
-
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
-
-                    map("n", "<leader>sr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
-                    -- stylua: ignore end
-
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    Snacks.toggle.inlay_hints():map("<leader>uh")
-
-                    -- toggle virtual diagnostics
-                    map("n", "<leader>ud", function()
-                        if vim.diagnostic.config().virtual_text then
-                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-                        else
-                            vim.diagnostic.config(vim.g.diagnostic_config)
-                        end
-                    end, { buffer = bufnr, desc = "Toggle virtual text" })
-
-                    vim.o.foldmethod = "expr"
-                    if client:supports_method("textDocument/foldingRange") then
-                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
-                    else
-                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                    end
-
-                    if client.server_capabilities.codeLensProvider then
-                        -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
-                        -- stylua: ignore end
-
-                        vim.lsp.codelens.refresh()
-                        vim.api.nvim_create_autocmd(
-                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
-                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
-                        )
-                    end
-
-                    vim.b[bufnr].autoformat = true
-                    -- stylua: ignore
-                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
-                end,
+                on_attach = make_on_attach(),
             })
 
             lsp.clangd.setup({
-                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
+                capabilities = get_capabilities({}, true),
                 cmd = {
                     "clangd",
                     "--background-index",
@@ -1232,145 +1269,44 @@ return {
                     "--header-insertion=iwyu",
                     "--enable-config",
                 },
-                on_attach = function(client, bufnr)
-                    -- vim.notify(vim.inspect(client))
-
-                    -- stylua: ignore start
-                    local map = vim.keymap.set
-                    map("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
-                    map("n", "gr", vim.lsp.buf.references, { buffer = bufnr, nowait = true, desc = "References" })
-                    map("n", "gy", vim.lsp.buf.type_definition, { buffer = bufnr, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
-                    map("n", "gI", vim.lsp.buf.implementation, { buffer = bufnr, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
-
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-                    map("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", { buffer = bufnr, desc = "Switch source/header" })
-                    map("n", "<leader>ci", "<cmd>ClangdShowSymbolInfo<cr>", { buffer = bufnr, desc = "Symbol information" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
-
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
-                    -- stylua: ignore end
-
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    Snacks.toggle.inlay_hints():map("<leader>uh")
-
-                    -- toggle virtual diagnostics
-                    map("n", "<leader>ud", function()
-                        if vim.diagnostic.config().virtual_text then
-                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-                        else
-                            vim.diagnostic.config(vim.g.diagnostic_config)
-                        end
-                    end, { buffer = bufnr, desc = "Toggle virtual text" })
-
-                    vim.o.foldmethod = "expr"
-                    if client:supports_method("textDocument/foldingRange") then
-                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
-                    else
-                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                    end
-
-                    if client.server_capabilities.codeLensProvider then
-                        -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
-                        -- stylua: ignore end
-
-                        vim.lsp.codelens.refresh()
-                        vim.api.nvim_create_autocmd(
-                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
-                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
-                        )
-                    end
-
-                    vim.b[bufnr].autoformat = true
-                    -- stylua: ignore
-                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
-                end,
+                on_attach = make_on_attach({
+                    mappings = {
+                        gd = vim.lsp.buf.definition,
+                        gy = vim.lsp.buf.type_definition,
+                        gI = vim.lsp.buf.implementation,
+                        extra = function(map)
+                            map("n", "gr", vim.lsp.buf.references, "References", { nowait = true })
+                            map("n", "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", "Switch source/header")
+                            map("n", "<leader>ci", "<cmd>ClangdShowSymbolInfo<cr>", "Symbol information")
+                        end,
+                    },
+                }),
             })
 
             lsp.taplo.setup({
-                capabilities = require("blink.cmp").get_lsp_capabilities({}, true),
+                capabilities = get_capabilities({}, true),
                 on_attach = function(_, bufnr)
                     local map = vim.keymap.set
                     vim.b[bufnr].autoformat = true
                     -- stylua: ignore
-                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
+                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end,
+                        { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
                 end,
             })
 
             lsp.marksman.setup({
-                capabilities = require("blink.cmp").get_lsp_capabilities(
+                capabilities = get_capabilities(
                     { workspace = { didChangeWatchedFiles = { dynamicRegistration = true } } },
                     true
                 ),
-                on_attach = function(client, bufnr)
-                    -- vim.notify(vim.inspect(client))
-
-                    -- stylua: ignore start
-                    local map = vim.keymap.set
-                    map("n", "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to definition" })
-                    map("n", "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to type definition" })
-                    map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
-                    map("n", "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, { buffer = bufnr, desc = "Go to implementation" })
-                    map("n", "gK", function() return vim.lsp.buf.signature_help() end, { buffer = bufnr, desc = "Signature help" })
-
-                    map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
-                    map("n", "<leader>cl", "<cmd>LspInfo<cr>", { buffer = bufnr, desc = "LSP information" })
-                    map("n", "<leader>cr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename buffer" })
-
-                    map("n", "<leader>cA", function() vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } }) end, { buffer = bufnr, desc = "Source action" })
-                    map("n", "<leader>cR", function() Snacks.rename.rename_file() end, { buffer = bufnr, desc = "Rename file" })
-
-                    map("n", "<leader>sr", "<cmd>Telescope lsp_references<cr>", { buffer = bufnr, nowait = true, desc = "References" })
-                    map("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", { buffer = bufnr, desc = "Symbols" })
-                    map("n", "<leader>sS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { buffer = bufnr, desc = "Symbols (workspace)" })
-
-                    map("n", "<leader>mp", "<cmd>Markview splitToggle<cr>", { buffer = bufnr, desc = "Markdown preview" })
-                    map("n", "<leader>mt", "<cmd>Markview Toggle<cr>", { buffer = bufnr, desc = "Markdown toggle" })
-                    -- stylua: ignore end
-
-                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-                    Snacks.toggle.inlay_hints():map("<leader>uh")
-
-                    -- toggle virtual diagnostics
-                    map("n", "<leader>ud", function()
-                        if vim.diagnostic.config().virtual_text then
-                            vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-                        else
-                            vim.diagnostic.config(vim.g.diagnostic_config)
-                        end
-                    end, { buffer = bufnr, desc = "Toggle virtual text" })
-
-                    vim.o.foldmethod = "expr"
-                    if client:supports_method("textDocument/foldingRange") then
-                        vim.o.foldexpr = "v:lua.vim.lsp.foldexpr()"
-                    else
-                        vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                    end
-
-                    if client.server_capabilities.codeLensProvider then
-                        -- stylua: ignore start
-                        map("n", "<leader>cC", vim.lsp.codelens.refresh, { buffer = bufnr, desc = "Refresh and display codelens" })
-                        map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { buffer = bufnr, desc = "Run codelens" })
-                        -- stylua: ignore end
-
-                        vim.lsp.codelens.refresh()
-                        vim.api.nvim_create_autocmd(
-                            { "TextChanged", "InsertLeave", "CursorHold", "LspAttach", "BufEnter" },
-                            { buffer = bufnr, callback = vim.lsp.codelens.refresh }
-                        )
-                    end
-
-                    vim.b[bufnr].autoformat = true
-                    -- stylua: ignore
-                    map("n", "<leader>uf", function() vim.b[bufnr].autoformat = not vim.b[bufnr].autoformat end, { buffer = bufnr, desc = "Toggle autoformat (buffer)" })
-                end,
+                on_attach = make_on_attach({
+                    mappings = {
+                        extra = function(map)
+                            map("n", "<leader>mp", "<cmd>Markview splitToggle<cr>", "Markdown preview")
+                            map("n", "<leader>mt", "<cmd>Markview Toggle<cr>", "Markdown toggle")
+                        end,
+                    },
+                }),
             })
         end,
     },
@@ -1507,24 +1443,24 @@ return {
         keys = {
             -- stylua: ignore start
             { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint condition" },
-            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-            { "<leader>dc", function() require("dap").run_to_cursor() end, desc = "Run to cursor" },
-            { "<leader>dC", function() require("dap").continue() end, desc = "Run/Continue" },
-            { "<leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
-            { "<leader>di", function() require("dap").step_into() end, desc = "Step into" },
-            { "<leader>dj", function() require("dap").down() end, desc = "down" },
-            { "<leader>dk", function() require("dap").up() end, desc = "up" },
-            { "<leader>dl", function() require("dap").run_last() end, desc = "Run last" },
-            { "<leader>do", function() require("dap").step_over() end, desc = "Step over" },
-            { "<leader>dO", function() require("dap").step_out() end, desc = "Step out" },
-            { "<leader>dP", function() require("dap").pause() end, desc = "Pause" },
-            { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-            { "<leader>ds", function() require("dap").session() end, desc = "Session" },
-            { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-            { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-            { "<leader>dX", "<cmd>DapClearBreakpoints<cr>", desc = "Clear breakpoints" },
-            { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
-            { "<leader>de", function() require("dapui").eval() end, desc = "Eval",  mode = { "n", "v" } },
+            { "<leader>db", function() require("dap").toggle_breakpoint() end,                                    desc = "Toggle breakpoint" },
+            { "<leader>dc", function() require("dap").run_to_cursor() end,                                        desc = "Run to cursor" },
+            { "<leader>dC", function() require("dap").continue() end,                                             desc = "Run/Continue" },
+            { "<leader>dg", function() require("dap").goto_() end,                                                desc = "Go to line (no execute)" },
+            { "<leader>di", function() require("dap").step_into() end,                                            desc = "Step into" },
+            { "<leader>dj", function() require("dap").down() end,                                                 desc = "down" },
+            { "<leader>dk", function() require("dap").up() end,                                                   desc = "up" },
+            { "<leader>dl", function() require("dap").run_last() end,                                             desc = "Run last" },
+            { "<leader>do", function() require("dap").step_over() end,                                            desc = "Step over" },
+            { "<leader>dO", function() require("dap").step_out() end,                                             desc = "Step out" },
+            { "<leader>dP", function() require("dap").pause() end,                                                desc = "Pause" },
+            { "<leader>dr", function() require("dap").repl.toggle() end,                                          desc = "Toggle REPL" },
+            { "<leader>ds", function() require("dap").session() end,                                              desc = "Session" },
+            { "<leader>dt", function() require("dap").terminate() end,                                            desc = "Terminate" },
+            { "<leader>dw", function() require("dap.ui.widgets").hover() end,                                     desc = "Widgets" },
+            { "<leader>dX", "<cmd>DapClearBreakpoints<cr>",                                                       desc = "Clear breakpoints" },
+            { "<leader>du", function() require("dapui").toggle({}) end,                                           desc = "Dap UI" },
+            { "<leader>de", function() require("dapui").eval() end,                                               desc = "Eval",                   mode = { "n", "v" } },
             {
                 "<leader>da",
                 function()
@@ -1599,18 +1535,18 @@ return {
         end,
         -- stylua: ignore
         keys = {
-            { "<leader>t",  "", desc = "+test" },
-            { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run file (neotest)" },
-            { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end, desc = "Run all test files (neotest)" },
-            { "<leader>tr", function() require("neotest").run.run() end, desc = "Run nearest (neotest)" },
-            { "<leader>tl", function() require("neotest").run.run_last() end, desc = "Run last (neotest)" },
-            { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle summary (neotest)" },
+            { "<leader>t",  "",                                                                                 desc = "+test" },
+            { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end,                      desc = "Run file (neotest)" },
+            { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end,                            desc = "Run all test files (neotest)" },
+            { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run nearest (neotest)" },
+            { "<leader>tl", function() require("neotest").run.run_last() end,                                   desc = "Run last (neotest)" },
+            { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle summary (neotest)" },
             { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show output (neotest)" },
-            { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle output panel (neotest)" },
-            { "<leader>tS", function() require("neotest").run.stop() end, desc = "Stop (neotest)" },
-            { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle watch (neotest)" },
+            { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle output panel (neotest)" },
+            { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop (neotest)" },
+            { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end,                 desc = "Toggle watch (neotest)" },
             ---@diagnostic disable-next-line: missing-fields
-            { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, desc = "Debug nearest" },
+            { "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end,                    desc = "Debug nearest" },
         },
     },
 
@@ -1627,42 +1563,42 @@ return {
 }
 
 --[[
-█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀█  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀█   
-█ │░███▀█▀▀▀▀▀▓████▓▄ ▀▀▀▀ │░████▓▄   │▓████▓▄  █   
-█ │▒███████  │▓███████     │▒███████  │▓███████ █   
-█ │▓███████  │▓███████     │▓███████  │▓███████ █   
-▀ │▓███████  │▓███████     │▓███████  │▓███████ █   
-▀ │▓███████  │▓███████▄ ▄  │▓███████  │▓███████ █   
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀█  █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀█
+█ │░███▀█▀▀▀▀▀▓████▓▄ ▀▀▀▀ │░████▓▄   │▓████▓▄  █
+█ │▒███████  │▓███████     │▒███████  │▓███████ █
+█ │▓███████  │▓███████     │▓███████  │▓███████ █
+▀ │▓███████  │▓███████     │▓███████  │▓███████ █
+▀ │▓███████  │▓███████▄ ▄  │▓███████  │▓███████ █
 █ │▓███████                │▓███████   ▓███████ █▄▄▄
 █ │▓███████▀▀ ▀    ▀       │▓███████▀▀▀▓█▄█████▄ ▄ █
 █▄▄▄▄▄▄▄▄ ▀ █▀▀▀▀▀▀▀▀▀▀▀▀█▄▄▄▄ ▄ ▄▄▄▄▄▄▄▄▄▄▄ ▄ ▄▄▄▄█
-        █ ▀ █                                       
-  <fh>  ▀▀▀▀▀                                       
+        █ ▀ █
+  <fh>  ▀▀▀▀▀
 
-▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ 
-                                      n e o v i m   
+▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀��▀▀ ▀
+                                      n e o v i m
 
-           _______  _ __ _____            /\            
+           _______  _ __ _____            /\
 _ __ ____ |      /____ ____   \  /\____ _/  \___ __ __ _
-     \_  \|     /_   /     \   \/   /___/    \  ___     
-      /   \    / /  /_  \   \  /   /   /      \/   \    
-     /   \    /    / / _/   /\    /   /         /   \   
-     \____\  /\_____/\_____/  \__/___/________\/     \  
-           \/                                  \_____/  
+     \_  \|     /_   /     \   \/   /___/    \  ___
+      /   \    / /  /_  \   \  /   /   /      \/   \
+     /   \    /    / / _/   /\    /   /         /   \
+     \____\  /\_____/\_____/  \__/___/________\/     \
+           \/                                  \_____/
 
-__ _ ____  __  /\___  _ __ ______ __/\     n e o v i m  
+__ _ ____  __  /\___  _ __ ______ __/\     n e o v i m
              \/                       \  _ ___ __ _ ____
-                                       \/               
+                                       \/
 
-      _______                                   
-____ |      /____ ____ ___  ____ ___/\    __    
-\_  \|     /_   /     \   \/   /___/  \  /  \   
- /   \    / /  /_ /\   \  /   /   /    \/    \  
-/   \    /    / / _/   /\    /   /       /    \ 
+      _______
+____ |      /____ ____ ___  ____ ___/\    __
+\_  \|     /_   /     \   \/   /___/  \  /  \
+ /   \    / /  /_ /\   \  /   /   /    \/    \
+/   \    /    / / _/   /\    /   /       /    \
 \____\  /\_____/\_____/  \__/___/______\/      \
       \/                                \______/
 
-______/\  __________________/\     n e o v i m  
+______/\  __________________/\     n e o v i m
         \/                    \  _______________
-                               \/               
+                               \/
 --]]
