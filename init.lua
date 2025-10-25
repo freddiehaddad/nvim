@@ -1,5 +1,5 @@
 -- Load custom colorscheme
-vim.cmd.colorscheme("rust_inspired")
+vim.cmd.colorscheme("nightingale")
 
 -- Options
 vim.g.mapleader = " "
