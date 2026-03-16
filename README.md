@@ -1,117 +1,197 @@
 # Neovim Configuration
 
-<https://github.com/user-attachments/assets/51d861a0-b026-4d94-a013-6a277ba6e52f>
+Minimal [Neovim] setup powered by [vim.pack], the [ferric.nvim] colorscheme,
+and a single plugin file: [`plugins.lua`]. The goal is a fast, cohesive editing
+experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 
-Opinionated [Neovim] setup powered by [lazy.nvim], a bespoke `rust_inspired` colorscheme, and a single plugin specification file: [`core.lua`]. The goal is a fast, cohesive editing experience with great defaults for Rust, C-family, web formats, and Markdown out of the box.
+<details>
+  <summary>📸 Click to View Screenshots</summary>
+  <img width="3585" height="2140" alt="startscreen" src="https://github.com/user-attachments/assets/46ec1195-e0ca-4e1b-afb0-e558e5f05bc2" />
+  <img width="3585" height="2140" alt="rust+md" src="https://github.com/user-attachments/assets/806b5b4b-7e4e-4172-8428-90dcb41115a3" />
+  <img width="3585" height="2140" alt="lua" src="https://github.com/user-attachments/assets/4ff3eb5c-b811-4f4b-a8e9-96b2ab26b47d" />
+  <img width="3585" height="2140" alt="rust+md+cmp" src="https://github.com/user-attachments/assets/3af8c38d-ccfa-4813-ae39-ce4cd1d9539f" />
+  <img width="3585" height="2140" alt="rust+md+lsp" src="https://github.com/user-attachments/assets/b18a29c4-9fcc-4b4b-9b9d-06caf9f98c8d" />
+  <img width="3585" height="2140" alt="md+lua+telescope" src="https://github.com/user-attachments/assets/21b34f03-3012-4eca-919f-547d2a2d26d4" />
+</details>
 
 ## Requirements
 
-- Neovim 0.10 or newer (uses `vim.uv` and the new notification APIs)
-- Git (for bootstrapping lazy-loaded plugins)
-- `rg` (ripgrep) and `fd` for the Telescope pickers
-- PowerShell (`pwsh`) is configured as the default external shell on Windows
+- Neovim 0.12 or newer
+- Git
+- [ripgrep] (`rg`) for Telescope live grep and `:grep`
+- A [Nerd Font] for statusline and diagnostic icons
+- PowerShell (`pwsh`) is configured as the default shell on Windows
 
-Optional but recommended tools:
+### Language servers
 
-- `stylua` for Lua formatting (`:Mason` can install it)
-- A Nerd Font (statusline, dashboard, and diagnostic icons)
+Install these separately:
+
+| Server          | Language | Install Method                                                                             |
+| --------------- | -------- | ------------------------------------------------------------------------------------------ |
+| `clangd`        | C/C++    | gh release download --repo rust-lang/rust-analyzer --pattern "*x86_64-pc-windows-msvc.zip" |
+| `jsonls`        | JSON     | npm install -g vscode-langservers-extracted                                                |
+| `lua_ls`        | Lua      | winget install --id LuaLS.lua-language-server                                              |
+| `marksman`      | Markdown | winget install --id Artempyanykh.Marksman                                                  |
+| `rust_analyzer` | Rust     | winget install --id LLVM.clangd                                                            |
+| `taplo-cli`     | TOML     | cargo install --features lsp --locked taplo-cli                                            |
+| `yamlls`        | YAML     | npm install -g yaml-language-server                                                        |
 
 ## Quick start
 
-```bash
+Clone into your Neovim config directory and launch:
+
+```console
+# Linux / macOS
 git clone https://github.com/freddiehaddad/nvim.git ~/.config/nvim
+
+# Windows (PowerShell)
+git clone https://github.com/freddiehaddad/nvim.git $env:LOCALAPPDATA\nvim
+```
+
+```console
 nvim
 ```
 
-The first launch will bootstrap [lazy.nvim], sync plugins, and install language servers and formatters via Mason. Use `:Mason` to verify managed tooling or `<leader>ua` / related Snacks toggles to explore the UI. When running on a new machine you may also want to install `rg`/`fd` manually.
+The first launch bootstraps [vim.pack] and installs all plugins automatically.
+Use `<leader>pu` to update plugins.
 
-## Highlights
+## Plugins
 
-### UI & workflow
+| Plugin            | Purpose                                                     |
+| ----------------- | ----------------------------------------------------------- |
+| [ferric.nvim]     | Colorscheme                                                 |
+| [nvim-treesitter] | Syntax highlighting, folds, and indentation                 |
+| [nvim-lspconfig]  | LSP server configuration                                    |
+| [blink.cmp]       | Completion with ghost text and signature help               |
+| [mini.nvim]       | Icons, pairs, surround, move, statusline, sessions, starter |
+| [telescope.nvim]  | Fuzzy finder with fzf-native and live grep                  |
+| [gitsigns.nvim]   | Git signs, hunk navigation, staging, and blame              |
 
-- Custom [rust_inspired] theme with matching highlights for statusline, Telescope, Trouble, Snacks notifications, and the dashboard.
-- Snacks dashboard with quick actions, animate/scroll toggles, statuscolumn, and a consistent floating window aesthetic.
-- `lualine.nvim` configured for global statusline, macro recorder, LSP health, Git branch/diff, and selection/search counters.
-- `mini.icons` provides Nerd Font icons everywhere without pulling in `nvim-web-devicons`.
-- `oil.nvim` offers a file explorer in place of netrw, with floating windows and single-border popups.
+## Key mappings
 
-### Editing experience
+Leader is `<Space>`.
 
-- [`blink.cmp`] for completion with ghost text, signature help, and friendly snippets.
-- [`conform.nvim`] handles formatting with async fallback to LSP when external formatters aren’t available.
-- `mini.pairs`, `which-key.nvim`, and a curated set of keymaps in `init.lua`.
-- `persistence.nvim` for session restore, gated behind convenient leader mappings.
+### General
 
-### Code intelligence & tooling
+| Key             | Action                      |
+| --------------- | --------------------------- |
+| `<C-h/j/k/l>`   | Move between windows        |
+| `<C-Arrow>`     | Resize windows              |
+| `[b` / `]b`     | Previous / next buffer      |
+| `<leader>bd`    | Delete buffer               |
+| `<leader>pu`    | Update plugins              |
+| `<Esc>`         | Clear search highlights     |
+| `<C-]>`         | Go to definition (centered) |
+| `<C-o>`         | Jump back (centered)        |
+| `gs`            | Jump to any visible location |
 
-- [`mason.nvim`] automatically installs core language servers, formatters, and debuggers (see the table below).
-- `nvim-lspconfig` with shared on-attach logic, inlay hints, folding, virtual diagnostics toggles, and Telescope-powered navigation.
-- `snacks.nvim` augments diagnostics, rename flows, inlay hints, notifications, and file renames.
-- `trouble.nvim` integrates with Telescope for diagnostics, quickfix, and symbol views.
-- `gitsigns.nvim` adds hunk navigation, inline previews, and staging/reset flows.
+### Diagnostics
 
-### Testing & debugging
+| Key            | Action                        |
+| -------------- | ----------------------------- |
+| `]d` / `[d`    | Next / previous diagnostic    |
+| `]e` / `[e`    | Next / previous error         |
+| `]w` / `[w`    | Next / previous warning       |
 
-- `nvim-dap` with `nvim-dap-ui` and `mason-nvim-dap` for zero-config debugging.
-- `nvim-dap-virtual-text` overlays inline variable state.
-- `neotest` (with the Rust adapter) provides test running, summary views, and output panes.
+### LSP (buffer-local, active on attach)
 
-### Rust-first workflow
+| Key             | Action                      |
+| --------------- | --------------------------- |
+| `gl`            | Line diagnostics            |
+| `<leader>ss`    | Document symbols            |
+| `<leader>sS`    | Workspace symbols           |
+| `<leader>sr`    | References                  |
+| `<leader>th`    | Toggle inlay hints          |
+| `<leader>df`    | Format document / selection |
 
-- [`rustaceanvim`] for Rust tooling, hover actions, code lens refresh, and dedicated keymaps.
-- [`crates.nvim`] enhances `Cargo.toml` with completion, upgrades, and semantic hover information.
+### Telescope
 
-## Language support
+| Key             | Action                     |
+| --------------- | -------------------------- |
+| `<leader>ff`    | Find files                 |
+| `<leader>fF`    | Find files (hidden)        |
+| `<leader>fg`    | Git files                  |
+| `<leader>fb`    | Buffers                    |
+| `<leader>fc`    | Config files               |
+| `<leader>fr`    | Recent files               |
+| `<leader>sg`    | Live grep                  |
+| `<leader>sG`    | Live grep with glob filter |
+| `<leader>sd`    | Document diagnostics       |
+| `<leader>sD`    | Workspace diagnostics      |
+| `<leader>sh`    | Help pages                 |
+| `<leader>sk`    | Keymaps                    |
+| `<leader>sR`    | Resume last picker         |
+| `<leader>sw`    | Grep word under cursor     |
 
-| Language / Format | Treesitter | LSP / Tooling              | Formatter | Extras                 |
-| ----------------- | ---------- | -------------------------- | --------- | ---------------------- |
-| C / C++           | ✅          | `clangd`                   | `clang-format` | DAP via `codelldb` |
-| CMake             | ✅          | `neocmake`                 | built-in   |                        |
-| JSON              | ✅          | `jsonls` + SchemaStore     | `jq`       |                        |
-| Lua               | ✅          | `lua_ls` + `lazydev`       | `stylua`   | Neovim API annotations |
-| Markdown          | ✅          | `marksman`                 | `mdformat` | `markview.nvim`        |
-| Rust              | ✅          | `rust-analyzer` (rustaceanvim) | `rustfmt` | `crates.nvim`, DAP  |
-| TOML              | ✅          | `taplo`                    | `taplo`    |                        |
-| YAML              | ✅          | `yamlls` + SchemaStore     | `yamlfmt`  |                        |
+### Git (gitsigns, buffer-local)
 
-Additional tree-sitter grammars are pre-installed for Git files, regex, HTML, and more to keep highlighting consistent across ancillary formats.
+| Key             | Action                   |
+| --------------- | ------------------------ |
+| `]h` / `[h`     | Next / previous hunk     |
+| `]H` / `[H`     | Last / first hunk        |
+| `ghs`           | Stage hunk               |
+| `ghr`           | Reset hunk               |
+| `ghS`           | Stage buffer             |
+| `ghu`           | Undo stage hunk          |
+| `ghR`           | Reset buffer             |
+| `ghp`           | Preview hunk inline      |
+| `ghb`           | Blame line               |
+| `ghB`           | Blame buffer             |
+| `ghd`           | Diff unstaged            |
+| `ghD`           | Diff against last commit |
+| `<leader>tb`    | Toggle blame line        |
+| `<leader>tD`    | Toggle show deleted      |
 
-## Key mappings at a glance
+### Completion (blink.cmp, insert mode)
 
-- Leader is `<Space>`; local leader is also `<Space>`
-- `<leader>o` / `<leader>O` open Oil rooted at the buffer or project
-- `<leader>ua`, `<leader>ul`, `<leader>uh`, etc. toggle UI affordances via Snacks
-- `<leader>cf` triggers formatting through Conform
-- `<leader>tt`, `<leader>tr`, `<leader>td` drive Neotest
-- `<leader>d…` namespace is reserved for DAP actions (continue, step, breakpoints)
-- `<leader>pl` opens the lazy.nvim manager UI
-- Rich LSP navigation (`gd`, `gy`, `gI`, `gr`, etc.) is wired through Telescope
+| Key          | Action                       |
+| ------------ | ---------------------------- |
+| `<C-k>`      | Show / toggle documentation  |
+| `<C-s>`      | Show / toggle signature help |
+| `<C-e>`      | Toggle completion menu       |
 
-See [`init.lua`] for the full list of defaults and window management helpers.
+## Autocmds
+
+- **Highlight on yank** — briefly highlights yanked text
+- **Close with `q`** — help, man, and quickfix buffers close with `q`
+- **Restore cursor** — reopens files at the last edited position (excludes
+  gitcommit, gitrebase, help)
+
+## Treesitter parsers
+
+Pre-installed grammars: C, C++, CMake, Git config, Git rebase, Gitattributes,
+Gitcommit, Gitignore, HTML, JSON, Lua, Markdown, Regex, RON, Rust, TOML, Vim,
+Vimdoc, YAML.
 
 ## Project layout
 
-- `init.lua` – editor options, keymaps, autocmds, and lazy.nvim bootstrapping.
-- `lua/plugins/core.lua` – single source of truth for plugins, their options, and shared LSP helpers.
-- `colors/rust_inspired.lua` & `lua/rust_inspired` – the custom color palette that unifies UI components.
-- `lua/plugins/` – additional plugin modules (automatically imported by lazy).
-- `reset.ps1` – helper script for pruning caches on Windows.
+```
+init.lua              Editor options, keymaps, autocmds, plugin bootstrap
+lua/helpers.lua       Shared keymap helper functions
+lua/plugins.lua       Plugin registration, build hooks, and configuration
+reset.ps1             Helper to wipe plugin data and lock file (Windows)
+```
 
-## Acknowledgements
+## Reset
 
-Thanks to the authors of the plugins above and to the broader Neovim community for tooling, documentation, and inspiration.
+To start fresh, run the reset script and relaunch Neovim:
 
----
+```powershell
+.\reset.ps1
+nvim
+```
 
-Happy hacking! If you spot an issue or have an idea for improvement, feel free to open an issue or PR.
+This removes the vim.pack plugin directory and `nvim-pack-lock.json`.
 
-[`core.lua`]: ./lua/plugins/core.lua
-[`init.lua`]: ./init.lua
-[`blink.cmp`]: https://github.com/saghen/blink.cmp
-[`conform.nvim`]: https://github.com/stevearc/conform.nvim
-[`mason.nvim`]: https://github.com/williamboman/mason.nvim
-[`rustaceanvim`]: https://github.com/mrcjkb/rustaceanvim
-[`crates.nvim`]: https://github.com/Saecki/crates.nvim
-[lazy.nvim]: https://github.com/folke/lazy.nvim
-[neovim]: https://github.com/neovim/neovim
-[rust_inspired]: ./colors/rust_inspired.lua
+[Neovim]: https://github.com/neovim/neovim
+[vim.pack]: https://neovim.io/doc/user/helptag.html?tag=vim.pack
+[ferric.nvim]: https://github.com/freddiehaddad/ferric.nvim
+[nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
+[nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
+[blink.cmp]: https://github.com/saghen/blink.cmp
+[mini.nvim]: https://github.com/nvim-mini/mini.nvim
+[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
+[gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
+[ripgrep]: https://github.com/BurntSushi/ripgrep
+[Nerd Font]: https://www.nerdfonts.com/
+[`plugins.lua`]: ./lua/plugins.lua

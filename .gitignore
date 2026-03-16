@@ -1,6 +1,1 @@
-# lazy nvim plugin
-lazy-lock.json
-
-# neodev plugin
-.luarc.json
-.vscode/
+nvim-pack-lock.json
