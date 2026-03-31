@@ -124,7 +124,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Close help, man, and quickfix buffers with q
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "help", "man", "qf", "nvim-pack" },
+    pattern = { "help", "man", "qf", "nvim-pack", "nvim-undotree" },
     callback = function(e)
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = e.buf })
     end,
