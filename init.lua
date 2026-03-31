@@ -111,6 +111,10 @@ map("<C-o>", "<C-o>zz", "Go to previous position in jump list")
 
 map("<Esc>", "<cmd>nohlsearch<cr>", "Clear highlights")
 
+-- Undo tree (built-in, Neovim 0.12+)
+vim.cmd.packadd("nvim.undotree")
+map("<leader>u", require("undotree").open, "Undo tree")
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()

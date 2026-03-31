@@ -84,6 +84,7 @@ Leader is `<Space>`.
 | `<C-]>`         | Go to definition (centered) |
 | `<C-o>`         | Jump back (centered)        |
 | `gs`            | Jump to any visible location |
+| `<leader>u`     | Undo tree                    |
 
 ### Diagnostics
 
