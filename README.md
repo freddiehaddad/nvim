@@ -73,26 +73,26 @@ Leader is `<Space>`.
 
 ### General
 
-| Key             | Action                      |
-| --------------- | --------------------------- |
-| `<C-h/j/k/l>`   | Move between windows        |
-| `<C-Arrow>`     | Resize windows              |
-| `[b` / `]b`     | Previous / next buffer      |
-| `<leader>bd`    | Delete buffer               |
-| `<leader>pu`    | Update plugins              |
-| `<Esc>`         | Clear search highlights     |
-| `<C-]>`         | Go to definition (centered) |
-| `<C-o>`         | Jump back (centered)        |
+| Key             | Action                       |
+| --------------- | ---------------------------- |
+| `<C-h/j/k/l>`   | Move between windows         |
+| `<C-Arrow>`     | Resize windows               |
+| `[b` / `]b`     | Previous / next buffer       |
+| `<leader>bd`    | Delete buffer                |
+| `<leader>pu`    | Update plugins               |
+| `<Esc>`         | Clear search highlights      |
+| `<C-]>`         | Go to definition (centered)  |
+| `<C-o>`         | Jump back (centered)         |
 | `gs`            | Jump to any visible location |
 | `<leader>u`     | Undo tree                    |
 
 ### Diagnostics
 
-| Key            | Action                        |
-| -------------- | ----------------------------- |
-| `]d` / `[d`    | Next / previous diagnostic    |
-| `]e` / `[e`    | Next / previous error         |
-| `]w` / `[w`    | Next / previous warning       |
+| Key            | Action                     |
+| -------------- | -------------------------- |
+| `]d` / `[d`    | Next / previous diagnostic |
+| `]e` / `[e`    | Next / previous error      |
+| `]w` / `[w`    | Next / previous warning    |
 
 ### LSP (buffer-local, active on attach)
 
