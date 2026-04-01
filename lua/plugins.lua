@@ -408,7 +408,7 @@ require("telescope").setup({
     },
     extensions = { fzf = {} },
 })
-local ok, err = pcall(require("telescope").load_extension, "fzf")
+local ok, _ = pcall(require("telescope").load_extension, "fzf")
 if not ok then
     vim.notify("fzf extension not loaded: run <leader>pu and restart", vim.log.levels.WARN)
 end
