@@ -237,8 +237,9 @@ require("mini.pairs").setup({
 })
 require("mini.surround").setup()
 require("mini.move").setup()
-require("mini.jump2d").setup()
-map("gs", MiniJump2d.start, "Mini jump", { "n", "v", "o" })
+require("mini.jump2d").setup({
+    mappings = { start_jumping = 'gs' }
+})
 
 require("mini.bufremove").setup()
 map("<leader>bd", MiniBufremove.delete, "Delete buffer")
