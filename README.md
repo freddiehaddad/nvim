@@ -22,25 +22,32 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 - A [Nerd Font] for statusline and diagnostic icons
 - PowerShell (`pwsh`) is configured as the default shell on Windows
 
-### Language servers
+### External tools
 
 Install these separately:
 
-| Server          | Language | Install Method                                                                             |
-| --------------- | -------- | ------------------------------------------------------------------------------------------ |
-| `clangd`        | C/C++    | gh release download --repo rust-lang/rust-analyzer --pattern "*x86_64-pc-windows-msvc.zip" |
-| `jsonls`        | JSON     | npm install -g vscode-langservers-extracted                                                |
-| `lua_ls`        | Lua      | winget install --id LuaLS.lua-language-server                                              |
-| `marksman`      | Markdown | winget install --id Artempyanykh.Marksman                                                  |
-| `rust_analyzer` | Rust     | winget install --id LLVM.clangd                                                            |
-| `taplo-cli`     | TOML     | cargo install --features lsp --locked taplo-cli                                            |
-| `yamlls`        | YAML     | npm install -g yaml-language-server                                                        |
+| Tool            | Language | Type     | Install Method                                                                             |
+| --------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+| `clangd`        | C/C++    | Server   | gh release download --repo rust-lang/rust-analyzer --pattern "*x86_64-pc-windows-msvc.zip" |
+| `jsonls`        | JSON     | Server   | npm install -g vscode-langservers-extracted                                                |
+| `lua_ls`        | Lua      | Server   | winget install --id LuaLS.lua-language-server                                              |
+| `marksman`      | Markdown | Server   | winget install --id Artempyanykh.Marksman                                                  |
+| `rust_analyzer` | Rust     | Server   | winget install --id LLVM.clangd                                                            |
+| `taplo-cli`     | TOML     | Server   | cargo install --features lsp --locked taplo-cli                                            |
+| `yamlls`        | YAML     | Server   | npm install -g yaml-language-server                                                        |
+| `codelldb`      | Rust     | Debugger | gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"                    |
+
+After downloading `codelldb`, extract it:
+
+```powershell
+Expand-Archive -Path .\codelldb-win32-x64.vsix -DestinationPath ~/.local/bin/codelldb
+```
 
 ## Quick start
 
 Clone into your Neovim config directory and launch:
 
-```console
+```powershell
 # Linux / macOS
 git clone https://github.com/freddiehaddad/nvim.git ~/.config/nvim
 
@@ -48,7 +55,7 @@ git clone https://github.com/freddiehaddad/nvim.git ~/.config/nvim
 git clone https://github.com/freddiehaddad/nvim.git $env:LOCALAPPDATA\nvim
 ```
 
-```console
+```powershell
 nvim
 ```
 
@@ -66,6 +73,8 @@ Use `<leader>pu` to update plugins.
 | [mini.nvim]       | Icons, pairs, surround, move, statusline, sessions, starter |
 | [telescope.nvim]  | Fuzzy finder with fzf-native and live grep                  |
 | [gitsigns.nvim]   | Git signs, hunk navigation, staging, and blame              |
+| [nvim-dap]        | Debug adapter protocol client                               |
+| [nvim-dap-view]   | Modern debugging UI                                         |
 
 ## Key mappings
 
@@ -151,6 +160,28 @@ Leader is `<Space>`.
 | `<C-s>`      | Show / toggle signature help |
 | `<C-e>`      | Toggle completion menu       |
 
+### Debugging (Rust buffers only)
+
+| Key             | Action                   |
+| --------------- | ------------------------ |
+| `<leader>dc`    | Continue / start         |
+| `<leader>dC`    | Run to cursor            |
+| `<leader>dn`    | Step over                |
+| `<leader>ds`    | Step into                |
+| `<leader>do`    | Step out                 |
+| `<leader>db`    | Toggle breakpoint        |
+| `<leader>dB`    | Conditional breakpoint   |
+| `<leader>dt`    | Debug test under cursor  |
+| `<leader>dr`    | Toggle REPL              |
+| `<leader>dq`    | Terminate session        |
+| `<leader>dv`    | Toggle debug view        |
+| `<leader>dX`    | Clear breakpoints        |
+
+> Pressing `<leader>dc` auto-builds the project and presents launch
+> configurations. `.vscode/launch.json` files are loaded automatically if
+> present. `<leader>dt` detects the test function under the cursor via
+> treesitter.
+
 ## Autocmds
 
 - **Highlight on yank** — briefly highlights yanked text
@@ -193,6 +224,8 @@ This removes the vim.pack plugin directory and `nvim-pack-lock.json`.
 [mini.nvim]: https://github.com/nvim-mini/mini.nvim
 [telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
 [gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
+[nvim-dap]: https://github.com/mfussenegger/nvim-dap
+[nvim-dap-view]: https://github.com/igorlfs/nvim-dap-view
 [ripgrep]: https://github.com/BurntSushi/ripgrep
 [Nerd Font]: https://www.nerdfonts.com/
 [`plugins.lua`]: ./lua/plugins.lua

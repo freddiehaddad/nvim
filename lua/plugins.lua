@@ -72,6 +72,8 @@ vim.pack.add({
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- native fzf sorter for telescope
     "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/mfussenegger/nvim-dap",
+    { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
 })
 
 -- Update keymap
@@ -409,10 +411,7 @@ require("telescope").setup({
     },
     extensions = { fzf = {} },
 })
-local ok, _ = pcall(require("telescope").load_extension, "fzf")
-if not ok then
-    vim.notify("fzf extension not loaded: run <leader>pu and restart", vim.log.levels.WARN)
-end
+require("telescope").load_extension("fzf")
 
 -- Keymaps
 map("<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true <cr>", "Buffers")
@@ -514,5 +513,251 @@ require("gitsigns").setup({
         -- Toggles
         bmap("<leader>tb", gs.toggle_current_line_blame, "Toggle blame line", bufnr)
         bmap("<leader>tD", gs.toggle_deleted, "Toggle show deleted", bufnr)
+    end,
+})
+
+-----------------------------------------------------------------------------
+-- Debugging (nvim-dap + nvim-dap-view)
+-----------------------------------------------------------------------------
+local dap = require("dap")
+
+vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticWarn" })
+vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticHint" })
+vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
+vim.fn.sign_define("DapStopped",
+    { text = "", texthl = "DapStoppedSign", linehl = "CursorLine", numhl = "CursorLine" })
+
+dap.adapters.codelldb = {
+    type = "server",
+    port = "${port}",
+    executable = {
+        command = vim.fn.expand("~/.local/bin/codelldb/extension/adapter/codelldb")
+            .. (vim.fn.has("win32") == 1 and ".exe" or ""),
+        args = { "--port", "${port}" },
+    },
+}
+
+-- Build a Rust project and return a list of binary artifacts
+local function cargo_build_binaries(args)
+    vim.notify("Building...")
+    local cmd = vim.list_extend({ "cargo", "build", "--message-format=json" }, args or {})
+    local build = vim.system(cmd, { cwd = vim.fn.getcwd() }):wait()
+    if build.code ~= 0 then
+        vim.notify("Build failed:\n" .. (build.stderr or ""), vim.log.levels.ERROR)
+        return nil
+    end
+
+    local binaries = {}
+    for line in build.stdout:gmatch("[^\n]+") do
+        local ok, msg = pcall(vim.json.decode, line)
+        if ok and msg.reason == "compiler-artifact" and msg.executable then
+            if msg.target and msg.target.kind and msg.profile then
+                table.insert(binaries, {
+                    path = msg.executable,
+                    name = msg.target.name,
+                    src_path = msg.target.src_path,
+                    kinds = msg.target.kind,
+                    is_test = msg.profile.test,
+                })
+            end
+        end
+    end
+    return binaries
+end
+
+-- Select the best binary matching the current file
+local function select_binary(binaries, filter_fn)
+    local filtered = vim.tbl_filter(filter_fn, binaries)
+    if #filtered == 0 then
+        vim.notify("No matching binary found", vim.log.levels.ERROR)
+        return nil
+    end
+    if #filtered == 1 then
+        return filtered[1].path
+    end
+
+    -- Match by source file
+    local current_file = vim.fn.expand("%:p"):gsub("\\", "/")
+    for _, bin in ipairs(filtered) do
+        if bin.src_path and bin.src_path:gsub("\\", "/") == current_file then
+            return bin.path
+        end
+    end
+
+    -- Multiple matches, no source match — prompt user
+    local result = nil
+    vim.ui.select(filtered, {
+        prompt = "Select binary:",
+        format_item = function(bin) return bin.name .. " (" .. bin.path .. ")" end,
+    }, function(choice)
+        if choice then result = choice.path end
+    end)
+    return result
+end
+
+local function find_rust_binary()
+    local binaries = cargo_build_binaries()
+    if not binaries then return dap.ABORT end
+    local binary = select_binary(binaries, function(bin)
+        return not bin.is_test and vim.tbl_contains(bin.kinds, "bin")
+    end)
+    return binary or dap.ABORT
+end
+
+dap.configurations.rust = {
+    {
+        name = "Launch (auto)",
+        type = "codelldb",
+        request = "launch",
+        program = find_rust_binary,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    },
+    {
+        name = "Launch (with args)",
+        type = "codelldb",
+        request = "launch",
+        program = find_rust_binary,
+        args = function()
+            local input = vim.fn.input("Arguments: ")
+            if input == "" then return {} end
+            return vim.split(input, " ")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    },
+}
+
+require("dap-view").setup({
+    auto_toggle = true,
+    winbar = {
+        sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", "console" },
+    },
+    windows = {
+        terminal = {
+            hide = { "codelldb" },
+        },
+    },
+})
+
+-- Find the Rust test function name at the cursor using treesitter
+local function get_test_name_at_cursor()
+    -- Get the node at cursor, falling back to the first node on the current line
+    local node = vim.treesitter.get_node()
+
+    -- If cursor is on whitespace, try to get the node at the first non-blank column
+    if node and (node:type() == "declaration_list" or node:type() == "source_file") then
+        local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+        local line = vim.api.nvim_get_current_line()
+        local col = line:find("%S")
+        if col then
+            node = vim.treesitter.get_node({ pos = { row, col - 1 } })
+        end
+    end
+
+    while node do
+        if node:type() == "function_item" then
+            local fn_node = node
+            local fn_name = nil
+            for child in fn_node:iter_children() do
+                if child:type() == "identifier" then
+                    fn_name = vim.treesitter.get_node_text(child, 0)
+                    break
+                end
+            end
+            if not fn_name then
+                node = node:parent()
+                goto continue
+            end
+
+            local prev = fn_node:prev_sibling()
+            while prev do
+                if prev:type() == "attribute_item" then
+                    local attr_text = vim.treesitter.get_node_text(prev, 0)
+                    if attr_text:match("%#%[test%]") or attr_text:match("%#%[tokio::test%]") then
+                        return fn_name
+                    end
+                end
+                prev = prev:prev_sibling()
+            end
+        end
+        node = node:parent()
+        ::continue::
+    end
+    return nil
+end
+
+-- Build and debug the test under cursor
+local function debug_rust_test()
+    local test_name = get_test_name_at_cursor()
+    if not test_name then
+        vim.notify("No #[test] function found at cursor", vim.log.levels.WARN)
+        return
+    end
+
+    local binaries = cargo_build_binaries({ "--tests" })
+    if not binaries then return end
+
+    local test_binary = select_binary(binaries, function(bin)
+        return bin.is_test
+    end)
+    if not test_binary then return end
+
+    -- Get the module path for the test
+    local module_path = ""
+    local bufname = vim.fn.expand("%:t:r")
+    if bufname ~= "lib" and bufname ~= "main" then
+        module_path = bufname .. "::"
+    end
+
+    -- Check if cursor is inside a `mod tests` block
+    local node = vim.treesitter.get_node()
+    while node do
+        if node:type() == "mod_item" then
+            for child in node:iter_children() do
+                if child:type() == "identifier" then
+                    local mod_name = vim.treesitter.get_node_text(child, 0)
+                    module_path = module_path .. mod_name .. "::"
+                    break
+                end
+            end
+        end
+        node = node:parent()
+    end
+
+    local full_test_name = module_path .. test_name
+
+    vim.notify("Debugging test: " .. full_test_name)
+    dap.run({
+        name = "Debug test: " .. test_name,
+        type = "codelldb",
+        request = "launch",
+        program = test_binary,
+        args = { "--exact", full_test_name },
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    })
+end
+
+-- Debug keymaps (Rust buffers only)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "rust",
+    callback = function(e)
+        local bufnr = e.buf
+        bmap("<leader>dc", dap.continue, "Debug: continue", bufnr)
+        bmap("<leader>dC", dap.run_to_cursor, "Debug: run to cursor", bufnr)
+        bmap("<leader>dn", dap.step_over, "Debug: step over", bufnr)
+        bmap("<leader>ds", dap.step_into, "Debug: step into", bufnr)
+        bmap("<leader>do", dap.step_out, "Debug: step out", bufnr)
+        bmap("<leader>db", dap.toggle_breakpoint, "Debug: toggle breakpoint", bufnr)
+        bmap("<leader>dB", function()
+            dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+        end, "Debug: conditional breakpoint", bufnr)
+        bmap("<leader>dt", debug_rust_test, "Debug: test under cursor", bufnr)
+        bmap("<leader>dr", dap.repl.toggle, "Debug: toggle REPL", bufnr)
+        bmap("<leader>dq", dap.terminate, "Debug: terminate", bufnr)
+        bmap("<leader>dv", "<cmd>DapViewToggle!<cr>", "Debug: toggle view", bufnr)
+        bmap("<leader>dX", dap.clear_breakpoints, "Debug: clear breakpoints", bufnr)
     end,
 })
