@@ -527,12 +527,12 @@ require("gitsigns").setup({
 -----------------------------------------------------------------------------
 local dap = require("dap")
 
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
+vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError" })
 vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticWarn" })
 vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticHint" })
 vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
 vim.fn.sign_define("DapStopped",
-    { text = "", texthl = "DapStoppedSign", linehl = "CursorLine", numhl = "CursorLine" })
+    { text = "→", texthl = "DapStoppedSign", linehl = "CursorLine", numhl = "CursorLine" })
 
 dap.adapters.codelldb = {
     type = "server",
