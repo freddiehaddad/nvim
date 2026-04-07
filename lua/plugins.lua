@@ -239,9 +239,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -----------------------------------------------------------------------------
 require("mini.icons").setup()
 require("mini.pairs").setup({
-    ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]." },
-    [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
-    ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^<&]." },
+    mappings = {
+        ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]." },
+        [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
+        ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^<&]." },
+    }
 })
 require("mini.surround").setup()
 require("mini.move").setup()
