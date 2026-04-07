@@ -242,8 +242,17 @@ require("mini.pairs").setup({
     mappings = {
         ["<"] = { action = "open", pair = "<>", neigh_pattern = "[%a:]." },
         [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
-        ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^<&]." },
-    }
+    },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "rust",
+    callback = function(e)
+        -- In Rust files, the single quote (') is rarely used for literal
+        -- characters and is more commonly used for lifetime specifiers.
+        -- So we disable it for Rust source files.
+        vim.keymap.set("i", "'", "'", { buffer = e.buf })
+    end,
 })
 require("mini.surround").setup()
 require("mini.move").setup()
