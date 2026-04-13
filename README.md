@@ -29,6 +29,7 @@ Install these separately:
 | Tool            | Language   | Type     | Install Method                                                                                        |
 | --------------- | -----------| -------- | ----------------------------------------------------------------------------------------------------- |
 | `clangd`        | C/C++      | Server   | winget install --id LLVM.clangd                                                                       |
+| `codelldb`      | Rust       | Debugger | gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"                               |
 | `jsonls`        | JSON       | Server   | npm install -g vscode-langservers-extracted                                                           |
 | `lua_ls`        | Lua        | Server   | winget install --id LuaLS.lua-language-server                                                         |
 | `marksman`      | Markdown   | Server   | winget install --id Artempyanykh.Marksman                                                             |
@@ -36,18 +37,24 @@ Install these separately:
 | `rust_analyzer` | Rust       | Server   | gh release download --repo rust-lang/rust-analyzer --pattern "*x86_64-pc-windows-msvc.zip"            |
 | `taplo-cli`     | TOML       | Server   | cargo install --features lsp --locked taplo-cli                                                       |
 | `yamlls`        | YAML       | Server   | npm install -g yaml-language-server                                                                   |
-| `codelldb`      | Rust       | Debugger | gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"                               |
 
-After downloading `codelldb`, extract it:
+After downloading `codelldb`, install with:
 
 ```powershell
-Expand-Archive -Path .\codelldb-win32-x64.vsix -DestinationPath ~/.local/bin/codelldb
+Expand-Archive .\codelldb-win32-x64.vsix ~/.local/bin/codelldb -Force
 ```
 
-After downloading `powershell_es`, extract it:
+After downloading `powershell_es`, install with:
 
 ```powershell
-expand-Archive -Path .\PowerShellEditorServices.zip -DestinationPath ~/.local/bin/PowershellEditorServices
+Expand-Archive .\PowerShellEditorServices.zip ~/.local/bin/PowershellEditorServices -Force
+```
+
+After downloading `rust_analyzer`, install with:
+
+```powershell
+Expand-Archive .\rust-analyzer-x86_64-pc-windows-msvc.zip ~/.local/bin/ -Force
+rustup component add rust-analyzer
 ```
 
 ## Quick start
@@ -208,8 +215,21 @@ Vimdoc, YAML.
 init.lua              Editor options, keymaps, autocmds, plugin bootstrap
 lua/helpers.lua       Shared keymap helper functions
 lua/plugins.lua       Plugin registration, build hooks, and configuration
+lua/config/health.lua Healthcheck module (:checkhealth config)
 reset.ps1             Helper to wipe plugin data and lock file (Windows)
 ```
+
+## Healthcheck
+
+Verify that all dependencies are installed:
+
+```vim
+:checkhealth config
+```
+
+This checks core requirements (Neovim version, git, ripgrep, pwsh, cmake,
+tree-sitter), package managers (cargo, npm, winget, gh), LSP servers, the debug
+adapter, and plugin status.
 
 ## Reset
 
