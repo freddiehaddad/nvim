@@ -101,6 +101,7 @@ local parsers = {
     "lua",
     "markdown",
     "markdown_inline",
+    "powershell",
     "regex",
     "ron",
     "rust",
