@@ -186,10 +186,15 @@ vim.lsp.config("yamlls", {
     },
 })
 
+vim.lsp.config("powershell_es", {
+    bundle_path = "c:/users/fhaddad/.local/bin/PowerShellEditorServices",
+})
+
 vim.lsp.enable("clangd")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("marksman")
+vim.lsp.enable("powershell_es")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("taplo")
 vim.lsp.enable("yamlls")
