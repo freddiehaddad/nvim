@@ -115,7 +115,7 @@ local deps = {
             kind = "executable",
             required = false,
             version = { "gh", "--version" },
-            used_by = "codelldb, powershell_es, rust_analyzer download",
+            used_by = "codelldb, powershell_es download",
             advice = "Install: winget install GitHub.cli",
             latest = { source = "github", repo = "cli/cli" },
         },
@@ -198,15 +198,28 @@ local deps = {
         },
         {
             name = "rust_analyzer",
-            check = "rust-analyzer",
-            kind = "executable",
+            kind = "special",
             required = true,
-            version = { "rust-analyzer", "--version" },
-            advice = table.concat({
-                "Install: gh release download --repo rust-lang/rust-analyzer",
-                '         --pattern "*x86_64-pc-windows-msvc.zip"',
-            }, "\n"),
-            latest = { source = "github", repo = "rust-lang/rust-analyzer", date_based = true },
+            version_fn = function()
+                local result = vim.system(
+                    { "rustup", "which", "rust-analyzer" }, { timeout = 5000 }
+                ):wait()
+                if result.code ~= 0 or not result.stdout then
+                    return nil
+                end
+                local path = vim.trim(result.stdout)
+                if vim.uv.fs_stat(path) then
+                    local ver = vim.system(
+                        { path, "--version" }, { timeout = 5000 }
+                    ):wait()
+                    if ver.code == 0 and ver.stdout then
+                        return vim.trim(ver.stdout:match("([^\r\n]+)") or "")
+                    end
+                end
+                return nil
+            end,
+            advice = "Update: rustup update stable",
+            latest = { source = "rustup" },
         },
         {
             name = "taplo",
@@ -385,10 +398,37 @@ local function fetch_latest(dep)
         return extract_version(ver_field)
     end
 
+    if src.source == "rustup" then
+        local ok, result = pcall(vim.system,
+            { "rustup", "check" }, { timeout = 15000 }
+        )
+        if not ok then
+            return nil
+        end
+        local out = result:wait()
+        if out.code ~= 0 or not out.stdout then
+            return nil
+        end
+        -- Look for the stable toolchain line:
+        -- "stable-... - Update available: 1.94.1 -> 1.95.0"
+        -- "stable-... - up to date: 1.94.1 (...)"
+        for line in out.stdout:gmatch("[^\r\n]+") do
+            if line:match("^stable") then
+                local new_ver = line:match("Update available.*->%s*(%d+%.%d+%.%d+)")
+                if new_ver then
+                    return new_ver
+                end
+                local cur_ver = line:match("up to date.*(%d+%.%d+%.%d+)")
+                if cur_ver then
+                    return cur_ver
+                end
+            end
+        end
+        return nil
+    end
+
     return nil
 end
-
---- Extract a YYYY-MM-DD date from a string.
 local function extract_date(text)
     if not text then
         return nil
@@ -513,6 +553,21 @@ local function check_dep(dep)
                     vim.health.error("pwsh is not the configured shell: " .. shell, dep.advice)
                 else
                     vim.health.warn("pwsh is not the configured shell: " .. shell, dep.advice)
+                end
+            end
+            return
+        end
+
+        if dep.name == "rust_analyzer" then
+            local ver = resolve_version(dep)
+            if ver then
+                vim.health.ok(("rust_analyzer (%s)"):format(ver))
+                return check_update(dep, ver)
+            else
+                if dep.required then
+                    vim.health.error("rust-analyzer not found via rustup", dep.advice)
+                else
+                    vim.health.warn("rust-analyzer not found via rustup", dep.advice)
                 end
             end
             return

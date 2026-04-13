@@ -34,7 +34,7 @@ Install these separately:
 | `lua_ls`        | Lua        | Server   | winget install --id LuaLS.lua-language-server                                                         |
 | `marksman`      | Markdown   | Server   | winget install --id Artempyanykh.Marksman                                                             |
 | `powershell_es` | Powershell | Server   | gh release download --repo PowerShell/PowerShellEditorServices --pattern PowerShellEditorServices.zip |
-| `rust_analyzer` | Rust       | Server   | gh release download --repo rust-lang/rust-analyzer --pattern "*x86_64-pc-windows-msvc.zip"            |
+| `rust_analyzer` | Rust       | Server   | rustup component add rust-analyzer                                                                    |
 | `taplo-cli`     | TOML       | Server   | cargo install --features lsp --locked taplo-cli                                                       |
 | `yamlls`        | YAML       | Server   | npm install -g yaml-language-server                                                                   |
 
@@ -47,14 +47,7 @@ Expand-Archive .\codelldb-win32-x64.vsix ~/.local/bin/codelldb -Force
 After downloading `powershell_es`, install with:
 
 ```powershell
-Expand-Archive .\PowerShellEditorServices.zip ~/.local/bin/PowershellEditorServices -Force
-```
-
-After downloading `rust_analyzer`, install with:
-
-```powershell
-Expand-Archive .\rust-analyzer-x86_64-pc-windows-msvc.zip ~/.local/bin/ -Force
-rustup component add rust-analyzer
+Expand-Archive .\PowerShellEditorServices.zip ~/.local/bin/PowerShellEditorServices -Force
 ```
 
 ## Quick start

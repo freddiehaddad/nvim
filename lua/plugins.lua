@@ -191,6 +191,14 @@ vim.lsp.config("powershell_es", {
     bundle_path = "c:/users/fhaddad/.local/bin/PowerShellEditorServices",
 })
 
+-- rust-analyzer is installed via rustup and not in PATH; resolve its location.
+local ra_result = vim.system({ "rustup", "which", "rust-analyzer" }, { timeout = 5000 }):wait()
+if ra_result.code == 0 and ra_result.stdout then
+    vim.lsp.config("rust_analyzer", {
+        cmd = { vim.trim(ra_result.stdout) },
+    })
+end
+
 vim.lsp.enable("clangd")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("lua_ls")
