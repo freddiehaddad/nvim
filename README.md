@@ -26,17 +26,17 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 
 Install these separately:
 
-| Tool            | Language   | Type     | Install Method                                                                                        |
-| --------------- | -----------| -------- | ----------------------------------------------------------------------------------------------------- |
-| `clangd`        | C/C++      | Server   | winget install --id LLVM.clangd                                                                       |
-| `codelldb`      | Rust       | Debugger | gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"                               |
-| `jsonls`        | JSON       | Server   | npm install -g vscode-langservers-extracted                                                           |
-| `lua_ls`        | Lua        | Server   | winget install --id LuaLS.lua-language-server                                                         |
-| `marksman`      | Markdown   | Server   | winget install --id Artempyanykh.Marksman                                                             |
-| `powershell_es` | Powershell | Server   | gh release download --repo PowerShell/PowerShellEditorServices --pattern PowerShellEditorServices.zip |
-| `rust_analyzer` | Rust       | Server   | rustup component add rust-analyzer                                                                    |
-| `taplo-cli`     | TOML       | Server   | cargo install --features lsp --locked taplo-cli                                                       |
-| `yamlls`        | YAML       | Server   | npm install -g yaml-language-server                                                                   |
+| Tool            | Language   | Type     | Install Method                                                                                          |
+| --------------- | -----------| -------- | ------------------------------------------------------------------------------------------------------- |
+| `clangd`        | C/C++      | Server   | `winget install --id LLVM.clangd`                                                                       |
+| `codelldb`      | Rust       | Debugger | `gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"`                               |
+| `jsonls`        | JSON       | Server   | `npm install -g vscode-langservers-extracted`                                                           |
+| `lua_ls`        | Lua        | Server   | `winget install --id LuaLS.lua-language-server`                                                         |
+| `marksman`      | Markdown   | Server   | `winget install --id Artempyanykh.Marksman`                                                             |
+| `powershell_es` | Powershell | Server   | `gh release download --repo PowerShell/PowerShellEditorServices --pattern PowerShellEditorServices.zip` |
+| `rust_analyzer` | Rust       | Server   | `rustup component add rust-analyzer`                                                                    |
+| `taplo-cli`     | TOML       | Server   | `cargo install --features lsp --locked taplo-cli`                                                       |
+| `yamlls`        | YAML       | Server   | `npm install -g yaml-language-server`                                                                   |
 
 After downloading `codelldb`, install with:
 
