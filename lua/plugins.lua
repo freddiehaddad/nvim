@@ -29,22 +29,6 @@ local build_hooks = {
         end
         vim.cmd("TSUpdate")
     end,
-    ["telescope-fzf-native.nvim"] = function()
-        local dir = vim.fn.stdpath("data") .. "/site/pack/core/opt/telescope-fzf-native.nvim"
-        local steps = {
-            { "cmake", "-S.",       "-Bbuild", "-DCMAKE_BUILD_TYPE=Release" },
-            { "cmake", "--build",   "build",   "--config",                  "Release" },
-            { "cmake", "--install", "build",   "--prefix",                  "build" },
-        }
-        for _, cmd in ipairs(steps) do
-            local result = vim.system(cmd, { cwd = dir }):wait()
-            if result.code ~= 0 then
-                vim.notify("telescope-fzf-native build failed: " .. (result.stderr or ""),
-                    vim.log.levels.ERROR)
-                return
-            end
-        end
-    end,
 }
 
 vim.api.nvim_create_autocmd("PackChanged", {
@@ -68,9 +52,7 @@ vim.pack.add({
     "https://github.com/nvim-mini/mini.nvim",                      -- icons used by blink.cmp
     "https://github.com/rafamadriz/friendly-snippets",             -- snippet collection for blink.cmp
     { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
-    "https://github.com/nvim-lua/plenary.nvim",                    -- required by telescope
-    "https://github.com/nvim-telescope/telescope.nvim",
-    "https://github.com/nvim-telescope/telescope-fzf-native.nvim", -- native fzf sorter for telescope
+    "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/mfussenegger/nvim-dap",
     { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
@@ -214,9 +196,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
         local bufnr = event.buf
         bmap("gl", vim.diagnostic.open_float, "Line diagnostics", bufnr)
-        bmap("<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", "Search document symbols", bufnr)
-        bmap("<leader>sS", "<cmd>Telescope lsp_workspace_symbols<cr>", "Search workspace symbols", bufnr)
-        bmap("<leader>sr", "<cmd>Telescope lsp_references<cr>", "Search references", bufnr)
+        bmap("<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", "Search document symbols", bufnr)
+        bmap("<leader>sS", "<cmd>FzfLua lsp_workspace_symbols<cr>", "Search workspace symbols", bufnr)
+        bmap("<leader>sr", "<cmd>FzfLua lsp_references<cr>", "Search references", bufnr)
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if not client then
@@ -365,111 +347,65 @@ require("blink.cmp").setup({
 })
 
 -----------------------------------------------------------------------------
--- Telescope
+-- fzf-lua
 -----------------------------------------------------------------------------
-local actions = require("telescope.actions")
-local live_grep_globbing = function(options)
-    local pickers = require("telescope.pickers")
-    local finders = require("telescope.finders")
-    local make_entry = require("telescope.make_entry")
-    local conf = require("telescope.config").values
-
-    options = options or {}
-    options.cwd = options.cwd or vim.uv.cwd()
-
-    local finder = finders.new_async_job({
-        command_generator = function(prompt)
-            if not prompt or prompt == "" then
-                return nil
-            end
-
-            local pieces = vim.split(prompt, "  ")
-            local args = { "rg" }
-            if pieces[1] then
-                table.insert(args, "-e")
-                table.insert(args, pieces[1])
-            end
-
-            if pieces[2] then
-                table.insert(args, "-g")
-                table.insert(args, pieces[2])
-            end
-
-            return vim.iter({
-                    args,
-                    {
-                        "--color=never",
-                        "--no-heading",
-                        "--with-filename",
-                        "--line-number",
-                        "--column",
-                        "--smart-case",
-                    },
-                })
-                :flatten()
-                :totable()
-        end,
-        entry_maker = make_entry.gen_from_vimgrep(options),
-        cwd = options.cwd,
-    })
-    pickers
-        .new(options, {
-            debounce = 100,
-            prompt_title = "multigrep",
-            finder = finder,
-            previewer = conf.grep_previewer(options),
-            sorter = require("telescope.sorters").empty(),
-        })
-        :find()
-end
-
-require("telescope").setup({
-    defaults = {
-        prompt_prefix = "❯ ",
-        selection_caret = "❯ ",
-        multi_icon = "❯ ",
-        borderchars = { "━", "┃", "━", "┃", "┏", "┓", "┛", "┗" },
-        mappings = {
-            i = {
-                ["<C-f>"] = actions.preview_scrolling_down,
-                ["<C-b>"] = actions.preview_scrolling_up,
-                ["<c-h>"] = "select_horizontal",
-            },
-            n = {
-                ["q"] = actions.close,
-            },
+require("fzf-lua").setup({
+    fzf_colors = true,
+    fzf_opts = {
+        ["--no-scrollbar"] = true,
+    },
+    winopts = {
+        border = "single",
+        preview = {
+            layout = "horizontal",
+            horizontal = "right:50%",
+            border = "single",
         },
     },
-    extensions = { fzf = {} },
+    keymap = {
+        builtin = {
+            ["<C-f>"] = "preview-page-down",
+            ["<C-b>"] = "preview-page-up",
+            ["<C-d>"] = "preview-half-page-down",
+            ["<C-u>"] = "preview-half-page-up",
+        },
+        fzf = {
+            ["ctrl-q"] = "select-all+accept",
+        },
+    },
+    grep = {
+        rg_glob = true,
+        glob_separator = "  ",
+    },
 })
-require("telescope").load_extension("fzf")
 
 -- Keymaps
-map("<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true <cr>", "Buffers")
-map("<leader>fc", "<cmd>Telescope find_files cwd=" .. vim.fn.stdpath("config") .. "<cr>", "Config file")
-map("<leader>ff", "<cmd>Telescope find_files<cr>", "Files")
-map("<leader>fF", "<cmd>Telescope find_files hidden=true<cr>", "Files (hidden)")
-map("<leader>fg", "<cmd>Telescope git_files<cr>", "Files (git)")
-map("<leader>fr", "<cmd>Telescope oldfiles<cr>", "Recent")
-map("<leader>sa", "<cmd>Telescope autocommands<cr>", "Auto commands")
-map("<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Buffer")
-map("<leader>sc", "<cmd>Telescope command_history<cr>", "Command history")
-map("<leader>sC", "<cmd>Telescope commands<cr>", "Commands")
-map("<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", "Document diagnostics")
-map("<leader>sD", "<cmd>Telescope diagnostics<cr>", "Workspace diagnostics")
-map("<leader>sg", "<cmd>Telescope live_grep<cr>", "Grep (cwd)")
-map("<leader>sG", live_grep_globbing, "Glob grep (cwd)")
-map("<leader>sh", "<cmd>Telescope help_tags<cr>", "Help pages")
-map("<leader>sH", "<cmd>Telescope highlights<cr>", "highlight groups")
-map("<leader>sj", "<cmd>Telescope jumplist<cr>", "Jumplist")
-map("<leader>sk", "<cmd>Telescope keymaps<cr>", "Keymaps")
-map("<leader>sl", "<cmd>Telescope loclist<cr>", "Location list")
-map("<leader>sm", "<cmd>Telescope marks<cr>", "Marks")
-map("<leader>so", "<cmd>Telescope vim_options<cr>", "Options")
-map("<leader>sq", "<cmd>Telescope quickfix<cr>", "Quickfix list")
-map("<leader>sR", "<cmd>Telescope resume<cr>", "Resume")
-map("<leader>sw", "<cmd>Telescope grep_string word_match=-w<cr>", "Word")
-map("<leader>sw", "<cmd>Telescope grep_string word_match=-w<cr>", "Selection", "v")
+map("<leader>fb", "<cmd>FzfLua buffers<cr>", "Buffers")
+map("<leader>fc", function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end, "Config file")
+map("<leader>ff", "<cmd>FzfLua files<cr>", "Files")
+map("<leader>fF", function() require("fzf-lua").files({ fd_opts = "--type f --hidden --exclude .git" }) end, "Files (hidden)")
+map("<leader>fg", "<cmd>FzfLua git_files<cr>", "Files (git)")
+map("<leader>fr", "<cmd>FzfLua oldfiles<cr>", "Recent")
+map("<leader>sa", "<cmd>FzfLua autocmds<cr>", "Auto commands")
+map("<leader>sb", "<cmd>FzfLua grep_curbuf<cr>", "Buffer (fuzzy)")
+map("<leader>sB", "<cmd>FzfLua lgrep_curbuf<cr>", "Buffer (regex)")
+map("<leader>sc", "<cmd>FzfLua command_history<cr>", "Command history")
+map("<leader>sC", "<cmd>FzfLua commands<cr>", "Commands")
+map("<leader>sd", "<cmd>FzfLua diagnostics_document<cr>", "Document diagnostics")
+map("<leader>sD", "<cmd>FzfLua diagnostics_workspace<cr>", "Workspace diagnostics")
+map("<leader>sg", "<cmd>FzfLua live_grep<cr>", "Grep (cwd)")
+map("<leader>sG", "<cmd>FzfLua live_grep_glob<cr>", "Glob grep (cwd)")
+map("<leader>sh", "<cmd>FzfLua helptags<cr>", "Help pages")
+map("<leader>sH", "<cmd>FzfLua highlights<cr>", "Highlight groups")
+map("<leader>sj", "<cmd>FzfLua jumps<cr>", "Jumplist")
+map("<leader>sk", "<cmd>FzfLua keymaps<cr>", "Keymaps")
+map("<leader>sl", "<cmd>FzfLua loclist<cr>", "Location list")
+map("<leader>sm", "<cmd>FzfLua marks<cr>", "Marks")
+map("<leader>so", "<cmd>FzfLua nvim_options<cr>", "Options")
+map("<leader>sq", "<cmd>FzfLua quickfix<cr>", "Quickfix list")
+map("<leader>sR", "<cmd>FzfLua resume<cr>", "Resume")
+map("<leader>sw", "<cmd>FzfLua grep_cword<cr>", "Word")
+map("<leader>sw", "<cmd>FzfLua grep_visual<cr>", "Selection", "v")
 
 -----------------------------------------------------------------------------
 -- Gitsigns

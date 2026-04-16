@@ -11,14 +11,14 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
   <img width="3585" height="2140" alt="lua" src="https://github.com/user-attachments/assets/4ff3eb5c-b811-4f4b-a8e9-96b2ab26b47d" />
   <img width="3585" height="2140" alt="rust+md+cmp" src="https://github.com/user-attachments/assets/3af8c38d-ccfa-4813-ae39-ce4cd1d9539f" />
   <img width="3585" height="2140" alt="rust+md+lsp" src="https://github.com/user-attachments/assets/b18a29c4-9fcc-4b4b-9b9d-06caf9f98c8d" />
-  <img width="3585" height="2140" alt="md+lua+telescope" src="https://github.com/user-attachments/assets/21b34f03-3012-4eca-919f-547d2a2d26d4" />
 </details>
 
 ## Requirements
 
 - Neovim 0.12 or newer
 - Git
-- [ripgrep] (`rg`) for Telescope live grep and `:grep`
+- [ripgrep] (`rg`) for fzf-lua live grep and `:grep`
+- [fzf] for fzf-lua fuzzy finding
 - A [Nerd Font] for statusline and diagnostic icons
 - PowerShell (`pwsh`) is configured as the default shell on Windows
 
@@ -78,7 +78,7 @@ Use `<leader>pu` to update plugins.
 | [nvim-lspconfig]  | LSP server configuration                                    |
 | [blink.cmp]       | Completion with ghost text and signature help               |
 | [mini.nvim]       | Icons, pairs, surround, move, statusline, sessions, starter |
-| [telescope.nvim]  | Fuzzy finder with fzf-native and live grep                  |
+| [fzf-lua]         | Fuzzy finder powered by fzf                                 |
 | [gitsigns.nvim]   | Git signs, hunk navigation, staging, and blame              |
 | [nvim-dap]        | Debug adapter protocol client                               |
 | [nvim-dap-view]   | Modern debugging UI                                         |
@@ -121,7 +121,7 @@ Leader is `<Space>`.
 | `<leader>th`    | Toggle inlay hints          |
 | `<leader>df`    | Format document / selection |
 
-### Telescope
+### Fuzzy finder (fzf-lua)
 
 | Key             | Action                     |
 | --------------- | -------------------------- |
@@ -133,6 +133,8 @@ Leader is `<Space>`.
 | `<leader>fr`    | Recent files               |
 | `<leader>sg`    | Live grep                  |
 | `<leader>sG`    | Live grep with glob filter |
+| `<leader>sb`    | Buffer search (fuzzy)      |
+| `<leader>sB`    | Buffer search (regex)      |
 | `<leader>sd`    | Document diagnostics       |
 | `<leader>sD`    | Workspace diagnostics      |
 | `<leader>sh`    | Help pages                 |
@@ -220,8 +222,8 @@ Verify that all dependencies are installed:
 :checkhealth config
 ```
 
-This checks core requirements (Neovim version, git, ripgrep, pwsh, cmake,
-tree-sitter), package managers (cargo, npm, winget, gh), LSP servers, the debug
+This checks core requirements (Neovim version, git, ripgrep, fzf, pwsh,
+tree-sitter), package managers (cargo, npm, gh), LSP servers, the debug
 adapter, and plugin status.
 
 ## Reset
@@ -242,10 +244,11 @@ This removes the vim.pack plugin directory and `nvim-pack-lock.json`.
 [nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
 [blink.cmp]: https://github.com/saghen/blink.cmp
 [mini.nvim]: https://github.com/nvim-mini/mini.nvim
-[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
+[fzf-lua]: https://github.com/ibhagwan/fzf-lua
 [gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
 [nvim-dap]: https://github.com/mfussenegger/nvim-dap
 [nvim-dap-view]: https://github.com/igorlfs/nvim-dap-view
 [ripgrep]: https://github.com/BurntSushi/ripgrep
+[fzf]: https://github.com/junegunn/fzf
 [Nerd Font]: https://www.nerdfonts.com/
 [`plugins.lua`]: ./lua/plugins.lua

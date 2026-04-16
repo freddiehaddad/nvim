@@ -70,13 +70,13 @@ local deps = {
             latest = { source = "winget", id = "Microsoft.PowerShell" },
         },
         {
-            name = "cmake",
-            check = "cmake",
+            name = "fzf",
+            check = "fzf",
             kind = "executable",
             required = true,
-            version = { "cmake", "--version" },
-            advice = "Install: winget install Kitware.CMake",
-            latest = { source = "winget", id = "Kitware.CMake" },
+            version = { "fzf", "--version" },
+            advice = "Install: winget install junegunn.fzf",
+            latest = { source = "github", repo = "junegunn/fzf" },
         },
         {
             name = "tree-sitter",
@@ -406,7 +406,9 @@ local function fetch_latest(dep)
             return nil
         end
         local out = result:wait()
-        if out.code ~= 0 or not out.stdout then
+        -- rustup check returns non-zero when any toolchain has updates;
+        -- we only care about stdout being present.
+        if not out.stdout then
             return nil
         end
         -- Look for the stable toolchain line:
