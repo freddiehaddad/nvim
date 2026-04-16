@@ -196,9 +196,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
         local bufnr = event.buf
         bmap("gl", vim.diagnostic.open_float, "Line diagnostics", bufnr)
+        bmap("gd", "<cmd>FzfLua lsp_definitions<cr>", "Go to definition", bufnr)
+        bmap("<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", "Code actions", bufnr)
+        bmap("<leader>si", "<cmd>FzfLua lsp_implementations<cr>", "Search implementations", bufnr)
+        bmap("<leader>sr", "<cmd>FzfLua lsp_references<cr>", "Search references", bufnr)
         bmap("<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", "Search document symbols", bufnr)
         bmap("<leader>sS", "<cmd>FzfLua lsp_workspace_symbols<cr>", "Search workspace symbols", bufnr)
-        bmap("<leader>sr", "<cmd>FzfLua lsp_references<cr>", "Search references", bufnr)
+        bmap("<leader>st", "<cmd>FzfLua lsp_typedefs<cr>", "Search type definitions", bufnr)
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if not client then
@@ -378,6 +382,7 @@ require("fzf-lua").setup({
         glob_separator = "  ",
     },
 })
+require("fzf-lua").register_ui_select()
 
 -- Keymaps
 map("<leader>fb", "<cmd>FzfLua buffers<cr>", "Buffers")
@@ -406,6 +411,14 @@ map("<leader>sq", "<cmd>FzfLua quickfix<cr>", "Quickfix list")
 map("<leader>sR", "<cmd>FzfLua resume<cr>", "Resume")
 map("<leader>sw", "<cmd>FzfLua grep_cword<cr>", "Word")
 map("<leader>sw", "<cmd>FzfLua grep_visual<cr>", "Selection", "v")
+map("<leader>s/", "<cmd>FzfLua search_history<cr>", "Search history")
+map('<leader>s"', "<cmd>FzfLua registers<cr>", "Registers")
+map("<leader>fp", "<cmd>FzfLua builtin<cr>", "Pickers")
+map("<leader>gc", "<cmd>FzfLua git_commits<cr>", "Commits")
+map("<leader>gC", "<cmd>FzfLua git_bcommits<cr>", "Buffer commits")
+map("<leader>gs", "<cmd>FzfLua git_status<cr>", "Status")
+map("<leader>gb", "<cmd>FzfLua git_branches<cr>", "Branches")
+map("<leader>gt", "<cmd>FzfLua git_stash<cr>", "Stash")
 
 -----------------------------------------------------------------------------
 -- Gitsigns

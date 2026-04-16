@@ -114,10 +114,14 @@ Leader is `<Space>`.
 
 | Key             | Action                      |
 | --------------- | --------------------------- |
+| `gd`            | Go to definition            |
 | `gl`            | Line diagnostics            |
+| `<leader>ca`    | Code actions                |
+| `<leader>si`    | Implementations             |
+| `<leader>sr`    | References                  |
 | `<leader>ss`    | Document symbols            |
 | `<leader>sS`    | Workspace symbols           |
-| `<leader>sr`    | References                  |
+| `<leader>st`    | Type definitions            |
 | `<leader>th`    | Toggle inlay hints          |
 | `<leader>df`    | Format document / selection |
 
@@ -125,22 +129,35 @@ Leader is `<Space>`.
 
 | Key             | Action                     |
 | --------------- | -------------------------- |
+| `<leader>fb`    | Buffers                    |
+| `<leader>fc`    | Config files               |
 | `<leader>ff`    | Find files                 |
 | `<leader>fF`    | Find files (hidden)        |
 | `<leader>fg`    | Git files                  |
-| `<leader>fb`    | Buffers                    |
-| `<leader>fc`    | Config files               |
+| `<leader>fp`    | Pickers (meta)             |
 | `<leader>fr`    | Recent files               |
-| `<leader>sg`    | Live grep                  |
-| `<leader>sG`    | Live grep with glob filter |
 | `<leader>sb`    | Buffer search (fuzzy)      |
 | `<leader>sB`    | Buffer search (regex)      |
 | `<leader>sd`    | Document diagnostics       |
 | `<leader>sD`    | Workspace diagnostics      |
+| `<leader>sg`    | Live grep                  |
+| `<leader>sG`    | Live grep with glob filter |
 | `<leader>sh`    | Help pages                 |
 | `<leader>sk`    | Keymaps                    |
 | `<leader>sR`    | Resume last picker         |
 | `<leader>sw`    | Grep word under cursor     |
+| `<leader>s/`    | Search history             |
+| `<leader>s"`    | Registers                  |
+
+### Git (fzf-lua)
+
+| Key             | Action                   |
+| --------------- | ------------------------ |
+| `<leader>gb`    | Branches                 |
+| `<leader>gc`    | Commits                  |
+| `<leader>gC`    | Buffer commits           |
+| `<leader>gs`    | Status                   |
+| `<leader>gt`    | Stash                    |
 
 ### Git (gitsigns, buffer-local)
 
