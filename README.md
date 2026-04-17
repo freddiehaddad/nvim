@@ -15,28 +15,27 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 
 ## Requirements
 
-- Neovim 0.12 or newer
-- Git
-- [ripgrep] (`rg`) for fzf-lua live grep and `:grep`
-- [fzf] for fzf-lua fuzzy finding
+- [Neovim] 0.12 or newer
 - A [Nerd Font] for statusline and diagnostic icons
-- PowerShell (`pwsh`) is configured as the default shell on Windows
 
 ### External tools
 
-Install these separately:
-
-| Tool            | Language   | Type     | Install Method                                                                                          |
-| --------------- | -----------| -------- | ------------------------------------------------------------------------------------------------------- |
-| `clangd`        | C/C++      | Server   | `winget install --id LLVM.clangd`                                                                       |
-| `codelldb`      | Rust       | Debugger | `gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"`                               |
-| `jsonls`        | JSON       | Server   | `npm install -g vscode-langservers-extracted`                                                           |
-| `lua_ls`        | Lua        | Server   | `winget install --id LuaLS.lua-language-server`                                                         |
-| `marksman`      | Markdown   | Server   | `winget install --id Artempyanykh.Marksman`                                                             |
-| `powershell_es` | Powershell | Server   | `gh release download --repo PowerShell/PowerShellEditorServices --pattern PowerShellEditorServices.zip` |
-| `rust_analyzer` | Rust       | Server   | `rustup component add rust-analyzer`                                                                    |
-| `taplo-cli`     | TOML       | Server   | `cargo install --features lsp --locked taplo-cli`                                                       |
-| `yamlls`        | YAML       | Server   | `npm install -g yaml-language-server`                                                                   |
+| Tool            | Purpose              | Install Method                                                                                          |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------- |
+| `git`           | Version control      | `winget install --id Git.Git`                                                                           |
+| `fzf`           | Fuzzy finding        | `winget install --id junegunn.fzf`                                                                      |
+| `pwsh`          | Default shell        | `winget install --id Microsoft.PowerShell`                                                              |
+| `ripgrep`       | Live grep, `:grep`   | `winget install --id BurntSushi.ripgrep.MSVC`                                                           |
+| `tree-sitter`   | Parser CLI           | `cargo install --locked tree-sitter-cli`                                                                |
+| `clangd`        | C/C++ LSP            | `winget install --id LLVM.clangd`                                                                       |
+| `jsonls`        | JSON LSP             | `npm install -g vscode-langservers-extracted`                                                           |
+| `lua_ls`        | Lua LSP              | `winget install --id LuaLS.lua-language-server`                                                         |
+| `marksman`      | Markdown LSP         | `winget install --id Artempyanykh.Marksman`                                                             |
+| `powershell_es` | PowerShell LSP       | `gh release download --repo PowerShell/PowerShellEditorServices --pattern PowerShellEditorServices.zip` |
+| `rust_analyzer` | Rust LSP             | `rustup component add rust-analyzer`                                                                    |
+| `taplo`         | TOML LSP             | `cargo install --features lsp --locked taplo-cli`                                                       |
+| `yamlls`        | YAML LSP             | `npm install -g yaml-language-server`                                                                   |
+| `codelldb`      | Rust debug adapter   | `gh release download --repo vadimcn/codelldb --pattern "*win32-x64.vsix"`                               |
 
 After downloading `codelldb`, install with:
 

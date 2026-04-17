@@ -58,8 +58,8 @@ local deps = {
             kind = "executable",
             required = true,
             version = { "rg", "--version" },
-            advice = "Install: winget install BurntSushi.ripgrep",
-            latest = { source = "github", repo = "BurntSushi/ripgrep" },
+            advice = "Install: winget install --id BurntSushi.ripgrep.MSVC",
+            latest = { source = "winget", id = "BurntSushi.ripgrep.MSVC" },
         },
         {
             name = "PowerShell",
