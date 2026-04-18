@@ -70,6 +70,7 @@ vim.cmd.colorscheme("ferric")
 -- Treesitter
 -----------------------------------------------------------------------------
 local parsers = {
+    "asm",
     "c",
     "cpp",
     "cmake",
@@ -181,6 +182,7 @@ if ra_result.code == 0 and ra_result.stdout then
     })
 end
 
+vim.lsp.enable("asm_lsp")
 vim.lsp.enable("clangd")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("lua_ls")

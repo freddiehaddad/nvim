@@ -124,6 +124,15 @@ local deps = {
     -- Section 3: LSP Servers
     lsp = {
         {
+            name = "asm_lsp",
+            check = "asm-lsp",
+            kind = "executable",
+            required = true,
+            version = { "asm-lsp", "--version" },
+            advice = "Install: cargo install asm-lsp",
+            latest = { source = "crates", crate = "asm-lsp" },
+        },
+        {
             name = "clangd",
             check = "clangd",
             kind = "executable",

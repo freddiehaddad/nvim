@@ -27,6 +27,7 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 | `pwsh`          | Default shell        | `winget install --id Microsoft.PowerShell`                                                              |
 | `ripgrep`       | Live grep, `:grep`   | `winget install --id BurntSushi.ripgrep.MSVC`                                                           |
 | `tree-sitter`   | Parser CLI           | `cargo install --locked tree-sitter-cli`                                                                |
+| `asm_lsp`       | Assembly LSP         | `cargo install asm-lsp`                                                                                 |
 | `clangd`        | C/C++ LSP            | `winget install --id LLVM.clangd`                                                                       |
 | `jsonls`        | JSON LSP             | `npm install -g vscode-langservers-extracted`                                                           |
 | `lua_ls`        | Lua LSP              | `winget install --id LuaLS.lua-language-server`                                                         |
