@@ -71,17 +71,18 @@ Use `<leader>pu` to update plugins.
 
 ## Plugins
 
-| Plugin            | Purpose                                                     |
-| ----------------- | ----------------------------------------------------------- |
-| [ferric.nvim]     | Colorscheme                                                 |
-| [nvim-treesitter] | Syntax highlighting, folds, and indentation                 |
-| [nvim-lspconfig]  | LSP server configuration                                    |
-| [blink.cmp]       | Completion with ghost text and signature help               |
-| [mini.nvim]       | Icons, pairs, surround, move, statusline, sessions, starter |
-| [fzf-lua]         | Fuzzy finder powered by fzf                                 |
-| [gitsigns.nvim]   | Git signs, hunk navigation, staging, and blame              |
-| [nvim-dap]        | Debug adapter protocol client                               |
-| [nvim-dap-view]   | Modern debugging UI                                         |
+| Plugin                        | Purpose                                                     |
+| ----------------------------- | ----------------------------------------------------------- |
+| [ferric.nvim]                 | Colorscheme                                                 |
+| [nvim-treesitter]             | Syntax highlighting, folds, and indentation                 |
+| [nvim-treesitter-textobjects] | Treesitter-aware textobjects, movement, and swap            |
+| [nvim-lspconfig]              | LSP server configuration                                    |
+| [blink.cmp]                   | Completion with ghost text and signature help               |
+| [mini.nvim]                   | Icons, pairs, surround, move, statusline, sessions, starter |
+| [fzf-lua]                     | Fuzzy finder powered by fzf                                 |
+| [gitsigns.nvim]               | Git signs, hunk navigation, staging, and blame              |
+| [nvim-dap]                    | Debug adapter protocol client                               |
+| [nvim-dap-view]               | Modern debugging UI                                         |
 
 ## Key mappings
 
@@ -109,6 +110,21 @@ Leader is `<Space>`.
 | `]d` / `[d`    | Next / previous diagnostic |
 | `]e` / `[e`    | Next / previous error      |
 | `]w` / `[w`    | Next / previous warning    |
+
+### Treesitter textobjects (visual + operator-pending)
+
+| Key            | Action                        |
+| -------------- | ----------------------------- |
+| `af` / `if`    | Around / inner function       |
+| `ac` / `ic`    | Around / inner class/struct   |
+| `aa` / `ia`    | Around / inner parameter      |
+| `al` / `il`    | Around / inner loop           |
+| `ai` / `ii`    | Around / inner conditional    |
+| `a/` / `i/`    | Around / inner comment        |
+| `]f` / `[f`    | Next / previous function      |
+| `]c` / `[c`    | Next / previous class/struct  |
+| `<leader>xp`   | Swap parameter forward        |
+| `<leader>xP`   | Swap parameter backward       |
 
 ### LSP (buffer-local, active on attach)
 
@@ -258,6 +274,7 @@ This removes the vim.pack plugin directory and `nvim-pack-lock.json`.
 [vim.pack]: https://neovim.io/doc/user/helptag.html?tag=vim.pack
 [ferric.nvim]: https://github.com/freddiehaddad/ferric.nvim
 [nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
+[nvim-treesitter-textobjects]: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 [nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
 [blink.cmp]: https://github.com/saghen/blink.cmp
 [mini.nvim]: https://github.com/nvim-mini/mini.nvim

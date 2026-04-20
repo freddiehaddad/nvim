@@ -47,10 +47,11 @@ vim.api.nvim_create_autocmd("PackChanged", {
 vim.pack.add({
     "https://github.com/freddiehaddad/ferric.nvim",
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
-    "https://github.com/b0o/schemastore.nvim",                     -- json/yaml schemas, used by lspconfig
+    "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+    "https://github.com/b0o/schemastore.nvim",         -- json/yaml schemas, used by lspconfig
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/nvim-mini/mini.nvim",                      -- icons used by blink.cmp
-    "https://github.com/rafamadriz/friendly-snippets",             -- snippet collection for blink.cmp
+    "https://github.com/nvim-mini/mini.nvim",          -- icons used by blink.cmp
+    "https://github.com/rafamadriz/friendly-snippets", -- snippet collection for blink.cmp
     { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lewis6991/gitsigns.nvim",
@@ -119,6 +120,66 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end,
 })
+
+-----------------------------------------------------------------------------
+-- Treesitter textobjects
+-----------------------------------------------------------------------------
+local ts_select = require("nvim-treesitter-textobjects.select")
+local ts_move = require("nvim-treesitter-textobjects.move")
+local ts_swap = require("nvim-treesitter-textobjects.swap")
+
+require("nvim-treesitter-textobjects").setup({
+    select = {
+        lookahead = true,
+    },
+    move = {
+        set_jumps = true,
+    },
+})
+
+-- Selection (visual + operator-pending)
+for _, mode in ipairs({ "x", "o" }) do
+    vim.keymap.set(mode, "af", function() ts_select.select_textobject("@function.outer", "textobjects") end,
+        { desc = "Around function" })
+    vim.keymap.set(mode, "if", function() ts_select.select_textobject("@function.inner", "textobjects") end,
+        { desc = "Inner function" })
+    vim.keymap.set(mode, "ac", function() ts_select.select_textobject("@class.outer", "textobjects") end,
+        { desc = "Around class/struct" })
+    vim.keymap.set(mode, "ic", function() ts_select.select_textobject("@class.inner", "textobjects") end,
+        { desc = "Inner class/struct" })
+    vim.keymap.set(mode, "aa", function() ts_select.select_textobject("@parameter.outer", "textobjects") end,
+        { desc = "Around parameter" })
+    vim.keymap.set(mode, "ia", function() ts_select.select_textobject("@parameter.inner", "textobjects") end,
+        { desc = "Inner parameter" })
+    vim.keymap.set(mode, "al", function() ts_select.select_textobject("@loop.outer", "textobjects") end,
+        { desc = "Around loop" })
+    vim.keymap.set(mode, "il", function() ts_select.select_textobject("@loop.inner", "textobjects") end,
+        { desc = "Inner loop" })
+    vim.keymap.set(mode, "ai", function() ts_select.select_textobject("@conditional.outer", "textobjects") end,
+        { desc = "Around conditional" })
+    vim.keymap.set(mode, "ii", function() ts_select.select_textobject("@conditional.inner", "textobjects") end,
+        { desc = "Inner conditional" })
+    vim.keymap.set(mode, "a/", function() ts_select.select_textobject("@comment.outer", "textobjects") end,
+        { desc = "Around comment" })
+    vim.keymap.set(mode, "i/", function() ts_select.select_textobject("@comment.inner", "textobjects") end,
+        { desc = "Inner comment" })
+end
+
+-- Movement (normal + visual)
+for _, mode in ipairs({ "n", "x" }) do
+    vim.keymap.set(mode, "]f", function() ts_move.goto_next_start("@function.outer", "textobjects") end,
+        { desc = "Next function" })
+    vim.keymap.set(mode, "[f", function() ts_move.goto_previous_start("@function.outer", "textobjects") end,
+        { desc = "Previous function" })
+    vim.keymap.set(mode, "]c", function() ts_move.goto_next_start("@class.outer", "textobjects") end,
+        { desc = "Next class/struct" })
+    vim.keymap.set(mode, "[c", function() ts_move.goto_previous_start("@class.outer", "textobjects") end,
+        { desc = "Previous class/struct" })
+end
+
+-- Swap
+map("<leader>xp", function() ts_swap.swap_next("@parameter.inner") end, "Swap parameter forward")
+map("<leader>xP", function() ts_swap.swap_previous("@parameter.inner") end, "Swap parameter backward")
 
 -----------------------------------------------------------------------------
 -- LSP
@@ -390,7 +451,8 @@ require("fzf-lua").register_ui_select()
 map("<leader>fb", "<cmd>FzfLua buffers<cr>", "Buffers")
 map("<leader>fc", function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end, "Config file")
 map("<leader>ff", "<cmd>FzfLua files<cr>", "Files")
-map("<leader>fF", function() require("fzf-lua").files({ fd_opts = "--type f --hidden --exclude .git" }) end, "Files (hidden)")
+map("<leader>fF", function() require("fzf-lua").files({ fd_opts = "--type f --hidden --exclude .git" }) end,
+    "Files (hidden)")
 map("<leader>fg", "<cmd>FzfLua git_files<cr>", "Files (git)")
 map("<leader>fr", "<cmd>FzfLua oldfiles<cr>", "Recent")
 map("<leader>sa", "<cmd>FzfLua autocmds<cr>", "Auto commands")
