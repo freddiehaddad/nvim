@@ -232,7 +232,7 @@ vim.lsp.config("yamlls", {
 })
 
 vim.lsp.config("powershell_es", {
-    bundle_path = "c:/users/fhaddad/.local/bin/PowerShellEditorServices",
+    bundle_path = vim.fn.expand("~/.local/bin/PowerShellEditorServices"),
 })
 
 -- rust-analyzer is installed via rustup and not in PATH; resolve its location.
