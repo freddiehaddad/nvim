@@ -230,6 +230,9 @@ Leader is `<Space>`.
 - **Close with `q`** — help, man, and quickfix buffers close with `q`
 - **Auto-reload** — checks for external file changes on focus, buffer enter,
   and cursor idle; notifies when a buffer is reloaded from disk
+- **Spell check** — enabled (`en_us`) for `markdown`, `gitcommit`, and `text`
+  filetypes; use `]s`/`[s` to navigate misspellings, `z=` for suggestions,
+  `zg` to add a word to the personal dictionary
 - **Restore cursor** — reopens files at the last edited position (excludes
   gitcommit, gitrebase, help)
 

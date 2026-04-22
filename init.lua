@@ -146,6 +146,15 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
     end,
 })
 
+-- Enable spell check for prose filetypes
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown", "gitcommit", "text" },
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.spelllang = "en_us"
+    end,
+})
+
 -- Restore cursor position when reopening files
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(e)
