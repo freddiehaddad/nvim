@@ -228,6 +228,8 @@ Leader is `<Space>`.
 
 - **Highlight on yank** — briefly highlights yanked text
 - **Close with `q`** — help, man, and quickfix buffers close with `q`
+- **Auto-reload** — checks for external file changes on focus, buffer enter,
+  and cursor idle; notifies when a buffer is reloaded from disk
 - **Restore cursor** — reopens files at the last edited position (excludes
   gitcommit, gitrebase, help)
 

@@ -131,6 +131,21 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- Auto-reload files changed outside Neovim
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+    callback = function()
+        if vim.fn.mode() ~= "c" and vim.fn.getcmdwintype() == "" then
+            vim.cmd("checktime")
+        end
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+    callback = function()
+        vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
+    end,
+})
+
 -- Restore cursor position when reopening files
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(e)
