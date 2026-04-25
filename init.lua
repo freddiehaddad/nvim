@@ -158,14 +158,19 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Restore cursor position when reopening files
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(e)
-        local exclude = { "gitcommit", "gitrebase", "help" }
-        if vim.tbl_contains(exclude, vim.bo[e.buf].filetype) then
-            return
-        end
-        local pos = vim.api.nvim_buf_get_mark(e.buf, '"')
-        if pos[1] > 0 and pos[1] <= vim.api.nvim_buf_line_count(e.buf) then
-            pcall(vim.api.nvim_win_set_cursor, 0, pos)
-        end
+        vim.schedule(function()
+            local exclude = { "gitcommit", "gitrebase", "help" }
+            if vim.tbl_contains(exclude, vim.bo[e.buf].filetype) then
+                return
+            end
+            if not vim.api.nvim_buf_is_valid(e.buf) then
+                return
+            end
+            local pos = vim.api.nvim_buf_get_mark(e.buf, '"')
+            if pos[1] > 0 and pos[1] <= vim.api.nvim_buf_line_count(e.buf) then
+                pcall(vim.api.nvim_win_set_cursor, 0, pos)
+            end
+        end)
     end,
 })
 

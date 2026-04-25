@@ -52,7 +52,7 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-mini/mini.nvim",          -- icons used by blink.cmp
     "https://github.com/rafamadriz/friendly-snippets", -- snippet collection for blink.cmp
-    { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
+    { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/mfussenegger/nvim-dap",
