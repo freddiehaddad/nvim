@@ -81,6 +81,7 @@ Use `<leader>pu` to update plugins.
 | [mini.nvim]                   | Icons, pairs, surround, move, statusline, sessions, starter |
 | [fzf-lua]                     | Fuzzy finder powered by fzf                                 |
 | [gitsigns.nvim]               | Git signs, hunk navigation, staging, and blame              |
+| [render-markdown.nvim]        | In-buffer markdown rendering                                |
 | [nvim-dap]                    | Debug adapter protocol client                               |
 | [nvim-dap-view]               | Modern debugging UI                                         |
 
@@ -202,6 +203,12 @@ Leader is `<Space>`.
 | `<C-s>`      | Show / toggle signature help |
 | `<C-e>`      | Toggle completion menu       |
 
+### Markdown (markdown buffers only)
+
+| Key             | Action                     |
+| --------------- | -------------------------- |
+| `<leader>tm`    | Toggle markdown render     |
+
 ### Debugging (Rust buffers only)
 
 | Key             | Action                   |
@@ -285,6 +292,7 @@ This removes the vim.pack plugin directory and `nvim-pack-lock.json`.
 [mini.nvim]: https://github.com/nvim-mini/mini.nvim
 [fzf-lua]: https://github.com/ibhagwan/fzf-lua
 [gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
+[render-markdown.nvim]: https://github.com/MeanderingProgrammer/render-markdown.nvim
 [nvim-dap]: https://github.com/mfussenegger/nvim-dap
 [nvim-dap-view]: https://github.com/igorlfs/nvim-dap-view
 [ripgrep]: https://github.com/BurntSushi/ripgrep

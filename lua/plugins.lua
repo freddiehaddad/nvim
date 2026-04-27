@@ -52,9 +52,10 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/nvim-mini/mini.nvim",          -- icons used by blink.cmp
     "https://github.com/rafamadriz/friendly-snippets", -- snippet collection for blink.cmp
-    { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
+    { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
     "https://github.com/mfussenegger/nvim-dap",
     { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
 })
@@ -557,6 +558,21 @@ require("gitsigns").setup({
         -- Toggles
         bmap("<leader>tb", gs.toggle_current_line_blame, "Toggle blame line", bufnr)
         bmap("<leader>tD", gs.toggle_deleted, "Toggle show deleted", bufnr)
+    end,
+})
+
+-----------------------------------------------------------------------------
+-- Render Markdown
+-----------------------------------------------------------------------------
+require("render-markdown").setup({
+    completions = { lsp = { enabled = true } },
+    heading = { position = "inline" },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function(e)
+        bmap("<leader>tm", "<cmd>RenderMarkdown toggle<cr>", "Toggle markdown render", e.buf)
     end,
 })
 
