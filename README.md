@@ -157,8 +157,7 @@ Leader is `<Space>`.
 | `<leader>sB`    | Buffer search (regex)      |
 | `<leader>sd`    | Document diagnostics       |
 | `<leader>sD`    | Workspace diagnostics      |
-| `<leader>sg`    | Live grep                  |
-| `<leader>sG`    | Live grep with glob filter |
+| `<leader>sg`    | Live grep (supports globs) |
 | `<leader>sh`    | Help pages                 |
 | `<leader>sk`    | Keymaps                    |
 | `<leader>sR`    | Resume last picker         |
