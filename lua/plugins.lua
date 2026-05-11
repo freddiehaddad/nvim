@@ -172,10 +172,20 @@ for _, mode in ipairs({ "n", "x" }) do
         { desc = "Next function" })
     vim.keymap.set(mode, "[f", function() ts_move.goto_previous_start("@function.outer", "textobjects") end,
         { desc = "Previous function" })
-    vim.keymap.set(mode, "]c", function() ts_move.goto_next_start("@class.outer", "textobjects") end,
-        { desc = "Next class/struct" })
-    vim.keymap.set(mode, "[c", function() ts_move.goto_previous_start("@class.outer", "textobjects") end,
-        { desc = "Previous class/struct" })
+    vim.keymap.set(mode, "]c", function()
+        if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+        else
+            ts_move.goto_next_start("@class.outer", "textobjects")
+        end
+    end, { desc = "Next class/struct (or diff change)" })
+    vim.keymap.set(mode, "[c", function()
+        if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+        else
+            ts_move.goto_previous_start("@class.outer", "textobjects")
+        end
+    end, { desc = "Previous class/struct (or diff change)" })
 end
 
 -- Swap
