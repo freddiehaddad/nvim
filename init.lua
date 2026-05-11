@@ -50,7 +50,7 @@ vim.opt.fillchars = { eob = " ", fold = " ", foldclose = "", foldopen = ""
 
 vim.o.foldlevel = 99
 vim.o.foldtext =
-[[''.getline(v:foldstart).' ... '.trim(getline(v:foldend)).' | '.(v:foldend-v:foldstart+1).' lines']]
+[[' '.getline(v:foldstart).' ... '.trim(getline(v:foldend)).' | '.(v:foldend-v:foldstart+1).' lines']]
 
 vim.o.signcolumn = "yes"
 vim.o.inccommand = "split"
