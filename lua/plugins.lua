@@ -117,8 +117,11 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
         vim.wo.foldmethod = "expr"
 
-        -- enables treesitter based indentation
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        -- Skip treesitter indent fo propse filetypes
+        local skip_indent = { markdown = true, gitcommit = true, text = true }
+        if not skip_indent[filetype] then
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
     end,
 })
 
