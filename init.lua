@@ -74,6 +74,7 @@ vim.o.softtabstop = 8
 -- 4. Followed by trailing whitespace
 vim.opt.formatlistpat = [[^\s*\(\d\+[\]:.)}\t ]\|[-*+]\s\)\s*]]
 vim.opt.formatoptions = "jcroqlnt"
+
 -- Keymaps
 -- Move between windows using Ctrl + h,j,k,l
 map("<C-h>", "<C-w>h", "Move to left window")
@@ -116,6 +117,9 @@ map("<Esc>", "<cmd>nohlsearch<cr>", "Clear highlights")
 vim.cmd.packadd("nvim.undotree")
 map("<leader>u", require("undotree").open, "Undo tree")
 
+-- Load plugins
+require("plugins")
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
@@ -152,6 +156,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.opt_local.spell = true
         vim.opt_local.spelllang = "en_us"
+        vim.opt_local.indentexpr = ""
     end,
 })
 
@@ -168,6 +173,3 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
         end
     end,
 })
-
--- Load plugins
-require("plugins")
