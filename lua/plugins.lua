@@ -55,7 +55,7 @@ vim.pack.add({
     { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/OXY2DEV/markview.nvim",
+    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
     "https://github.com/mfussenegger/nvim-dap",
     { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
 })
@@ -574,42 +574,32 @@ require("gitsigns").setup({
 })
 
 -----------------------------------------------------------------------------
--- Markview (markdown preview)
+-- render-markdown (markdown preview)
 -----------------------------------------------------------------------------
-require("markview").setup({
-    preview = {
-        icon_provider = "mini",
+require("render-markdown").setup({
+    file_types = { "markdown" },
+    heading = {
+        sign = false,
+        position = "inline",
+        icons = { "▊ ", "▋ ", "▌ ", "▍ ", "▎ ", "▏ " },
+        width = "full",
     },
-    markdown = {
-        headings = {
-            shift_width = 0,
-            heading_1 = { sign = false, icon = "▊ ", hl = "MarkviewHeading1" },
-            heading_2 = { sign = false, icon = "▋ ", hl = "MarkviewHeading2" },
-            heading_3 = { icon = "▌ ", hl = "MarkviewHeading3" },
-            heading_4 = { icon = "▍ ", hl = "MarkviewHeading4" },
-            heading_5 = { icon = "▎ ", hl = "MarkviewHeading5" },
-            heading_6 = { icon = "▏ ", hl = "MarkviewHeading6" },
-            setext_1 = { sign = false },
-            setext_2 = { sign = false },
-        },
-        code_blocks = {
-            sign = false,
-            label_hl = "MarkviewCode",
-            info_hl = "MarkviewCode",
-        },
-        tables = {
-            parts = {
-                top = { "┌", "─", "┐", "┬" },
-                bottom = { "└", "─", "┘", "┴" },
-            },
-        },
+    code = {
+        sign = false,
+        style = "full",
+        highlight_language = "RenderMarkdownCode",
+        highlight_info = "RenderMarkdownCode",
+    },
+    pipe_table = {
+        preset = "none", -- square corners (┌ ┬ ┐ └ ┴ ┘ ├ ┼ ┤)
+        cell = "padded",
     },
 })
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
     callback = function(e)
-        bmap("<leader>tm", "<cmd>Markview toggle<cr>", "Toggle markdown render", e.buf)
+        bmap("<leader>tm", "<cmd>RenderMarkdown toggle<cr>", "Toggle markdown render", e.buf)
     end,
 })
 
