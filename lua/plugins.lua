@@ -343,9 +343,9 @@ map("<leader>bd", MiniBufremove.delete, "Delete buffer")
 local statusline = require("mini.statusline")
 local section_location = function(args)
     if statusline.is_truncated(args.trunc_width) then
-        return "%l %2v"
+        return "%2v"
     end
-    return '󰙪 %l/%L 󰘮 %2v/%-2{virtcol("$") - 1}'
+    return '󰘮 %2v/%-2{virtcol("$") - 1}'
 end
 
 require("mini.statusline").setup({

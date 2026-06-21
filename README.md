@@ -6,11 +6,12 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 
 <details>
   <summary>📸 Click to View Screenshots</summary>
-  <img width="3585" height="2140" alt="startscreen" src="https://github.com/user-attachments/assets/46ec1195-e0ca-4e1b-afb0-e558e5f05bc2" />
-  <img width="3585" height="2140" alt="rust+md" src="https://github.com/user-attachments/assets/806b5b4b-7e4e-4172-8428-90dcb41115a3" />
-  <img width="3585" height="2140" alt="lua" src="https://github.com/user-attachments/assets/4ff3eb5c-b811-4f4b-a8e9-96b2ab26b47d" />
-  <img width="3585" height="2140" alt="rust+md+cmp" src="https://github.com/user-attachments/assets/3af8c38d-ccfa-4813-ae39-ce4cd1d9539f" />
-  <img width="3585" height="2140" alt="rust+md+lsp" src="https://github.com/user-attachments/assets/b18a29c4-9fcc-4b4b-9b9d-06caf9f98c8d" />
+  <p><em>Each image is split diagonally — light theme in the upper-left half, dark theme in the lower-right half.</em></p>
+  <img alt="mini.starter screen — light theme top-left, dark theme bottom-right" src="screenshots/1-combined.png" />
+  <br>
+  <img alt="Rust source code with syntax highlighting" src="screenshots/2-combined.png" />
+  <br>
+  <img alt="fzf-lua symbol picker with preview" src="screenshots/3-combined.png" />
 </details>
 
 ## Requirements
