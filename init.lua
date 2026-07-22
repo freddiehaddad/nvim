@@ -33,7 +33,7 @@ vim.o.clipboard = "unnamedplus"
 
 vim.o.pumheight = 20
 
-vim.o.cmdheight = 0
+vim.o.cmdheight = 1
 vim.o.cursorline = true
 vim.o.number = true
 vim.o.relativenumber = true
