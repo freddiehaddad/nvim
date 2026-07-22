@@ -577,6 +577,7 @@ require("gitsigns").setup({
 -- render-markdown (markdown preview)
 -----------------------------------------------------------------------------
 require("render-markdown").setup({
+    enabled = false, -- don't render by default
     file_types = { "markdown" },
     heading = {
         sign = false,
@@ -594,12 +595,21 @@ require("render-markdown").setup({
         preset = "none", -- square corners (┌ ┬ ┐ └ ┴ ┘ ├ ┼ ┤)
         cell = "padded",
     },
+    completions = { lsp = { enabled = true } },
 })
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
     callback = function(e)
-        bmap("<leader>tm", "<cmd>RenderMarkdown toggle<cr>", "Toggle markdown render", e.buf)
+        bmap("<leader>pm", function ()
+            if require('render-markdown').get() then
+                require('render-markdown').preview()
+                require('render-markdown').disable()
+            else
+                require('render-markdown').enable()
+                require('render-markdown').preview()
+            end
+        end, "Toggle render markdown preview", e.buf)
     end,
 })
 
