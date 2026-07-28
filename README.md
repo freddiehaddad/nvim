@@ -207,7 +207,7 @@ Leader is `<Space>`.
 
 | Key             | Action                     |
 | --------------- | -------------------------- |
-| `<leader>tm`    | Toggle markdown render     |
+| `<leader>mp`    | Toggle markdown render     |
 
 ### Debugging (Rust buffers only)
 
