@@ -55,9 +55,9 @@ vim.pack.add({
     { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
     "https://github.com/mfussenegger/nvim-dap",
     { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
+    { src = "https://github.com/freddiehaddad/render-markdown.nvim", version = "feature/conceal-aware-wrap" },
 })
 
 -- Update keymap
