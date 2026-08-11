@@ -24,7 +24,7 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
 | Tool            | Purpose              | Install Method                                                                                          |
 | --------------- | -------------------- | ------------------------------------------------------------------------------------------------------- |
 | `git`           | Version control      | `winget install --id Git.Git`                                                                           |
-| `fzf`           | Fuzzy finding        | `winget install --id junegunn.fzf`                                                                      |
+| `cmake`         | Build telescope-fzf-native | `winget install --id Kitware.CMake`                                                                |
 | `pwsh`          | Default shell        | `winget install --id Microsoft.PowerShell`                                                              |
 | `ripgrep`       | Live grep, `:grep`   | `winget install --id BurntSushi.ripgrep.MSVC`                                                           |
 | `tree-sitter`   | Parser CLI           | `cargo install --locked tree-sitter-cli`                                                                |
@@ -271,7 +271,7 @@ Verify that all dependencies are installed:
 :checkhealth config
 ```
 
-This checks core requirements (Neovim version, git, ripgrep, fzf, pwsh,
+This checks core requirements (Neovim version, git, ripgrep, cmake, pwsh,
 tree-sitter), package managers (cargo, npm, gh), LSP servers, the debug
 adapter, and plugin status.
 

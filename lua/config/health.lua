@@ -582,6 +582,38 @@ local function check_dep(dep)
             end
             return
         end
+
+        if dep.name == "clangd" then
+            -- Report the binary Neovim will actually launch, which is pinned in plugins.lua
+            -- and falls back to PATH (an older clangd, on machines with Visual Studio).
+            local cfg = vim.lsp.config.clangd
+            local exe = cfg and cfg.cmd and cfg.cmd[1] or "clangd"
+            local pinned = exe ~= "clangd"
+
+            if vim.fn.executable(exe) == 0 then
+                vim.health.error("clangd: `" .. exe .. "` not found", dep.advice)
+                return
+            end
+
+            local ver = get_version({ exe, "--version" })
+            vim.health.ok(("clangd (%s)"):format(ver or "unknown version"))
+            if not pinned then
+                vim.health.warn(
+                    "clangd: falling back to PATH (" .. (vim.fn.exepath("clangd") or "?") .. ")",
+                    "The pinned path in plugins.lua is gone; update it after a clangd upgrade."
+                )
+            end
+
+            -- Documentation.CommentFormat, which the .clangd files rely on, is clangd 22+.
+            local major = tonumber((extract_version(ver or "") or ""):match("^(%d+)") or "")
+            if major and major < 22 then
+                vim.health.warn(
+                    ("clangd %d is too old for Documentation.CommentFormat"):format(major),
+                    "Doc comments will show escaped markdown. Needs clangd 22 or newer."
+                )
+            end
+            return check_update(dep, ver)
+        end
     end
 
     -- Executable check
