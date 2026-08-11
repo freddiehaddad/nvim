@@ -16,7 +16,6 @@ local startup_footer =
 [[▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀ ▀
                                       n e o v i m]]
 
--- Keymap helpers
 local h = require("helpers")
 local map = h.map
 local bmap = h.bmap
@@ -62,15 +61,14 @@ vim.api.nvim_create_autocmd("PackChanged", {
     end,
 })
 
--- Register and install plugins
 vim.pack.add({
     "https://github.com/freddiehaddad/ferric.nvim",
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-    "https://github.com/b0o/schemastore.nvim",         -- json/yaml schemas, used by lspconfig
+    "https://github.com/b0o/schemastore.nvim",                         -- json/yaml schemas, used by lspconfig
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/nvim-mini/mini.nvim",          -- icons used by blink.cmp
-    "https://github.com/rafamadriz/friendly-snippets", -- snippet collection for blink.cmp
+    "https://github.com/nvim-mini/mini.nvim",                          -- icons used by blink.cmp
+    "https://github.com/rafamadriz/friendly-snippets",                 -- snippet collection for blink.cmp
     { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
     "https://github.com/nvim-lua/plenary.nvim",                        -- required by telescope.nvim
     "https://github.com/nvim-telescope/telescope.nvim",
@@ -79,11 +77,10 @@ vim.pack.add({
     "https://github.com/nvim-telescope/telescope-live-grep-args.nvim", -- interactive rg args/globs in live grep
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/mfussenegger/nvim-dap",
-    { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
+    { src = "https://github.com/igorlfs/nvim-dap-view",              version = vim.version.range("1.x") },
     { src = "https://github.com/freddiehaddad/render-markdown.nvim", version = "feature/conceal-aware-wrap" },
 })
 
--- Update keymap
 map("<leader>pu", vim.pack.update, "Update plugins")
 
 -----------------------------------------------------------------------------
@@ -129,18 +126,17 @@ vim.api.nvim_create_autocmd("FileType", {
             return
         end
 
-        -- check if parser exists and load it
+        -- load the parser if available
         if not vim.treesitter.language.add(language) then
             return
         end
-        -- enables syntax highlighting and other treesitter features
-        vim.treesitter.start(buf, language)
+        vim.treesitter.start(buf, language) -- enable highlighting
 
-        -- enables treesitter based folds
+        -- enable folds
         vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
         vim.wo.foldmethod = "expr"
 
-        -- Skip treesitter indent fo propse filetypes
+        -- Skip treesitter indent for prose filetypes
         local skip_indent = { markdown = true, gitcommit = true, text = true }
         if not skip_indent[filetype] then
             vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
@@ -358,9 +354,7 @@ require("mini.pairs").setup({
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "rust",
     callback = function(e)
-        -- In Rust files, the single quote (') is rarely used for literal
-        -- characters and is more commonly used for lifetime specifiers.
-        -- So we disable it for Rust source files.
+        -- ' is a lifetime specifier in Rust, not a quote, so don't auto-pair it
         vim.keymap.set("i", "'", "'", { buffer = e.buf })
     end,
 })
@@ -656,7 +650,7 @@ require("gitsigns").setup({
 -- render-markdown (markdown preview)
 -----------------------------------------------------------------------------
 require("render-markdown").setup({
-    enabled = false, -- don't render by default
+    enabled = false,
     file_types = { "markdown" },
     heading = {
         sign = false,
@@ -819,10 +813,9 @@ require("dap-view").setup({
 
 -- Find the Rust test function name at the cursor using treesitter
 local function get_test_name_at_cursor()
-    -- Get the node at cursor, falling back to the first node on the current line
     local node = vim.treesitter.get_node()
 
-    -- If cursor is on whitespace, try to get the node at the first non-blank column
+    -- Fall back to the first non-blank column if the cursor is on whitespace
     if node and (node:type() == "declaration_list" or node:type() == "source_file") then
         local row = vim.api.nvim_win_get_cursor(0)[1] - 1
         local line = vim.api.nvim_get_current_line()
