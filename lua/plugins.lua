@@ -411,11 +411,91 @@ require("mini.starter").setup({
 -----------------------------------------------------------------------------
 -- Completion (blink.cmp)
 -----------------------------------------------------------------------------
+
+-- Servers hard-wrap doc comments at the source width, so blink.cmp can only rewrap
+-- individual lines, not paragraphs. Join soft-wrapped lines within each paragraph and
+-- let 'wrap' handle it; hard breaks and non-paragraph blocks (lists, tables, code,
+-- quotes, headings) are left alone.
+local function reflow_markdown(text)
+    local lines = vim.split(text, "\n")
+    if #lines < 2 then
+        return text
+    end
+
+    local ok, parser = pcall(vim.treesitter.get_string_parser, text, "markdown")
+    if not ok or not parser then
+        return text
+    end
+    local trees = parser:parse()
+    if not trees or not trees[1] then
+        return text
+    end
+
+    -- Doxygen tags must stay at line-start for vim.lsp.util to detect them
+    local function is_tag(line)
+        return line ~= nil and line:match("^%s*[@\\]%w+") ~= nil
+    end
+
+    -- Mark each row whose following newline is a soft break inside a paragraph.
+    local join = {}
+    local function walk(node)
+        if node:type() == "paragraph" then
+            local srow, _, erow, ecol = node:range()
+            -- A range ending at column 0 does not include that row.
+            local last = ecol == 0 and erow - 1 or erow
+            for row = srow, last - 1 do
+                local line = lines[row + 1]
+                if not (line:match("  $") or line:match("\\$")) and not is_tag(lines[row + 2]) then
+                    join[row] = true
+                end
+            end
+            return
+        end
+        for child in node:iter_children() do
+            walk(child)
+        end
+    end
+    walk(trees[1]:root())
+
+    local joined, i = {}, 1
+    while i <= #lines do
+        local line = lines[i]
+        while join[i - 1] and i < #lines do
+            i = i + 1
+            line = line:gsub("%s+$", "") .. " " .. lines[i]:gsub("^%s*", "")
+        end
+        joined[#joined + 1] = line
+        i = i + 1
+    end
+    return table.concat(joined, "\n")
+end
+
 require("blink.cmp").setup({
     appearance = { nerd_font_variant = "normal" },
     fuzzy = { implementation = "prefer_rust_with_warning" },
     completion = {
-        documentation = { auto_show = true },
+        documentation = {
+            auto_show = true,
+            window = { max_width = 80 },
+            draw = function(opts)
+                local documentation = opts.item.documentation
+                -- Only markdown: in plaintext a line break is literal.
+                if
+                    type(documentation) == "table"
+                    and documentation.kind == "markdown"
+                    and type(documentation.value) == "string"
+                then
+                    opts.default_implementation({
+                        documentation = {
+                            kind = "markdown",
+                            value = reflow_markdown(documentation.value),
+                        },
+                    })
+                else
+                    opts.default_implementation()
+                end
+            end,
+        },
         ghost_text = { enabled = true },
         menu = {
             draw = {
