@@ -754,7 +754,7 @@ require("render-markdown").setup({
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
     callback = function(e)
-        bmap("<leader>mp", function ()
+        bmap("<leader>mp", function()
             if require('render-markdown').get() then
                 require('render-markdown').preview()
                 require('render-markdown').disable()
