@@ -11,7 +11,7 @@ experience with sensible defaults for Rust, C/C++, Lua, and common file formats.
   <br>
   <img alt="Rust source code with syntax highlighting" src="screenshots/2-combined.png" />
   <br>
-  <img alt="fzf-lua symbol picker with preview" src="screenshots/3-combined.png" />
+  <img alt="Telescope symbol picker with preview" src="screenshots/3-combined.png" />
 </details>
 
 ## Requirements
@@ -80,7 +80,11 @@ Use `<leader>pu` to update plugins.
 | [nvim-lspconfig]              | LSP server configuration                                    |
 | [blink.cmp]                   | Completion with ghost text and signature help               |
 | [mini.nvim]                   | Icons, pairs, surround, move, statusline, sessions, starter |
-| [fzf-lua]                     | Fuzzy finder powered by fzf                                 |
+| [plenary.nvim]                | Lua utility functions (telescope.nvim dependency)           |
+| [telescope.nvim]              | Fuzzy finder over lists (files, grep, LSP, git, etc.)        |
+| [telescope-fzf-native.nvim]   | Native fzf-algorithm sorter for Telescope                    |
+| [telescope-ui-select.nvim]    | Renders `vim.ui.select` (e.g. code actions) via Telescope    |
+| [telescope-live-grep-args.nvim] | Interactive ripgrep flags/globs in Telescope live grep     |
 | [gitsigns.nvim]               | Git signs, hunk navigation, staging, and blame              |
 | [render-markdown.nvim]        | In-buffer markdown rendering with code, table, and callouts |
 | [nvim-dap]                    | Debug adapter protocol client                               |
@@ -143,7 +147,7 @@ Leader is `<Space>`.
 | `<leader>th`    | Toggle inlay hints          |
 | `<leader>df`    | Format document / selection |
 
-### Fuzzy finder (fzf-lua)
+### Fuzzy finder (Telescope)
 
 | Key             | Action                     |
 | --------------- | -------------------------- |
@@ -158,7 +162,7 @@ Leader is `<Space>`.
 | `<leader>sB`    | Buffer search (regex)      |
 | `<leader>sd`    | Document diagnostics       |
 | `<leader>sD`    | Workspace diagnostics      |
-| `<leader>sg`    | Live grep (supports globs) |
+| `<leader>sg`    | Live grep (cwd, supports interactive rg args via `<C-k>`) |
 | `<leader>sh`    | Help pages                 |
 | `<leader>sk`    | Keymaps                    |
 | `<leader>sR`    | Resume last picker         |
@@ -166,7 +170,7 @@ Leader is `<Space>`.
 | `<leader>s/`    | Search history             |
 | `<leader>s"`    | Registers                  |
 
-### Git (fzf-lua)
+### Git (Telescope)
 
 | Key             | Action                   |
 | --------------- | ------------------------ |
@@ -290,12 +294,15 @@ This removes the vim.pack plugin directory and `nvim-pack-lock.json`.
 [nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
 [blink.cmp]: https://github.com/saghen/blink.cmp
 [mini.nvim]: https://github.com/nvim-mini/mini.nvim
-[fzf-lua]: https://github.com/ibhagwan/fzf-lua
+[plenary.nvim]: https://github.com/nvim-lua/plenary.nvim
+[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
+[telescope-fzf-native.nvim]: https://github.com/nvim-telescope/telescope-fzf-native.nvim
+[telescope-ui-select.nvim]: https://github.com/nvim-telescope/telescope-ui-select.nvim
+[telescope-live-grep-args.nvim]: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 [gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
 [render-markdown.nvim]: https://github.com/MeanderingProgrammer/render-markdown.nvim
 [nvim-dap]: https://github.com/mfussenegger/nvim-dap
 [nvim-dap-view]: https://github.com/igorlfs/nvim-dap-view
 [ripgrep]: https://github.com/BurntSushi/ripgrep
-[fzf]: https://github.com/junegunn/fzf
 [Nerd Font]: https://www.nerdfonts.com/
 [`plugins.lua`]: ./lua/plugins.lua

@@ -29,6 +29,25 @@ local build_hooks = {
         end
         vim.cmd("TSUpdate")
     end,
+    ["telescope-fzf-native.nvim"] = function(ev)
+        local cwd = ev.data.path
+        local configure = vim.system(
+            { "cmake", "-S.", "-Bbuild", "-DCMAKE_BUILD_TYPE=Release" }, { cwd = cwd }
+        ):wait()
+        if configure.code ~= 0 then
+            vim.notify(
+                "telescope-fzf-native: cmake configure failed\n" .. (configure.stderr or ""),
+                vim.log.levels.ERROR
+            )
+            return
+        end
+        local build = vim.system(
+            { "cmake", "--build", "build", "--config", "Release", "--target", "install" }, { cwd = cwd }
+        ):wait()
+        if build.code ~= 0 then
+            vim.notify("telescope-fzf-native: cmake build failed\n" .. (build.stderr or ""), vim.log.levels.ERROR)
+        end
+    end,
 }
 
 vim.api.nvim_create_autocmd("PackChanged", {
@@ -53,7 +72,11 @@ vim.pack.add({
     "https://github.com/nvim-mini/mini.nvim",          -- icons used by blink.cmp
     "https://github.com/rafamadriz/friendly-snippets", -- snippet collection for blink.cmp
     { src = "https://github.com/saghen/blink.cmp",                version = vim.version.range("1.x") },
-    "https://github.com/ibhagwan/fzf-lua",
+    "https://github.com/nvim-lua/plenary.nvim",                        -- required by telescope.nvim
+    "https://github.com/nvim-telescope/telescope.nvim",
+    "https://github.com/nvim-telescope/telescope-fzf-native.nvim",     -- native sorter (cmake build, see build_hooks)
+    "https://github.com/nvim-telescope/telescope-ui-select.nvim",      -- vim.ui.select via Telescope (code actions, etc.)
+    "https://github.com/nvim-telescope/telescope-live-grep-args.nvim", -- interactive rg args/globs in live grep
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/mfussenegger/nvim-dap",
     { src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.x") },
@@ -267,19 +290,19 @@ vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("taplo")
 vim.lsp.enable("yamlls")
 
--- Keymaps (buffer-local, set on attach)
+local telescope_builtin = require("telescope.builtin")
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
     callback = function(event)
         local bufnr = event.buf
         bmap("gl", vim.diagnostic.open_float, "Line diagnostics", bufnr)
-        bmap("gd", "<cmd>FzfLua lsp_definitions<cr>", "Go to definition", bufnr)
-        bmap("<leader>ca", "<cmd>FzfLua lsp_code_actions<cr>", "Code actions", bufnr)
-        bmap("<leader>si", "<cmd>FzfLua lsp_implementations<cr>", "Search implementations", bufnr)
-        bmap("<leader>sr", "<cmd>FzfLua lsp_references<cr>", "Search references", bufnr)
-        bmap("<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", "Search document symbols", bufnr)
-        bmap("<leader>sS", "<cmd>FzfLua lsp_workspace_symbols<cr>", "Search workspace symbols", bufnr)
-        bmap("<leader>st", "<cmd>FzfLua lsp_typedefs<cr>", "Search type definitions", bufnr)
+        bmap("gd", telescope_builtin.lsp_definitions, "Go to definition", bufnr)
+        bmap("<leader>ca", vim.lsp.buf.code_action, "Code actions", bufnr)
+        bmap("<leader>si", telescope_builtin.lsp_implementations, "Search implementations", bufnr)
+        bmap("<leader>sr", telescope_builtin.lsp_references, "Search references", bufnr)
+        bmap("<leader>ss", telescope_builtin.lsp_document_symbols, "Search document symbols", bufnr)
+        bmap("<leader>sS", telescope_builtin.lsp_workspace_symbols, "Search workspace symbols", bufnr)
+        bmap("<leader>st", telescope_builtin.lsp_type_definitions, "Search type definitions", bufnr)
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if not client then
@@ -427,75 +450,121 @@ require("blink.cmp").setup({
     },
 })
 
+-- Align wrapped list items in blink.cmp's documentation window (no setting for this
+-- exists). 'list:-1' indents continuations to match the marker width; the default
+-- formatlistpat only covers numbered lists, so bullets are added too.
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "blink-cmp-documentation",
+    callback = function(e)
+        vim.bo[e.buf].formatlistpat = [[^\s*\(\d\+[\]:.)}\t ]\|[-*+]\s\)\s*]]
+        -- The window is not entered when it opens, so find it by buffer.
+        for _, win in ipairs(vim.fn.win_findbuf(e.buf)) do
+            vim.wo[win].breakindent = true
+            vim.wo[win].breakindentopt = "list:-1"
+        end
+    end,
+})
+
 -----------------------------------------------------------------------------
--- fzf-lua
+-- Telescope
 -----------------------------------------------------------------------------
-require("fzf-lua").setup({
-    fzf_colors = true,
-    fzf_opts = {
-        ["--no-scrollbar"] = true,
-    },
-    winopts = {
-        border = "single",
-        preview = {
-            layout = "horizontal",
-            horizontal = "right:50%",
-            border = "single",
+local telescope = require("telescope")
+
+-- Full-page preview scroll for <C-f>/<C-b>, to complement the built-in half-page
+-- scroll on <C-d>/<C-u>. Height - 2 matches Vim's own native <C-f>/<C-b> overlap.
+local function preview_scroll_full_page(direction)
+    return function(prompt_bufnr)
+        local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+        local previewer = picker.previewer
+        local status = require("telescope.state").get_status(prompt_bufnr)
+        local preview_winid = status.layout.preview and status.layout.preview.winid
+        if type(previewer) ~= "table" or not preview_winid or not previewer.scroll_fn then
+            return
+        end
+        local amount = math.max(1, vim.api.nvim_win_get_height(preview_winid) - 2)
+        previewer:scroll_fn(amount * direction)
+    end
+end
+
+telescope.setup({
+    defaults = {
+        borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        prompt_prefix = " ",
+        selection_caret = "❯ ",
+        multi_icon = "✓ ",
+        mappings = {
+            i = {
+                ["<C-f>"] = preview_scroll_full_page(1),
+                ["<C-b>"] = preview_scroll_full_page(-1),
+            },
+            n = {
+                ["<C-f>"] = preview_scroll_full_page(1),
+                ["<C-b>"] = preview_scroll_full_page(-1),
+            },
         },
     },
-    keymap = {
-        builtin = {
-            ["<C-f>"] = "preview-page-down",
-            ["<C-b>"] = "preview-page-up",
-            ["<C-d>"] = "preview-half-page-down",
-            ["<C-u>"] = "preview-half-page-up",
+    pickers = {
+        find_files = {
+            find_command = { "rg", "--files", "--color", "never", "--glob", "!.git" },
         },
+    },
+    extensions = {
         fzf = {
-            ["ctrl-q"] = "select-all+accept",
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
         },
-    },
-    grep = {
-        rg_glob = true,
-        glob_separator = "  ",
+        ["ui-select"] = require("telescope.themes").get_dropdown({}),
+        live_grep_args = {
+            auto_quoting = true,
+        },
     },
 })
-require("fzf-lua").register_ui_select()
 
--- Keymaps
-map("<leader>fb", "<cmd>FzfLua buffers<cr>", "Buffers")
-map("<leader>fc", function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end, "Config file")
-map("<leader>ff", "<cmd>FzfLua files<cr>", "Files")
-map("<leader>fF", function() require("fzf-lua").files({ fd_opts = "--type f --hidden --exclude .git" }) end,
-    "Files (hidden)")
-map("<leader>fg", "<cmd>FzfLua git_files<cr>", "Files (git)")
-map("<leader>fr", "<cmd>FzfLua oldfiles<cr>", "Recent")
-map("<leader>sa", "<cmd>FzfLua autocmds<cr>", "Auto commands")
-map("<leader>sb", "<cmd>FzfLua grep_curbuf<cr>", "Buffer (fuzzy)")
-map("<leader>sB", "<cmd>FzfLua lgrep_curbuf<cr>", "Buffer (regex)")
-map("<leader>sc", "<cmd>FzfLua command_history<cr>", "Command history")
-map("<leader>sC", "<cmd>FzfLua commands<cr>", "Commands")
-map("<leader>sd", "<cmd>FzfLua diagnostics_document<cr>", "Document diagnostics")
-map("<leader>sD", "<cmd>FzfLua diagnostics_workspace<cr>", "Workspace diagnostics")
-map("<leader>sg", "<cmd>FzfLua live_grep<cr>", "Grep (cwd)")
-map("<leader>sh", "<cmd>FzfLua helptags<cr>", "Help pages")
-map("<leader>sH", "<cmd>FzfLua highlights<cr>", "Highlight groups")
-map("<leader>sj", "<cmd>FzfLua jumps<cr>", "Jumplist")
-map("<leader>sk", "<cmd>FzfLua keymaps<cr>", "Keymaps")
-map("<leader>sl", "<cmd>FzfLua loclist<cr>", "Location list")
-map("<leader>sm", "<cmd>FzfLua marks<cr>", "Marks")
-map("<leader>so", "<cmd>FzfLua nvim_options<cr>", "Options")
-map("<leader>sq", "<cmd>FzfLua quickfix<cr>", "Quickfix list")
-map("<leader>sR", "<cmd>FzfLua resume<cr>", "Resume")
-map("<leader>sw", "<cmd>FzfLua grep_cword<cr>", "Word")
-map("<leader>sw", "<cmd>FzfLua grep_visual<cr>", "Selection", "v")
-map("<leader>s/", "<cmd>FzfLua search_history<cr>", "Search history")
-map('<leader>s"', "<cmd>FzfLua registers<cr>", "Registers")
-map("<leader>fp", "<cmd>FzfLua builtin<cr>", "Pickers")
-map("<leader>gc", "<cmd>FzfLua git_commits<cr>", "Commits")
-map("<leader>gC", "<cmd>FzfLua git_bcommits<cr>", "Buffer commits")
-map("<leader>gs", "<cmd>FzfLua git_status<cr>", "Status")
-map("<leader>gb", "<cmd>FzfLua git_branches<cr>", "Branches")
-map("<leader>gt", "<cmd>FzfLua git_stash<cr>", "Stash")
+telescope.load_extension("fzf")
+telescope.load_extension("ui-select")
+telescope.load_extension("live_grep_args")
+
+local live_grep_args = telescope.extensions.live_grep_args
+local live_grep_shortcuts = require("telescope-live-grep-args.shortcuts")
+
+map("<leader>fb", telescope_builtin.buffers, "Buffers")
+map("<leader>fc", function() telescope_builtin.find_files({ cwd = vim.fn.stdpath("config"), hidden = true }) end,
+    "Config file")
+map("<leader>ff", telescope_builtin.find_files, "Files")
+map("<leader>fF", function() telescope_builtin.find_files({ hidden = true }) end, "Files (hidden)")
+map("<leader>fg", telescope_builtin.git_files, "Files (git)")
+map("<leader>fr", telescope_builtin.oldfiles, "Recent")
+map("<leader>sa", telescope_builtin.autocommands, "Auto commands")
+map("<leader>sb", telescope_builtin.current_buffer_fuzzy_find, "Buffer (fuzzy)")
+map("<leader>sB", function()
+    live_grep_args.live_grep_args({ search_dirs = { vim.api.nvim_buf_get_name(0) } })
+end, "Buffer (regex)")
+map("<leader>sc", telescope_builtin.command_history, "Command history")
+map("<leader>sC", telescope_builtin.commands, "Commands")
+map("<leader>sd", function() telescope_builtin.diagnostics({ bufnr = 0 }) end, "Document diagnostics")
+map("<leader>sD", telescope_builtin.diagnostics, "Workspace diagnostics")
+map("<leader>sg", live_grep_args.live_grep_args, "Grep (cwd)")
+map("<leader>sh", telescope_builtin.help_tags, "Help pages")
+map("<leader>sH", telescope_builtin.highlights, "Highlight groups")
+map("<leader>sj", telescope_builtin.jumplist, "Jumplist")
+map("<leader>sk", telescope_builtin.keymaps, "Keymaps")
+map("<leader>sl", telescope_builtin.loclist, "Location list")
+map("<leader>sm", telescope_builtin.marks, "Marks")
+map("<leader>so", telescope_builtin.vim_options, "Options")
+map("<leader>sq", telescope_builtin.quickfix, "Quickfix list")
+map("<leader>sR", telescope_builtin.resume, "Resume")
+map("<leader>sw", live_grep_shortcuts.grep_word_under_cursor, "Word")
+map("<leader>sw", live_grep_shortcuts.grep_visual_selection, "Selection", "v")
+map("<leader>s/", telescope_builtin.search_history, "Search history")
+map('<leader>s"', telescope_builtin.registers, "Registers")
+map("<leader>fp", telescope_builtin.builtin, "Pickers")
+map("<leader>gc", telescope_builtin.git_commits, "Commits")
+map("<leader>gC", telescope_builtin.git_bcommits, "Buffer commits")
+map("<leader>gs", telescope_builtin.git_status, "Status")
+map("<leader>gb", telescope_builtin.git_branches, "Branches")
+map("<leader>gt", telescope_builtin.git_stash, "Stash")
 
 -----------------------------------------------------------------------------
 -- Gitsigns
