@@ -590,6 +590,15 @@ telescope.setup({
     pickers = {
         find_files = {
             find_command = { "rg", "--files", "--color", "never", "--glob", "!.git" },
+            -- Ignore non-text files
+            file_ignore_patterns = {
+                "%.png$", "%.jpe?g$", "%.gif$", "%.bmp$", "%.ico$", "%.webp$", "%.tiff?$",
+                "%.pdf$",
+                "%.zip$", "%.tar$", "%.gz$", "%.7z$", "%.rar$",
+                "%.exe$", "%.dll$", "%.pdb$", "%.so$", "%.o$", "%.obj$", "%.lib$", "%.a$", "%.class$",
+                "%.woff2?$", "%.ttf$", "%.otf$", "%.eot$",
+                "%.mp3$", "%.mp4$", "%.mov$", "%.wav$", "%.flac$", "%.ogg$", "%.webm$", "%.avi$",
+            },
         },
     },
     extensions = {
