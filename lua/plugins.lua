@@ -408,6 +408,82 @@ require("mini.starter").setup({
     footer = startup_footer,
 })
 
+-- Quickfix skips nofile buffers; watch only while starter buffers exist.
+local starter_group = vim.api.nvim_create_augroup("ministarter-quickfix", { clear = true })
+local starter_buffers = {}
+local starter_quickfix_autocmd
+
+local function cleanup_starter_placeholder(e)
+    local buf = e.buf
+    if not vim.api.nvim_buf_is_valid(buf) then
+        return
+    end
+    local unused = not vim.bo[buf].modified and vim.api.nvim_buf_get_name(buf) == ""
+        and (not vim.api.nvim_buf_is_loaded(buf)
+            or (vim.api.nvim_buf_line_count(buf) == 1
+                and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == ""))
+    if unused and #vim.fn.win_findbuf(buf) == 0 then
+        vim.api.nvim_buf_delete(buf, {})
+    else
+        vim.bo[buf].buflisted = true
+    end
+end
+
+local function watch_starter_buffers()
+    -- MiniStarterOpened is deferred at startup, so the current buffer may have changed.
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.bo[buf].filetype == "ministarter" and not starter_buffers[buf] then
+            starter_buffers[buf] = true
+            vim.api.nvim_create_autocmd("BufWipeout", {
+                group = starter_group,
+                buffer = buf,
+                once = true,
+                callback = function(e)
+                    starter_buffers[e.buf] = nil
+                    if next(starter_buffers) == nil and starter_quickfix_autocmd then
+                        vim.api.nvim_del_autocmd(starter_quickfix_autocmd)
+                        starter_quickfix_autocmd = nil
+                    end
+                end,
+            })
+        end
+    end
+    if starter_quickfix_autocmd or next(starter_buffers) == nil then
+        return
+    end
+    starter_quickfix_autocmd = vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+        group = starter_group,
+        nested = true, -- Allow dashboard cleanup when its buffer is replaced.
+        callback = function(e)
+            if vim.bo[e.buf].buftype ~= "quickfix" then
+                return
+            end
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                if vim.api.nvim_win_is_valid(win) and starter_buffers[vim.api.nvim_win_get_buf(win)] then
+                    local buf = vim.api.nvim_create_buf(false, false)
+                    vim.bo[buf].bufhidden = ""
+                    vim.api.nvim_create_autocmd("BufWinLeave", {
+                        buffer = buf,
+                        once = true,
+                        desc = "Clean up the starter quickfix placeholder",
+                        -- Neovim still holds the old buffer during BufWinLeave.
+                        callback = vim.schedule_wrap(cleanup_starter_placeholder),
+                    })
+                    vim.api.nvim_win_set_buf(win, buf)
+                end
+            end
+        end,
+    })
+end
+
+vim.api.nvim_create_autocmd("User", {
+    group = starter_group,
+    pattern = "MiniStarterOpened",
+    callback = watch_starter_buffers,
+})
+-- Also cover reloading this config with an existing dashboard.
+watch_starter_buffers()
+
 -----------------------------------------------------------------------------
 -- Completion (blink.cmp)
 -----------------------------------------------------------------------------
