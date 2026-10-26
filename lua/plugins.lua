@@ -62,7 +62,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 vim.pack.add({
-    "https://github.com/freddiehaddad/ferric.nvim",
+    "https://github.com/freddiehaddad/haishoku.nvim",
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
     "https://github.com/b0o/schemastore.nvim",                         -- json/yaml schemas, used by lspconfig
@@ -86,7 +86,7 @@ map("<leader>pu", vim.pack.update, "Update plugins")
 -----------------------------------------------------------------------------
 -- Theme
 -----------------------------------------------------------------------------
-vim.cmd.colorscheme("ferric-forge")
+vim.cmd.colorscheme("haishoku")
 
 -----------------------------------------------------------------------------
 -- Treesitter
